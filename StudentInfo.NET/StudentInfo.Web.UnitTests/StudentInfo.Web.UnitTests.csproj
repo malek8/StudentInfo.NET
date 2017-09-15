@@ -98,12 +98,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StudentInfo.Web\StudentInfo.Web.csproj">
-      <Project>{EA5D4023-4634-419F-B2E0-833B33FD0855}</Project>
-      <Name>StudentInfo.Web</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
