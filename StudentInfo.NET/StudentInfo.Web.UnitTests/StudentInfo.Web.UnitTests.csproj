@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3CE1A1E3-2850-4DE3-A6FD-DFADD649501D}</ProjectGuid>
+    <ProjectGuid>{4CCFC2A5-C4A9-48A9-B6D0-EC1830BDA530}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StudentInfo.Web.UnitTests</RootNamespace>
@@ -97,6 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.Web\StudentInfo.Web.csproj">
+      <Project>{2AA12FE2-2569-4E13-A1D1-EDADD47611BC}</Project>
+      <Name>StudentInfo.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
