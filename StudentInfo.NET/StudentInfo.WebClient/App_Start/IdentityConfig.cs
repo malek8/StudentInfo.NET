@@ -37,7 +37,7 @@ namespace StudentInfo.WebClient.App_Start
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             // Need DbContext
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>());
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
 
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
