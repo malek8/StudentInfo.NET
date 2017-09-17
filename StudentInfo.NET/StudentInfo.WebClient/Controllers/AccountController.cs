@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using StudentInfo.WebClient.App_Start;
 using StudentInfo.Users.Dto;
+using StudentInfo.Data;
 
 namespace StudentInfo.WebClient.Controllers
 {
