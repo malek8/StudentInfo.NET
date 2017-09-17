@@ -22,23 +22,13 @@ namespace StudentInfo.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<ApplicationUser>().HasKey(x => x.Id);
-            //modelBuilder.Entity<ApplicationUser>().Ignore(x => x.Logins);
-            //modelBuilder.Entity<ApplicationUser>().Ignore(x => x.Roles);
-            //modelBuilder.Entity<ApplicationUser>().Ignore(x => x.Claims);
-
-            //modelBuilder.Entity<Department>().HasRequired(x => x.Faculty);
-            //modelBuilder.Entity<Program>().HasRequired(x => x.Department);
-
-            //modelBuilder.Entity<UserDetails>().HasRequired(x => x.ApplicationUser);
-            //modelBuilder.Entity<User>().HasOptional(x => x.HomeAddress);
-            //modelBuilder.Entity<User>().HasOptional(x => x.MailAddress);
         }
 
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Program> Programs { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        //public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<Address> Address { get; set; }
     }
 }

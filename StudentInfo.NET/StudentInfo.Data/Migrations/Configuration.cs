@@ -5,8 +5,8 @@ namespace StudentInfo.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Collections.Generic;
-    using StudentInfo.Faculties;
     using StudentInfo.Users.Dto;
+    using StudentInfo.Faculties;
 
     internal sealed class Configuration : DbMigrationsConfiguration<StudentInfo.Data.StudentInfoContext>
     {
@@ -17,19 +17,19 @@ namespace StudentInfo.Data.Migrations
 
         protected override void Seed(StudentInfo.Data.StudentInfoContext context)
         {
-            //context.Users.AddOrUpdate(
-            //  p => p.Email,
-            //  new ApplicationUser
-            //  {
-            //      Email = "malek.atwiz@hotmail.com",
-            //      UserName = "malek.atwiz@hotmail.com",
-            //      FirstName = "Malek",
-            //      LastName = "A",
-            //      PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
-            //      SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
-            //      EmailConfirmed = true
-            //  }
-            //);
+            context.Users.AddOrUpdate(
+              p => p.Email,
+              new ApplicationUser
+              {
+                  Email = "malek.atwiz@hotmail.com",
+                  UserName = "malek.atwiz@hotmail.com",
+                  FirstName = "Malek",
+                  LastName = "A",
+                  PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
+                  SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
+                  EmailConfirmed = true
+              }
+            );
 
             context.Faculties.AddOrUpdate(f =>
             f.Name,

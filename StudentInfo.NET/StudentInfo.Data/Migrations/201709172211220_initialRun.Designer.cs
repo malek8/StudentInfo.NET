@@ -7,13 +7,13 @@ namespace StudentInfo.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addingApplicationUser : IMigrationMetadata
+    public sealed partial class initialRun : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addingApplicationUser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialRun));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709170458276_addingApplicationUser"; }
+            get { return "201709172211220_initialRun"; }
         }
         
         string IMigrationMetadata.Source

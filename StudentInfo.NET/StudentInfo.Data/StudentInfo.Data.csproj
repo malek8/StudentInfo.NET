@@ -53,25 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201709170453293_initialCreate.cs" />
-    <Compile Include="Migrations\201709170453293_initialCreate.Designer.cs">
-      <DependentUpon>201709170453293_initialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201709172211220_initialRun.cs" />
+    <Compile Include="Migrations\201709172211220_initialRun.Designer.cs">
+      <DependentUpon>201709172211220_initialRun.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709170458276_addingApplicationUser.cs" />
-    <Compile Include="Migrations\201709170458276_addingApplicationUser.Designer.cs">
-      <DependentUpon>201709170458276_addingApplicationUser.cs</DependentUpon>
+    <Compile Include="Migrations\201709172213582_UserDetailsRelationship.cs" />
+    <Compile Include="Migrations\201709172213582_UserDetailsRelationship.Designer.cs">
+      <DependentUpon>201709172213582_UserDetailsRelationship.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709170501398_addingUserDetails.cs" />
-    <Compile Include="Migrations\201709170501398_addingUserDetails.Designer.cs">
-      <DependentUpon>201709170501398_addingUserDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709170503393_dropRelationship.cs" />
-    <Compile Include="Migrations\201709170503393_dropRelationship.Designer.cs">
-      <DependentUpon>201709170503393_dropRelationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709170509350_dropUserDetails.cs" />
-    <Compile Include="Migrations\201709170509350_dropUserDetails.Designer.cs">
-      <DependentUpon>201709170509350_dropUserDetails.cs</DependentUpon>
+    <Compile Include="Migrations\201709172218138_AddressRelationship.cs" />
+    <Compile Include="Migrations\201709172218138_AddressRelationship.Designer.cs">
+      <DependentUpon>201709172218138_AddressRelationship.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,20 +88,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709170453293_initialCreate.resx">
-      <DependentUpon>201709170453293_initialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709172211220_initialRun.resx">
+      <DependentUpon>201709172211220_initialRun.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709170458276_addingApplicationUser.resx">
-      <DependentUpon>201709170458276_addingApplicationUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709172213582_UserDetailsRelationship.resx">
+      <DependentUpon>201709172213582_UserDetailsRelationship.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709170501398_addingUserDetails.resx">
-      <DependentUpon>201709170501398_addingUserDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709170503393_dropRelationship.resx">
-      <DependentUpon>201709170503393_dropRelationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709170509350_dropUserDetails.resx">
-      <DependentUpon>201709170509350_dropUserDetails.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709172218138_AddressRelationship.resx">
+      <DependentUpon>201709172218138_AddressRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

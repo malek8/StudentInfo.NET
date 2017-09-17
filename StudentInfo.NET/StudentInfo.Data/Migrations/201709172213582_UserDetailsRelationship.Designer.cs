@@ -7,13 +7,13 @@ namespace StudentInfo.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class dropRelationship : IMigrationMetadata
+    public sealed partial class UserDetailsRelationship : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(dropRelationship));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UserDetailsRelationship));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709170503393_dropRelationship"; }
+            get { return "201709172213582_UserDetailsRelationship"; }
         }
         
         string IMigrationMetadata.Source

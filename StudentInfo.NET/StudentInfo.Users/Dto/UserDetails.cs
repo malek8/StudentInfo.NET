@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentInfo.Users.Dto
 {
@@ -14,11 +13,18 @@ namespace StudentInfo.Users.Dto
         [Required]
         public Guid Id { get; set; }
 
-        public string HomePhone { get; set; }
+        [MaxLength(25)]
         public string WorkPhone { get; set; }
+
+        [MaxLength(25)]
+        public string HomePhone { get; set; }
+
+        [MaxLength(25)]
         public string CellPhone { get; set; }
 
-        public Address HomeAddress { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
         public Address MailAddress { get; set; }
+        public Address HomeAddress { get; set; }
     }
 }

@@ -56,7 +56,6 @@
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Dto\ApplicationUser.cs" />
     <Compile Include="Dto\UserDetails.cs" />
-    <Compile Include="Dto\UserStudent.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserService.cs" />
