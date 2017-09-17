@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using StudentInfo.Users.Dto;
 
 namespace StudentInfo.WebClient.App_Start
 {

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Security.Claims;
-using Microsoft.AspNet.Identity;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StudentInfo.WebClient.Models
+namespace StudentInfo.Users.Dto
 {
     public class ApplicationUser : IdentityUser
     {
@@ -20,15 +21,6 @@ namespace StudentInfo.WebClient.Models
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             return userIdentity;
-        }
-
-        public class Address
-        {
-            public string AddressLine1 { get; set; }
-            public string AddressLine2 { get; set; }
-            public string City { get; set; }
-            public string Province { get; set; }
-            public string Country { get; set; }
         }
     }
 }

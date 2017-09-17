@@ -186,31 +186,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709162044323_Initial.cs" />
-    <Compile Include="Migrations\201709162044323_Initial.Designer.cs">
-      <DependentUpon>201709162044323_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709162045221_Up1.cs" />
-    <Compile Include="Migrations\201709162045221_Up1.Designer.cs">
-      <DependentUpon>201709162045221_Up1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709162051328_address.cs" />
-    <Compile Include="Migrations\201709162051328_address.Designer.cs">
-      <DependentUpon>201709162051328_address.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709162052235_removeAddress.cs" />
-    <Compile Include="Migrations\201709162052235_removeAddress.Designer.cs">
-      <DependentUpon>201709162052235_removeAddress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709170039536_Faculties.cs" />
-    <Compile Include="Migrations\201709170039536_Faculties.Designer.cs">
-      <DependentUpon>201709170039536_Faculties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\ConfigurationIdentity.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Startup.cs" />
@@ -278,26 +255,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709162044323_Initial.resx">
-      <DependentUpon>201709162044323_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709162045221_Up1.resx">
-      <DependentUpon>201709162045221_Up1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709162051328_address.resx">
-      <DependentUpon>201709162051328_address.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709162052235_removeAddress.resx">
-      <DependentUpon>201709162052235_removeAddress.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709170039536_Faculties.resx">
-      <DependentUpon>201709170039536_Faculties.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\StudentInfo.Data\StudentInfo.Data.csproj">
       <Project>{39a85bca-6bf0-4796-8c9d-004316095f6f}</Project>
       <Name>StudentInfo.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StudentInfo.Users\StudentInfo.Users.csproj">
+      <Project>{15bb1717-7224-48d9-9b30-fab987b6dc27}</Project>
+      <Name>StudentInfo.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

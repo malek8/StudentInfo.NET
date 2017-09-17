@@ -36,6 +36,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -47,33 +53,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201709170453293_initialCreate.cs" />
+    <Compile Include="Migrations\201709170453293_initialCreate.Designer.cs">
+      <DependentUpon>201709170453293_initialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709170458276_addingApplicationUser.cs" />
+    <Compile Include="Migrations\201709170458276_addingApplicationUser.Designer.cs">
+      <DependentUpon>201709170458276_addingApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709170501398_addingUserDetails.cs" />
+    <Compile Include="Migrations\201709170501398_addingUserDetails.Designer.cs">
+      <DependentUpon>201709170501398_addingUserDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709170503393_dropRelationship.cs" />
+    <Compile Include="Migrations\201709170503393_dropRelationship.Designer.cs">
+      <DependentUpon>201709170503393_dropRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709170509350_dropUserDetails.cs" />
+    <Compile Include="Migrations\201709170509350_dropUserDetails.Designer.cs">
+      <DependentUpon>201709170509350_dropUserDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
-    <Compile Include="StudentInfoMigrations\201709170056401_initialOne.cs" />
-    <Compile Include="StudentInfoMigrations\201709170056401_initialOne.Designer.cs">
-      <DependentUpon>201709170056401_initialOne.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInfoMigrations\201709170108192_updateSeed.cs" />
-    <Compile Include="StudentInfoMigrations\201709170108192_updateSeed.Designer.cs">
-      <DependentUpon>201709170108192_updateSeed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInfoMigrations\201709170119072_IDdatatype.cs" />
-    <Compile Include="StudentInfoMigrations\201709170119072_IDdatatype.Designer.cs">
-      <DependentUpon>201709170119072_IDdatatype.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInfoMigrations\201709170138069_facultyDepartmentNavigation.cs" />
-    <Compile Include="StudentInfoMigrations\201709170138069_facultyDepartmentNavigation.Designer.cs">
-      <DependentUpon>201709170138069_facultyDepartmentNavigation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInfoMigrations\201709170147557_changedMaxLength.cs" />
-    <Compile Include="StudentInfoMigrations\201709170147557_changedMaxLength.Designer.cs">
-      <DependentUpon>201709170147557_changedMaxLength.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInfoMigrations\201709170220053_StudyPrograms.cs" />
-    <Compile Include="StudentInfoMigrations\201709170220053_StudyPrograms.Designer.cs">
-      <DependentUpon>201709170220053_StudyPrograms.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StudentInfoMigrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StudentInfo.Enums\StudentInfo.Enums.csproj">
@@ -94,23 +96,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="StudentInfoMigrations\201709170056401_initialOne.resx">
-      <DependentUpon>201709170056401_initialOne.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709170453293_initialCreate.resx">
+      <DependentUpon>201709170453293_initialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentInfoMigrations\201709170108192_updateSeed.resx">
-      <DependentUpon>201709170108192_updateSeed.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709170458276_addingApplicationUser.resx">
+      <DependentUpon>201709170458276_addingApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentInfoMigrations\201709170119072_IDdatatype.resx">
-      <DependentUpon>201709170119072_IDdatatype.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709170501398_addingUserDetails.resx">
+      <DependentUpon>201709170501398_addingUserDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentInfoMigrations\201709170138069_facultyDepartmentNavigation.resx">
-      <DependentUpon>201709170138069_facultyDepartmentNavigation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709170503393_dropRelationship.resx">
+      <DependentUpon>201709170503393_dropRelationship.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentInfoMigrations\201709170147557_changedMaxLength.resx">
-      <DependentUpon>201709170147557_changedMaxLength.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StudentInfoMigrations\201709170220053_StudyPrograms.resx">
-      <DependentUpon>201709170220053_StudyPrograms.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709170509350_dropUserDetails.resx">
+      <DependentUpon>201709170509350_dropUserDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

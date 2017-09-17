@@ -9,6 +9,7 @@ using Microsoft.Owin;
 using Microsoft.AspNet.Identity.Owin;
 using StudentInfo.WebClient.Models;
 using StudentInfo.WebClient.App_Start;
+using StudentInfo.Users.Dto;
 
 namespace StudentInfo.WebClient
 {

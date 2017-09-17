@@ -1,4 +1,4 @@
-namespace StudentInfo.Data.StudentInfoMigrations
+namespace StudentInfo.Data.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -6,17 +6,31 @@ namespace StudentInfo.Data.StudentInfoMigrations
     using System.Linq;
     using System.Collections.Generic;
     using StudentInfo.Faculties;
+    using StudentInfo.Users.Dto;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<StudentInfoContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<StudentInfo.Data.StudentInfoContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"StudentInfoMigrations";
         }
 
-        protected override void Seed(StudentInfoContext context)
+        protected override void Seed(StudentInfo.Data.StudentInfoContext context)
         {
+            //context.Users.AddOrUpdate(
+            //  p => p.Email,
+            //  new ApplicationUser
+            //  {
+            //      Email = "malek.atwiz@hotmail.com",
+            //      UserName = "malek.atwiz@hotmail.com",
+            //      FirstName = "Malek",
+            //      LastName = "A",
+            //      PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
+            //      SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
+            //      EmailConfirmed = true
+            //  }
+            //);
+
             context.Faculties.AddOrUpdate(f =>
             f.Name,
             new Faculty
@@ -73,8 +87,6 @@ namespace StudentInfo.Data.StudentInfoMigrations
                     new Department{Id = Guid.NewGuid(), Name = "Supply Chain & Business Technology Management" }
                 }
             });
-
-            //context.SaveChanges();
         }
     }
 }

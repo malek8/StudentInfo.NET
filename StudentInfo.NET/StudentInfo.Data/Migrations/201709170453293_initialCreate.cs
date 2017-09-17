@@ -1,12 +1,48 @@
-namespace StudentInfo.WebClient.Migrations
+namespace StudentInfo.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initialCreate : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Departments",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 150),
+                        Faculty_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Faculties", t => t.Faculty_Id, cascadeDelete: true)
+                .Index(t => t.Faculty_Id);
+            
+            CreateTable(
+                "dbo.Faculties",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 150),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Programs",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 125),
+                        Level = c.Int(nullable: false),
+                        DegreeType = c.Int(nullable: false),
+                        StudyType = c.Int(nullable: false),
+                        Department_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Departments", t => t.Department_Id, cascadeDelete: true)
+                .Index(t => t.Department_Id);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -35,7 +71,6 @@ namespace StudentInfo.WebClient.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        UserType = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -84,17 +119,24 @@ namespace StudentInfo.WebClient.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Programs", "Department_Id", "dbo.Departments");
+            DropForeignKey("dbo.Departments", "Faculty_Id", "dbo.Faculties");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Programs", new[] { "Department_Id" });
+            DropIndex("dbo.Departments", new[] { "Faculty_Id" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Programs");
+            DropTable("dbo.Faculties");
+            DropTable("dbo.Departments");
         }
     }
 }
