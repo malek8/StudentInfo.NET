@@ -1,6 +1,5 @@
 namespace StudentInfo.WebClient.Migrations
 {
-    using StudentInfo.WebClient.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -10,24 +9,23 @@ namespace StudentInfo.WebClient.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(StudentInfo.WebClient.Models.ApplicationDbContext context)
         {
-            context.Users.AddOrUpdate(
-              p => p.Email,
-              new ApplicationUser
-              {
-                  Email = "malek.atwiz@hotmail.com",
-                  UserName = "malek.atwiz@hotmail.com",
-                  FirstName = "Malek",
-                  LastName = "A",
-                  PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
-                  SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
-                  EmailConfirmed = true
-              }
-            );
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
         }
     }
 }

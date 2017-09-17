@@ -202,7 +202,12 @@
     <Compile Include="Migrations\201709162052235_removeAddress.Designer.cs">
       <DependentUpon>201709162052235_removeAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709170039536_Faculties.cs" />
+    <Compile Include="Migrations\201709170039536_Faculties.Designer.cs">
+      <DependentUpon>201709170039536_Faculties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\ConfigurationIdentity.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -285,6 +290,15 @@
     <EmbeddedResource Include="Migrations\201709162052235_removeAddress.resx">
       <DependentUpon>201709162052235_removeAddress.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709170039536_Faculties.resx">
+      <DependentUpon>201709170039536_Faculties.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.Data\StudentInfo.Data.csproj">
+      <Project>{39a85bca-6bf0-4796-8c9d-004316095f6f}</Project>
+      <Name>StudentInfo.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
