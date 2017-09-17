@@ -7,10 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using StudentInfo.WebClient.App_Start;
 
 namespace StudentInfo.WebClient.Controllers
 {
+    [RequireHttps]
     [Authorize]
     public class AccountController : Controller
     {
@@ -39,6 +41,11 @@ namespace StudentInfo.WebClient.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         public AccountController()
@@ -73,7 +80,7 @@ namespace StudentInfo.WebClient.Controllers
             switch(result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return await CheckAccount(model.Email, returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -85,14 +92,14 @@ namespace StudentInfo.WebClient.Controllers
             }
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -107,14 +114,84 @@ namespace StudentInfo.WebClient.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    await SendConfirmationEmail(user.Id);
 
+                    // Redirect to Accounts management area.
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> RequestConfirmationEmail(string userId)
+        {
+            await SendConfirmationEmail(userId);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Login", "Account");
+        }
+
+        private async Task<ActionResult> CheckAccount(string email, string returnUrl)
+        {
+            var user = await UserManager.FindByEmailAsync(email);
+
+            if (user != null && user.EmailConfirmed)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("RequestConfirmationEmail", "Account", new { userId = user.Id});
+        }
+
+        private async Task SendConfirmationEmail(string userId)
+        {
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                new { userId = userId, code = code }, protocol: Request.Url.Scheme);
+
+            var messageBody = $@"Click on the following link to confirm your email address: <a href={callbackUrl}>Click Here</a>";
+            await UserManager.SendEmailAsync(userId, "Confirmation Email", messageBody);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+
+                if (_signInManager != null)
+                {
+                    _signInManager.Dispose();
+                    _signInManager = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         public ActionResult RedirectToLocal(string returnUrl)

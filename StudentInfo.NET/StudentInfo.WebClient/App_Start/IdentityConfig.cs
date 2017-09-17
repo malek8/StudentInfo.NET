@@ -9,6 +9,8 @@ using Microsoft.Owin.Security;
 using StudentInfo.WebClient.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace StudentInfo.WebClient.App_Start
 {
@@ -75,7 +77,7 @@ namespace StudentInfo.WebClient.App_Start
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create(""));
+                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("StudentInfo.NET ASP.NET Identity"));
             }
 
             return manager;
@@ -86,7 +88,15 @@ namespace StudentInfo.WebClient.App_Start
     {
         public Task SendAsync(IdentityMessage message)
         {
-            return Task.FromResult(0);
+            var gridMessage = new SendGridMessage();
+            gridMessage.SetFrom(new EmailAddress(Settings.ConfirmationEmailFrom, Settings.SystemName));
+            gridMessage.AddTo(message.Destination);
+            gridMessage.Subject = message.Subject;
+
+            gridMessage.AddContent(MimeType.Html, message.Body);
+
+            var gridClient = new SendGridClient(Settings.MailerKey);
+            return gridClient.SendEmailAsync(gridMessage);
         }
     }
 }
