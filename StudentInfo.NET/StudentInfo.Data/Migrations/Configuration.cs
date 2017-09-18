@@ -28,6 +28,16 @@ namespace StudentInfo.Data.Migrations
                   PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
                   SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
                   EmailConfirmed = true
+              },
+              new ApplicationUser
+              {
+                  Email = "bruce.wayne@batman.com",
+                  UserName = "bruce.wayne@batman.com",
+                  FirstName = "Bruce",
+                  LastName = "Wayne",
+                  PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
+                  SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
+                  EmailConfirmed = true
               }
             );
 

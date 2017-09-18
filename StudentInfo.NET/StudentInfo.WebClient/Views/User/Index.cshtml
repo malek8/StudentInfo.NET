@@ -1,37 +1,55 @@
 ﻿@model PagedList.IPagedList<StudentInfo.Users.Dto.ApplicationUser>
+@using PagedList.Mvc
+@using StudentInfo.Enums
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Users";
 }
 
 <h2>Users</h2>
 
-<tabel>
+<table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
+            First Name
+            <a class="glyphicon glyphicon-chevron-down" href="@Url.Action("Index", "User", new { sortBy = UserSearchConstants.FirstName, sortDirection = SearchConstants.Ascending, currentFilter = ViewBag.CurrentFilter })"></a>
+            <a class="glyphicon glyphicon-chevron-up" href="@Url.Action("Index", "User", new { sortBy = UserSearchConstants.FirstName, sortDirection = SearchConstants.Descending, currentFilter = ViewBag.CurrentFilter })"></a>
         </th>
         <th>
-            First Name
+            Middle Name
         </th>
+        <th>
+            Last Name
+            <a class="glyphicon glyphicon-chevron-down" href="@Url.Action("Index", "User", new { sortBy = UserSearchConstants.LastName, sortDirection = SearchConstants.Ascending, currentFilter = ViewBag.CurrentFilter })"></a>
+            <a class="glyphicon glyphicon-chevron-up" href="@Url.Action("Index", "User", new { sortBy = UserSearchConstants.LastName, sortDirection = SearchConstants.Descending, currentFilter = ViewBag.CurrentFilter })"></a>
+        </th>
+        <th></th>
     </tr>
-
     @foreach(var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)
+                @Html.DisplayFor(x => item.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.MiddleName)
+                @Html.DisplayFor(x => item.MiddleName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
+                @Html.DisplayFor(x => item.LastName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id}) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
         </tr>
     }
-</tabel>
+    <tr>
+
+    </tr>
+</table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
 

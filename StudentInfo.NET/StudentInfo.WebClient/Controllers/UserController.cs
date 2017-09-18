@@ -6,17 +6,15 @@ using System.Web.Mvc;
 using PagedList;
 using StudentInfo.Users.Dto;
 using StudentInfo.Data;
+using StudentInfo.Enums;
 
 namespace StudentInfo.WebClient.Controllers
 {
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortBy, string sortDirection, string currentFilter, string searchString, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
             if (searchString != null)
             {
                 page = 1;
@@ -38,13 +36,16 @@ namespace StudentInfo.WebClient.Controllers
                 x.FirstName.Contains(searchString));
             }
 
-            switch(sortOrder)
+            switch(sortBy)
             {
-                case "name_desc":
-                    users = users.OrderByDescending(x => x.LastName);
+                case UserSearchConstants.FirstName:
+                    if (sortDirection == SearchConstants.Ascending) users = users.OrderBy(x => x.FirstName);
+                    else users = users.OrderByDescending(x => x.FirstName);
                     break;
                 default:
-                    users = users.OrderBy(x => x.LastName);
+                case UserSearchConstants.LastName:
+                    if (sortDirection == SearchConstants.Ascending) users = users.OrderBy(x => x.LastName);
+                    else users = users.OrderByDescending(x => x.LastName);
                     break;
             }
             int pageSize = 3;
