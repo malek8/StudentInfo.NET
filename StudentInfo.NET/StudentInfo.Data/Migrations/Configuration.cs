@@ -5,18 +5,41 @@ namespace StudentInfo.Data.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Collections.Generic;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity;
     using StudentInfo.Users.Dto;
     using StudentInfo.Faculties;
+    using StudentInfo.Enums;
+    using StudentInfo.Data.UserDbContext;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<StudentInfo.Data.StudentInfoContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<StudentInfoContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(StudentInfo.Data.StudentInfoContext context)
+        protected override void Seed(StudentInfoContext context)
         {
+            CreateUserRoles(context);
+            CreateUserAccounts(context);
+            CreateFaculties(context);
+        }
+
+        private void CreateUserRoles(StudentInfoContext context)
+        {
+            context.Roles.AddOrUpdate(r => r.Name,
+                new IdentityRole { Name = SystemRoles.Administrator },
+                new IdentityRole { Name = SystemRoles.Student },
+                new IdentityRole { Name = SystemRoles.Instructor },
+                new IdentityRole { Name = SystemRoles.FacultyMember },
+                new IdentityRole { Name = SystemRoles.Advisor });
+        }
+
+        private void CreateUserAccounts(StudentInfoContext context)
+        {
+            var hashedPassword = new PasswordHasher().HashPassword("Playit@Playit2");
+
             context.Users.AddOrUpdate(
               p => p.Email,
               new ApplicationUser
@@ -25,8 +48,8 @@ namespace StudentInfo.Data.Migrations
                   UserName = "malek.atwiz@hotmail.com",
                   FirstName = "Malek",
                   LastName = "A",
-                  PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
-                  SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
+                  PasswordHash = hashedPassword,
+                  SecurityStamp = Guid.NewGuid().ToString(),
                   EmailConfirmed = true
               },
               new ApplicationUser
@@ -35,12 +58,25 @@ namespace StudentInfo.Data.Migrations
                   UserName = "bruce.wayne@batman.com",
                   FirstName = "Bruce",
                   LastName = "Wayne",
-                  PasswordHash = "AJcag5W34+9EsdoD8LVANbNFlmBRzN7UYQK/w53BShVLO1VXd+jkNbvJCye/PYUqtQ==",
-                  SecurityStamp = "820248a4-8273-4cf2-9aa8-80662168c6ea",
+                  PasswordHash = hashedPassword,
+                  SecurityStamp = Guid.NewGuid().ToString(),
                   EmailConfirmed = true
               }
             );
+        }
 
+        private void AssignUserRoles()
+        {
+            var context = UserDbContext.Create();
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var user = userManager.FindByEmail("malek.atwiz@hotmail.com");
+            userManager.AddToRole(user.Id, SystemRoles.Administrator);
+        }
+
+        private void CreateFaculties(StudentInfoContext context)
+        {
             context.Faculties.AddOrUpdate(f =>
             f.Name,
             new Faculty

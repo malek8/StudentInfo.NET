@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomSeed.cs" />
     <Compile Include="Migrations\201709172211220_initialRun.cs" />
     <Compile Include="Migrations\201709172211220_initialRun.Designer.cs">
       <DependentUpon>201709172211220_initialRun.cs</DependentUpon>
@@ -70,6 +71,10 @@
     <Compile Include="StudentInfoContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.Data.UserDbContext\StudentInfo.Data.UserDbContext.csproj">
+      <Project>{83f6f84e-e09a-48de-b49d-9ee66bbbb242}</Project>
+      <Name>StudentInfo.Data.UserDbContext</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Enums\StudentInfo.Enums.csproj">
       <Project>{b6a408cc-9c4c-4dc2-86b5-bb8102d9e07d}</Project>
       <Name>StudentInfo.Enums</Name>

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using StudentInfo.WebClient.Models;
 using StudentInfo.WebClient.App_Start;
 using StudentInfo.Users.Dto;
+using StudentInfo.Data.UserDbContext;
 
 namespace StudentInfo.WebClient
 {
@@ -17,7 +18,7 @@ namespace StudentInfo.WebClient
     {
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(UserDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 

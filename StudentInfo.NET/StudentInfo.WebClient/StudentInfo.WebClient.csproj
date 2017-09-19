@@ -209,7 +209,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
@@ -286,6 +285,10 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.Data.UserDbContext\StudentInfo.Data.UserDbContext.csproj">
+      <Project>{83f6f84e-e09a-48de-b49d-9ee66bbbb242}</Project>
+      <Name>StudentInfo.Data.UserDbContext</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Data\StudentInfo.Data.csproj">
       <Project>{39a85bca-6bf0-4796-8c9d-004316095f6f}</Project>
       <Name>StudentInfo.Data</Name>

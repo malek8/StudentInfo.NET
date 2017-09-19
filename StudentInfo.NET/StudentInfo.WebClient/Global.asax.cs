@@ -16,6 +16,8 @@ namespace StudentInfo.WebClient
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Data.CustomSeed.AssignUserRoles();
         }
     }
 }

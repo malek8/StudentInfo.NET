@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using StudentInfo.Users.Dto;
+using StudentInfo.Data.UserDbContext;
 
 namespace StudentInfo.WebClient.App_Start
 {
@@ -39,8 +40,7 @@ namespace StudentInfo.WebClient.App_Start
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            // Need DbContext
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<UserDbContext>()));
 
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
