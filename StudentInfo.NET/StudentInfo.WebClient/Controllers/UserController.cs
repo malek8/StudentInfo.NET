@@ -10,9 +10,10 @@ using StudentInfo.Enums;
 
 namespace StudentInfo.WebClient.Controllers
 {
+    [RequireHttps]
+    [Authorize(Roles =SystemRoles.Administrator)]
     public class UserController : Controller
     {
-        // GET: User
         public ActionResult Index(string sortBy, string sortDirection, string currentFilter, string searchString, int? page)
         {
             if (searchString != null)

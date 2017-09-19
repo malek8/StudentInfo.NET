@@ -21,6 +21,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if(User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
+                    {
+                        <li>@Html.ActionLink("Users", "Index", "User")</li>
+                    }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>

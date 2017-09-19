@@ -202,6 +202,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StartupAuth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -274,6 +275,7 @@
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\RequestConfirmationEmail.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Faculty\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -296,6 +298,10 @@
     <ProjectReference Include="..\StudentInfo.Enums\StudentInfo.Enums.csproj">
       <Project>{b6a408cc-9c4c-4dc2-86b5-bb8102d9e07d}</Project>
       <Name>StudentInfo.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StudentInfo.Faculties\StudentInfo.Faculties.csproj">
+      <Project>{0f234ca0-944a-40aa-8e3e-b175c1b5986c}</Project>
+      <Name>StudentInfo.Faculties</Name>
     </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Users\StudentInfo.Users.csproj">
       <Project>{15bb1717-7224-48d9-9b30-fab987b6dc27}</Project>
