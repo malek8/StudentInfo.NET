@@ -10,7 +10,6 @@ namespace StudentInfo.Data.Migrations
     using StudentInfo.Users.Dto;
     using StudentInfo.Faculties;
     using StudentInfo.Enums;
-    using StudentInfo.Data.UserDbContext;
 
     internal sealed class Configuration : DbMigrationsConfiguration<StudentInfoContext>
     {
@@ -63,16 +62,6 @@ namespace StudentInfo.Data.Migrations
                   EmailConfirmed = true
               }
             );
-        }
-
-        private void AssignUserRoles()
-        {
-            var context = UserDbContext.Create();
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-
-            var user = userManager.FindByEmail("malek.atwiz@hotmail.com");
-            userManager.AddToRole(user.Id, SystemRoles.Administrator);
         }
 
         private void CreateFaculties(StudentInfoContext context)
