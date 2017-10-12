@@ -26,7 +26,7 @@ namespace StudentInfo.Data.Migrations
                         FirstName = c.String(),
                         MiddleName = c.String(),
                         LastName = c.String(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
+                        Discriminator = c.String(nullable: true, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");

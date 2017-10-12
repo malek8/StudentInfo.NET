@@ -1,4 +1,5 @@
 ﻿@model StudentInfo.WebClient.Models.RegisterViewModel
+    @using StudentInfo.Enums
 @{
     ViewBag.Title = "Register";
 }
@@ -10,7 +11,63 @@
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.Role, new List<SelectListItem>
+       {
+           new SelectListItem()
+           {
+               Selected = true,
+               Text = SystemRoles.Student,
+               Value = SystemRoles.Student
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.Instructor,
+               Value = SystemRoles.Instructor
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.FacultyMember,
+               Value = SystemRoles.FacultyMember
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.Advisor,
+               Value = SystemRoles.Advisor
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.Administrator,
+               Value = SystemRoles.Administrator
+           }
+       }, new { @class = "form-control"})
+        </div>
+    </div>
     @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

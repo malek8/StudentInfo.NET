@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201709172218138_AddressRelationship.Designer.cs">
       <DependentUpon>201709172218138_AddressRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710120058343_removeUserDetails.cs" />
+    <Compile Include="Migrations\201710120058343_removeUserDetails.Designer.cs">
+      <DependentUpon>201710120058343_removeUserDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -101,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709172218138_AddressRelationship.resx">
       <DependentUpon>201709172218138_AddressRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710120058343_removeUserDetails.resx">
+      <DependentUpon>201710120058343_removeUserDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
