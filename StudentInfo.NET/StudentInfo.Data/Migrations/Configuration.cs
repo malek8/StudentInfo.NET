@@ -20,6 +20,10 @@ namespace StudentInfo.Data.Migrations
 
         protected override void Seed(StudentInfoContext context)
         {
+            //if (!System.Diagnostics.Debugger.IsAttached)
+            //{
+            //    System.Diagnostics.Debugger.Launch();
+            //}
             CreateUserRoles(context);
             CreateUserAccounts(context);
             CreateFaculties(context);
@@ -99,7 +103,83 @@ namespace StudentInfo.Data.Migrations
                         new Program{Id = Guid.NewGuid(), Name = "Master of Engineering, Software Engineering (MEng)", Level = Enums.ProgramLevel.Graduate, DegreeType = Enums.DegreeType.Master, StudyType = Enums.ProgramStudyType.CourseBased },
                         new Program{Id = Guid.NewGuid(), Name = "Master in Applied Computer Science (MApCompSc)", Level = Enums.ProgramLevel.Graduate, DegreeType = Enums.DegreeType.Master, StudyType = Enums.ProgramStudyType.CourseBased },
                         new Program{Id = Guid.NewGuid(), Name = "Graduate diploma in Computer Science (GrDip)", Level = Enums.ProgramLevel.Graduate, DegreeType = Enums.DegreeType.GraduateDiploma, StudyType = Enums.ProgramStudyType.CourseBased }
-                    } },
+                    },
+                    Courses = new List<Course>
+                    {
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "COMP 691",
+                            Name = "TOPICS/COMPUTER SCIENCE",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "COMP 5261",
+                            Name = "COMPUTER ARCHITECTURE",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "COMP 6231",
+                            Name = "DISTRIBUTED SYSTEM DESIGN",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "COMP 6281",
+                            Name = "PARALLEL PROGRAMMING",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "SOEN 691",
+                            Name = "TOPICS/SOFTWARE ENGINEERING",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "SOEN 6431",
+                            Name = "SOFT. COMP.& MAINTENANCE",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "SOEN 6441",
+                            Name = "ADV. PROG. PRACTICES",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "SOEN 6841",
+                            Name = "SOFTWARE PROJECT MANAGEMENT",
+                            NumberOfCredits = 4,
+                            Level = ProgramLevel.Graduate
+                        },
+                        new Course()
+                        {
+                            Id = Guid.NewGuid(),
+                            Code = "COMP 6961",
+                            Name = "GRADUATE SEMINAR-COMP.SC.",
+                            NumberOfCredits = 1,
+                            Level = ProgramLevel.Graduate
+                        }
+                    }},
                     new Department{Id = Guid.NewGuid(), Name = "Concordia Institute for Information Systems Engineering (CIISE)" },
                     new Department{Id = Guid.NewGuid(), Name = "Concordia Institute for Aerospace Design and Innovation" }
                 }
@@ -113,7 +193,7 @@ namespace StudentInfo.Data.Migrations
             {
                 Id = Guid.NewGuid(),
                 Name = "John Molson School of Business",
-                Departments = new List<Faculties.Department>
+                Departments = new List<Department>
                 {
                     new Department{Id = Guid.NewGuid(), Name = "Accountancy" },
                     new Department{Id = Guid.NewGuid(), Name = "Finance" },
@@ -122,6 +202,15 @@ namespace StudentInfo.Data.Migrations
                     new Department{Id = Guid.NewGuid(), Name = "Supply Chain & Business Technology Management" }
                 }
             });
+
+            //try
+            //{
+            //    context.SaveChanges();
+            //}
+            //catch(Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
         }
     }
 }

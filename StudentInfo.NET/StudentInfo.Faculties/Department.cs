@@ -20,5 +20,7 @@ namespace StudentInfo.Faculties
         public Faculty Faculty { get; set; }
 
         public ICollection<Program> Programs { get; set; }
+
+        public ICollection<Course> Courses { get; set; }
     }
 }

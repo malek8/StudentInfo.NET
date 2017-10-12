@@ -44,7 +44,7 @@ namespace StudentInfo.WebClient.Controllers
                 faculties = faculties.OrderByDescending(x => x.Name);
             }
 
-            int pageSize = 3;
+            int pageSize = 6;
             int pageNumber = (page ?? 1);
             return View(faculties.ToPagedList(pageNumber, pageSize));
         }

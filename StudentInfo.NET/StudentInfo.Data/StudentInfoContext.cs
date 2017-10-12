@@ -30,5 +30,6 @@ namespace StudentInfo.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<Course> Courses { get; set; }
     }
 }

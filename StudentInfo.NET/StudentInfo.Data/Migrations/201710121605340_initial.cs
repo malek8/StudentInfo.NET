@@ -3,10 +3,24 @@ namespace StudentInfo.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialRun : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Addresses",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        AddressLine1 = c.String(),
+                        AddressLine2 = c.String(),
+                        City = c.String(maxLength: 50),
+                        Province = c.String(maxLength: 30),
+                        PostalCode = c.String(maxLength: 6),
+                        Country = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id);
+            
             CreateTable(
                 "dbo.AspNetUsers",
                 c => new
@@ -104,7 +118,23 @@ namespace StudentInfo.Data.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Departments", t => t.Department_Id)
                 .Index(t => t.Department_Id);
-            
+
+            CreateTable(
+                "dbo.Courses",
+                c => new
+                {
+                    Id = c.Guid(nullable: false),
+                    Name = c.String(nullable: false, maxLength: 150),
+                    Code = c.String(nullable: false, maxLength: 12),
+                    Description = c.String(maxLength: 500),
+                    NumberOfCredits = c.Int(nullable: false),
+                    Level = c.Int(nullable: false),
+                    Department_Id = c.Guid(),
+                })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Departments", t => t.Department_Id)
+                .Index(t => t.Department_Id);
+
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -123,8 +153,17 @@ namespace StudentInfo.Data.Migrations
                         WorkPhone = c.String(maxLength: 25),
                         HomePhone = c.String(maxLength: 25),
                         CellPhone = c.String(maxLength: 25),
+                        ApplicationUser_Id = c.String(maxLength: 128),
+                        HomeAddress_Id = c.Guid(),
+                        MailAddress_Id = c.Guid(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
+                .ForeignKey("dbo.Addresses", t => t.HomeAddress_Id)
+                .ForeignKey("dbo.Addresses", t => t.MailAddress_Id)
+                .Index(t => t.ApplicationUser_Id)
+                .Index(t => t.HomeAddress_Id)
+                .Index(t => t.MailAddress_Id);
             
         }
         
@@ -133,12 +172,20 @@ namespace StudentInfo.Data.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.UserDetails", "MailAddress_Id", "dbo.Addresses");
+            DropForeignKey("dbo.UserDetails", "HomeAddress_Id", "dbo.Addresses");
+            DropForeignKey("dbo.UserDetails", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Programs", "Department_Id", "dbo.Departments");
             DropForeignKey("dbo.Departments", "Faculty_Id", "dbo.Faculties");
+            DropForeignKey("dbo.Courses", "Department_Id", "dbo.Departments");
+            DropIndex("dbo.UserDetails", new[] { "MailAddress_Id" });
+            DropIndex("dbo.UserDetails", new[] { "HomeAddress_Id" });
+            DropIndex("dbo.UserDetails", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Programs", new[] { "Department_Id" });
             DropIndex("dbo.Departments", new[] { "Faculty_Id" });
+            DropIndex("dbo.Courses", new[] { "Department_Id" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -149,10 +196,12 @@ namespace StudentInfo.Data.Migrations
             DropTable("dbo.Programs");
             DropTable("dbo.Faculties");
             DropTable("dbo.Departments");
+            DropTable("dbo.Courses");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Addresses");
         }
     }
 }

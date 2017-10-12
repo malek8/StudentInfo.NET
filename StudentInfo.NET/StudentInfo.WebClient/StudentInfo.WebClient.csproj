@@ -20,9 +20,9 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44319</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -202,8 +202,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StartupAuth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentCenterController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -276,9 +278,11 @@
     <Content Include="Views\Account\RequestConfirmationEmail.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Faculty\Index.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\StudentCenter\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
