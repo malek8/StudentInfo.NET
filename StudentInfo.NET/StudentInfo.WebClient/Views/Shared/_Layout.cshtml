@@ -6,6 +6,9 @@
     <title>@ViewBag.Title - StudentInfo.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,7 +27,7 @@
                     @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                     {
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">User
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Search", "Index", "User")</li>
@@ -32,6 +35,19 @@
                             </ul>
                         </li>
                     }
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Courses
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Search", "Index", "Course")</li>
+                            @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+                            {
+                                
+                            }
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
@@ -46,8 +62,6 @@
             <p>&copy; @DateTime.Now.Year - StudentInfo.NET</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

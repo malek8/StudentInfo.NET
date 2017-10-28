@@ -1,35 +1,67 @@
 ﻿@model PagedList.IPagedList<StudentInfo.Faculties.Course>
 @using PagedList.Mvc
-@using StudentInfo.Enums
 @{
     ViewBag.Title = "Courses";
 }
+<script type="text/javascript">
+    $(function () {
+        $("#courseDetailsDialog").dialog({
+            autoOpen: false,
+            draggable: false,
+            resizable: false,
+            closeOnEscape: false,
+            modal: true,
+            buttons: [
+                {
+                    text: "Ok",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
+        });
+    });
+
+    function getCourseDetails(courseId) {
+        $("#courseDetailsDialog").load('/Course/Details?id=' + courseId);
+    }
+</script>
 
 <h2>Courses</h2>
-
 <table class="table">
     <tr>
-        <th>
-            Name
-        </th>
+        <th>Code</th>
+        <th>Name</th>
         <th></th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>
+                @Html.DisplayFor(x => item.Code)
+            </td>
+            <td>
                 @Html.DisplayFor(x => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                <button id="@item.Id" class="btn btn-primary" onclick='getCourseDetails("@item.Id"); $("#courseDetailsDialog").dialog("open");'>Details</button>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
             </td>
         </tr>
     }
     <tr></tr>
 </table>
 <br />
+<div id="courseDetailsDialog" title="Course Details" hidden="hidden"></div>
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+
+
+

@@ -13,7 +13,5 @@ namespace StudentInfo.WebClient.Controllers
         {
             return View();
         }
-
-
     }
 }
