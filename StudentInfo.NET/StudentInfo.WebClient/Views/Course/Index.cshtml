@@ -4,31 +4,11 @@
     ViewBag.Title = "Courses";
 }
 <script type="text/javascript">
-    $(function () {
-        $("#courseDetailsDialog").dialog({
-            autoOpen: false,
-            draggable: false,
-            resizable: false,
-            closeOnEscape: false,
-            modal: true,
-            buttons: [
-                {
-                    text: "Ok",
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                },
-                {
-                    text: "Cancel",
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                }]
-        });
-    });
-
-    function getCourseDetails(courseId) {
-        $("#courseDetailsDialog").load('/Course/Details?id=' + courseId);
+    function loadCourseDetails(courseId) {
+        $.get('/Course/Details?id=' + courseId, function (data) {
+            $('#courseDetailsModalBody').html(data);
+            $('#courseDetailsModal').modal('show');
+        })
     }
 </script>
 
@@ -49,7 +29,7 @@
                 @Html.DisplayFor(x => item.Name)
             </td>
             <td>
-                <button id="@item.Id" class="btn btn-primary" onclick='getCourseDetails("@item.Id"); $("#courseDetailsDialog").dialog("open");'>Details</button>
+                <button id="@item.Id" class="btn btn-default" onclick='loadCourseDetails("@item.Id");'>Details</button>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
             </td>
         </tr>
@@ -57,7 +37,14 @@
     <tr></tr>
 </table>
 <br />
-<div id="courseDetailsDialog" title="Course Details" hidden="hidden"></div>
+
+<div id="courseDetailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseDetailsModalBody" class="modal-content">
+            
+        </div>
+    </div>
+</div>
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 

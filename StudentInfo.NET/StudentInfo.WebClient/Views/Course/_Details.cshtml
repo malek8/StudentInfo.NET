@@ -1,3 +1,11 @@
 ﻿@model StudentInfo.Faculties.Course
 
-<h2>@Model.Name - @Model.Code</h2>
+<div class="modal-header">
+    <h4 class="modal-title">@Model.Code - @Model.Name</h4>
+</div>
+<div class="modal-body">
+    <p>Course description.</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
