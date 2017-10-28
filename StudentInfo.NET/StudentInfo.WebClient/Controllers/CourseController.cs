@@ -51,5 +51,12 @@ namespace StudentInfo.WebClient.Controllers
 
             return PartialView("_Details", courseDetails);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult AddToCart(Guid id)
+        //{
+
+        //}
     }
 }

@@ -58,6 +58,10 @@
     <Compile Include="Migrations\201710121605340_initial.Designer.cs">
       <DependentUpon>201710121605340_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710282243510_studentCourse.cs" />
+    <Compile Include="Migrations\201710282243510_studentCourse.Designer.cs">
+      <DependentUpon>201710282243510_studentCourse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -71,10 +75,6 @@
       <Project>{b6a408cc-9c4c-4dc2-86b5-bb8102d9e07d}</Project>
       <Name>StudentInfo.Enums</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StudentInfo.Faculties\StudentInfo.Faculties.csproj">
-      <Project>{0f234ca0-944a-40aa-8e3e-b175c1b5986c}</Project>
-      <Name>StudentInfo.Faculties</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Users\StudentInfo.Users.csproj">
       <Project>{15bb1717-7224-48d9-9b30-fab987b6dc27}</Project>
       <Name>StudentInfo.Users</Name>
@@ -87,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710121605340_initial.resx">
       <DependentUpon>201710121605340_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710282243510_studentCourse.resx">
+      <DependentUpon>201710282243510_studentCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

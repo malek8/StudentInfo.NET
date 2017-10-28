@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StudentInfo.Faculties;
 using StudentInfo.Users.Dto;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -31,5 +30,6 @@ namespace StudentInfo.Data
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<StudentCourse> StudentCourses { get; set; }
     }
 }

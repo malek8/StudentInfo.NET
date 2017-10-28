@@ -349,10 +349,6 @@
       <Project>{b6a408cc-9c4c-4dc2-86b5-bb8102d9e07d}</Project>
       <Name>StudentInfo.Enums</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StudentInfo.Faculties\StudentInfo.Faculties.csproj">
-      <Project>{0f234ca0-944a-40aa-8e3e-b175c1b5986c}</Project>
-      <Name>StudentInfo.Faculties</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Users\StudentInfo.Users.csproj">
       <Project>{15bb1717-7224-48d9-9b30-fab987b6dc27}</Project>
       <Name>StudentInfo.Users</Name>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentInfo.Users", "StudentInfo.Users\StudentInfo.Users.csproj", "{15BB1717-7224-48D9-9B30-FAB987B6DC27}"
 EndProject
@@ -18,8 +18,6 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "StudentInfo.Database", "StudentInfo.Database\StudentInfo.Database.sqlproj", "{5EF27A05-5A91-4907-A73D-7E5EE4797F9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentInfo.Enums", "StudentInfo.Enums\StudentInfo.Enums.csproj", "{B6A408CC-9C4C-4DC2-86B5-BB8102D9E07D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentInfo.Faculties", "StudentInfo.Faculties\StudentInfo.Faculties.csproj", "{0F234CA0-944A-40AA-8E3E-B175C1B5986C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentInfo.Data", "StudentInfo.Data\StudentInfo.Data.csproj", "{39A85BCA-6BF0-4796-8C9D-004316095F6F}"
 EndProject
@@ -61,10 +59,6 @@ Global
 		{B6A408CC-9C4C-4DC2-86B5-BB8102D9E07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6A408CC-9C4C-4DC2-86B5-BB8102D9E07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6A408CC-9C4C-4DC2-86B5-BB8102D9E07D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F234CA0-944A-40AA-8E3E-B175C1B5986C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F234CA0-944A-40AA-8E3E-B175C1B5986C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F234CA0-944A-40AA-8E3E-B175C1B5986C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F234CA0-944A-40AA-8E3E-B175C1B5986C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39A85BCA-6BF0-4796-8C9D-004316095F6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39A85BCA-6BF0-4796-8C9D-004316095F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39A85BCA-6BF0-4796-8C9D-004316095F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU

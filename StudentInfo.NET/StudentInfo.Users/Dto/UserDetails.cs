@@ -26,5 +26,6 @@ namespace StudentInfo.Users.Dto
 
         public Address MailAddress { get; set; }
         public Address HomeAddress { get; set; }
+        public IEnumerable<StudentCourse> StudentCourse { get; set; }
     }
 }

@@ -32,4 +32,22 @@ namespace StudentInfo.Enums
         CourseBased = 1,
         ThesisBased = 2,
     }
+
+    public enum Term
+    {
+        Fall = 1,
+        Winter = 2,
+        Summer1 = 3,
+        Summer2 = 4
+    }
+
+    public enum CourseRegistrationState
+    {
+        Added = 1,
+        Enrolled = 2,
+        Waiting = 3,
+        Dropped = 4,
+        Pass = 5,
+        Fail = 6
+    }
 }

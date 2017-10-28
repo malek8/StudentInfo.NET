@@ -8,7 +8,6 @@ namespace StudentInfo.Data.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity;
     using StudentInfo.Users.Dto;
-    using StudentInfo.Faculties;
     using StudentInfo.Enums;
 
     internal sealed class Configuration : DbMigrationsConfiguration<StudentInfoContext>

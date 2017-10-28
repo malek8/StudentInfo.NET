@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<StudentInfo.Faculties.Course>
+﻿@model PagedList.IPagedList<StudentInfo.Users.Dto.Course>
 @using PagedList.Mvc
 @{
     ViewBag.Title = "Courses";
@@ -29,8 +29,16 @@
                 @Html.DisplayFor(x => item.Name)
             </td>
             <td>
-                <button id="@item.Id" class="btn btn-default" onclick='loadCourseDetails("@item.Id");'>Details</button>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
+                {
+                    <button class="btn btn-primary">Edit</button>
+                }
+                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id");'>
+                    <span class="glyphicon glyphicon-plus"></span> Add
+                </button>
+                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id");'>
+                    <span class="glyphicon glyphicon-file"></span> Details
+                </button>
             </td>
         </tr>
     }
@@ -42,6 +50,14 @@
     <div class="modal-dialog">
         <div id="courseDetailsModalBody" class="modal-content">
             
+        </div>
+    </div>
+</div>
+
+<div id="courseEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseEditModalBody" class="modal-content">
+
         </div>
     </div>
 </div>
