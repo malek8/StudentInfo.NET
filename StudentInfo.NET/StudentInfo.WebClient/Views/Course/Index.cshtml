@@ -8,30 +8,8 @@
         $.get('/Course/Details?id=' + courseId + '&allowEdit=' + allowEdit, function (data) {
             $('#courseDetailsModalBody').html(data);
             $('#courseDetailsModal').modal('show');
-            //bindForm($('#courseDetailsModal'));
         })
     }
-
-    //function bindForm(dialog) {
-    //    $('form', dialog).submit(function () {
-    //        $.ajax({
-    //            url: this.action,
-    //            type: this.method,
-    //            data: $(this).serialize(),
-    //            success: function (result) {
-    //                if (result.success) {
-    //                    showValidationIssues(false);
-    //                    $('#courseDetailsModal').modal('hide');
-    //                    alert('Saved');
-    //                }
-    //                else {
-    //                    fillValidationErrors(result);
-    //                    showValidationIssues(true);
-    //                }
-    //            }
-    //        })
-    //    })
-    //}
 
     function showValidationIssues(isShown) {
         if (isShown) {
