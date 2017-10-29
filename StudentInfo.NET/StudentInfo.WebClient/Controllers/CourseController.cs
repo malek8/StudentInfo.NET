@@ -141,5 +141,27 @@ namespace StudentInfo.WebClient.Controllers
             }
             return Json(errors);
         }
+
+        [HttpGet]
+        public ActionResult Enroll()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetDepartments(Guid facultyId)
+        {
+            var db = new StudentInfoContext();
+
+            var departments = db.Departments.AsQueryable();
+
+            if (facultyId != null)
+            {
+                departments = departments.Where(x => x.Faculty.Id == facultyId);
+            }
+
+            return Json(departments.Select(x => new { text = x.Name, value = x.Id }),
+                JsonRequestBehavior.AllowGet);
+        }
     }
 }

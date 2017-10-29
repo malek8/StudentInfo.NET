@@ -1,0 +1,58 @@
+﻿@model StudentInfo.WebClient.Models.CourseSearchModel
+@using StudentInfo.WebClient.Helpers
+
+<script type="text/javascript">
+    function updateDepartments() {
+        $("#departmentSelector").empty();
+        getDepartments($('#facultySelector').val());
+    }
+
+    function getDepartments(facultyId) {
+        var url = '/Course/GetDepartments';
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: { facultyId },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $('#departmentSelector').append('<option value = "' + data[i].value + '">' + data[i].text + '</option>');
+                }
+            }
+        });
+    }
+</script>
+
+<div class="well">
+    <p><h4>Course Search</h4></p>
+    <div class="form-horizontal" role="form">
+        @using (Ajax.BeginForm("Search", new AjaxOptions() { }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(x => x.Keyword, new { @class = "control-label" })
+                <div>
+                    @Html.TextBoxFor(x => x.Keyword, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.FacultyId, new { @class = "control-label" })
+                <div>
+                    @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(),
+                   new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.DepartmentId, new { @class = "control-label" })
+                <div>
+                    @Html.DropDownListFor(x => x.DepartmentId, FieldInputHelpers.GetSchoolDepartments(), 
+                   new { id = "departmentSelector", @class = "form-control" })
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        }
+    </div>
+    </div>

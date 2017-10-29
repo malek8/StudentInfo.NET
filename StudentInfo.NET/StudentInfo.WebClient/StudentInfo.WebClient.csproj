@@ -212,8 +212,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthorizeRolesAttribute.cs" />
+    <Compile Include="Helpers\FieldInputHelpers.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CourseEnrollModel.cs" />
+    <Compile Include="Models\CourseSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
@@ -330,6 +332,8 @@
     <Content Include="Views\Shared\_StudentMenu.cshtml" />
     <Content Include="Views\Course\_Details.cshtml" />
     <Content Include="Views\Course\_EditDetails.cshtml" />
+    <Content Include="Views\Course\Enroll.cshtml" />
+    <Content Include="Views\Course\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
