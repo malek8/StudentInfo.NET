@@ -118,6 +118,19 @@ namespace StudentInfo.WebClient.Controllers
         {
             if (ModelState.IsValid)
             {
+                var db = new StudentInfoContext();
+
+                var courseToUpdate = db.Courses.FirstOrDefault(x => x.Id == course.Id);
+
+                if (courseToUpdate != null)
+                {
+
+                    courseToUpdate.Name = course.Name;
+                    courseToUpdate.Description = course.Description;
+                    courseToUpdate.NumberOfCredits = course.NumberOfCredits;
+                    courseToUpdate.Level = course.Level;
+                    db.SaveChanges();
+                }
                 return Json(new { success = true });
             }
 

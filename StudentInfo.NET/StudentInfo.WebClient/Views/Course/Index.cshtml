@@ -56,19 +56,13 @@
         $("#errors").html(errorsList);
     }
 
-    function  OnSuccess(data){
-        alert('maybe');
-    }
-
-    function saveChanges(data) {
+    function processResult(data) {
         if (data.success) {
-            alert("yes");
             showValidationIssues(false);
             $('#courseDetailsModal').modal('hide');
         }
         else {
-            alert("no");
-            fillValidationErrors(result);
+            fillValidationErrors(data);
             showValidationIssues(true);
         }
     }
@@ -93,12 +87,14 @@
             <td>
                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                 {
-                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", true)'>Edit</button>
+                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", true)'>
+                <span class="glyphicon glyphicon-pencil"></span> Edit
+                    </button>
                 }
-                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false);'>
+                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false)'>
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </button>
-                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false);'>
+                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false)'>
                     <span class="glyphicon glyphicon-file"></span> Details
                 </button>
             </td>
