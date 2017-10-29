@@ -327,6 +327,7 @@
     <Content Include="Views\StudentCenter\Index.cshtml" />
     <Content Include="Views\Shared\_StudentMenu.cshtml" />
     <Content Include="Views\Course\_Details.cshtml" />
+    <Content Include="Views\Course\_EditDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -27,11 +27,13 @@ namespace StudentInfo.Users.Dto
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Credits")]
         public int NumberOfCredits { get; set; }
 
+        [Display(Name = "Level")]
         public ProgramLevel Level { get; set; }
 
-        public Department Department { get; set; }
+        public virtual Department Department { get; set; }
 
     }
 }

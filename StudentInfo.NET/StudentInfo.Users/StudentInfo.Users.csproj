@@ -55,10 +55,12 @@
   <ItemGroup>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Dto\ApplicationUser.cs" />
+    <Compile Include="Dto\Classroom.cs" />
     <Compile Include="Dto\Course.cs" />
     <Compile Include="Dto\Department.cs" />
     <Compile Include="Dto\Faculty.cs" />
     <Compile Include="Dto\Program.cs" />
+    <Compile Include="Dto\SemesterCourse.cs" />
     <Compile Include="Dto\StudentCourse.cs" />
     <Compile Include="Dto\UserDetails.cs" />
     <Compile Include="IUserService.cs" />

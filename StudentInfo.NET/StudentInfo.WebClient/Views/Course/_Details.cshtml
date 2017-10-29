@@ -1,10 +1,15 @@
-﻿@model StudentInfo.Faculties.Course
+﻿@model StudentInfo.Users.Dto.Course
 
 <div class="modal-header">
     <h4 class="modal-title">@Model.Code - @Model.Name</h4>
 </div>
 <div class="modal-body">
-    <p>Course description.</p>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Model.Department?.Faculty?.Name</li>
+        <li class="breadcrumb-item">@Model.Department?.Name</li>
+    </ol>
+    <p>Course Description:</p>
+    <p class="text-info">@Model.Description</p>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

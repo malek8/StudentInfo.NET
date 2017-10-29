@@ -17,10 +17,10 @@ namespace StudentInfo.Users.Dto
         [MaxLength(150)]
         public string Name { get; set; }
 
-        public Faculty Faculty { get; set; }
+        public virtual Faculty Faculty { get; set; }
 
-        public ICollection<Program> Programs { get; set; }
+        public virtual ICollection<Program> Programs { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

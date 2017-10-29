@@ -1,0 +1,62 @@
+﻿@model StudentInfo.Users.Dto.Course
+
+<div class="modal-header">
+    <h4 class="modal-title">@Model.Code - @Model.Name</h4>
+</div>
+<div class="modal-body">
+    <div>
+        @using (Ajax.BeginForm("Edit", new AjaxOptions() { HttpMethod = "Post", }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div id="myModal">
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Code, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Code, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Description, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.NumberOfCredits, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(x => x.NumberOfCredits, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.NumberOfCredits, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Level, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(x => x.Level, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Level, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id="errorContainer" class="alert alert-danger" style="display: none">
+        Issues:
+        <div id="errors"></div>
+    </div>
+</div>

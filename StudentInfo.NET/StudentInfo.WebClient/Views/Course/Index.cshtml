@@ -4,11 +4,73 @@
     ViewBag.Title = "Courses";
 }
 <script type="text/javascript">
-    function loadCourseDetails(courseId) {
-        $.get('/Course/Details?id=' + courseId, function (data) {
+    function loadCourseDetails(courseId, allowEdit) {
+        $.get('/Course/Details?id=' + courseId + '&allowEdit=' + allowEdit, function (data) {
             $('#courseDetailsModalBody').html(data);
             $('#courseDetailsModal').modal('show');
+            //bindForm($('#courseDetailsModal'));
         })
+    }
+
+    //function bindForm(dialog) {
+    //    $('form', dialog).submit(function () {
+    //        $.ajax({
+    //            url: this.action,
+    //            type: this.method,
+    //            data: $(this).serialize(),
+    //            success: function (result) {
+    //                if (result.success) {
+    //                    showValidationIssues(false);
+    //                    $('#courseDetailsModal').modal('hide');
+    //                    alert('Saved');
+    //                }
+    //                else {
+    //                    fillValidationErrors(result);
+    //                    showValidationIssues(true);
+    //                }
+    //            }
+    //        })
+    //    })
+    //}
+
+    function showValidationIssues(isShown) {
+        if (isShown) {
+            $("#errorContainer").show();
+        }
+        else {
+            $("#errorContainer").hide();
+        }
+    }
+
+    function fillValidationErrors(errors) {
+        $("#errors").html("");
+
+        var errorsList = document.createElement('ul');
+
+        for (var i = 0; i < errors.length; i++) {
+            var item = document.createElement('li');
+            item.appendChild(document.createTextNode(errors[i]));
+            errorsList.appendChild(item);
+        }
+
+        $("#errors").html(errorsList);
+    }
+
+    function  OnSuccess(data){
+        alert('maybe');
+    }
+
+    function saveChanges(data) {
+        if (data.success) {
+            alert("yes");
+            showValidationIssues(false);
+            $('#courseDetailsModal').modal('hide');
+        }
+        else {
+            alert("no");
+            fillValidationErrors(result);
+            showValidationIssues(true);
+        }
     }
 </script>
 
@@ -31,12 +93,12 @@
             <td>
                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                 {
-                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", true)'>Edit</button>
                 }
-                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id");'>
+                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false);'>
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </button>
-                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id");'>
+                <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false);'>
                     <span class="glyphicon glyphicon-file"></span> Details
                 </button>
             </td>
