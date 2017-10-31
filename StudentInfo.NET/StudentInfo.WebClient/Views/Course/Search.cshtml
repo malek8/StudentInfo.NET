@@ -1,5 +1,6 @@
 ﻿@model StudentInfo.WebClient.Models.CourseSearchModel
 @using StudentInfo.WebClient.Helpers
+@using PagedList.Mvc
 
 <script type="text/javascript">
     function updateDepartments() {
@@ -24,8 +25,8 @@
 
 <div class="well">
     <p><h4>Course Search</h4></p>
-    <div class="form-horizontal" role="form">
-        @using (Ajax.BeginForm("Search", new AjaxOptions() { }))
+    <div class="form-inline" role="form">
+        @using (Ajax.BeginForm("Search", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "resultsDiv" }))
         {
             <div class="form-group">
                 @Html.LabelFor(x => x.Keyword, new { @class = "control-label" })
@@ -56,3 +57,6 @@
         }
     </div>
     </div>
+<div id="resultsDiv">
+    
+</div>

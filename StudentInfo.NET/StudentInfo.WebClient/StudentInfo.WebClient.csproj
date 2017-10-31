@@ -334,6 +334,7 @@
     <Content Include="Views\Course\_EditDetails.cshtml" />
     <Content Include="Views\Course\Enroll.cshtml" />
     <Content Include="Views\Course\Search.cshtml" />
+    <Content Include="Views\Course\_SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

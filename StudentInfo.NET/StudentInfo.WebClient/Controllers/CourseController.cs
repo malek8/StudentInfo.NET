@@ -165,6 +165,8 @@ namespace StudentInfo.WebClient.Controllers
 
         public ActionResult Search(CourseSearchModel model, int? page)
         {
+            if (model == null) model = new CourseSearchModel();
+
             var db = new StudentInfoContext();
 
             var courses = db.Courses.AsQueryable();
@@ -172,7 +174,8 @@ namespace StudentInfo.WebClient.Controllers
             if (!string.IsNullOrEmpty(model.Keyword))
             {
                 courses = courses.Where(x => x.Code.Contains(model.Keyword) ||
-                x.Name.Contains(model.Keyword));
+                x.Name.Contains(model.Keyword) ||
+                x.Description.Contains(model.Keyword));
             }
             if (model.DepartmentId.HasValue)
             {
@@ -184,7 +187,8 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             int pageNumber = (page ?? 1);
-            return View(courses.OrderBy(x => x.Code).ToPagedList(pageNumber, SearchConstants.PageSize));
+            model.Results = courses.OrderBy(x => x.Code).ToPagedList(pageNumber, SearchConstants.PageSize);
+            return View("_SearchResults", model);
         }
     }
 }

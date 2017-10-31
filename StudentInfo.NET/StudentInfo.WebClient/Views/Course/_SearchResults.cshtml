@@ -1,0 +1,51 @@
+﻿@model StudentInfo.WebClient.Models.CourseSearchModel
+@using PagedList.Mvc
+@{
+    Layout = "";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+<table class="table">
+    <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    @if (Model.Results != null)
+    {
+        foreach (var item in Model.Results)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Name)
+                </td>
+                <td>
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
+                    {
+                        <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", true)'>
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>
+                    }
+                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false)'>
+                        <span class="glyphicon glyphicon-plus"></span> Add
+                    </button>
+                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false)'>
+                        <span class="glyphicon glyphicon-file"></span> Details
+                    </button>
+                </td>
+            </tr>
+        }
+    }
+    <tr></tr>
+</table>
+
+@if (Model.Results != null)
+{
+    @: Page @(Model.Results.PageCount < Model.Results.PageNumber ? 0 : Model.Results.PageNumber) of @Model.Results.PageCount
+
+    @Html.PagedListPager(Model.Results, page => Url.Action("Search", new { page, model = Model}))
+}
