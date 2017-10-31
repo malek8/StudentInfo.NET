@@ -11,9 +11,9 @@ namespace StudentInfo.WebClient.Models
         public string Keyword { get; set; }
 
         [Display(Name = "Department")]
-        public Guid DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
 
         [Display(Name = "Faculty")]
-        public Guid FacultyId { get; set; }
+        public Guid? FacultyId { get; set; }
     }
 }

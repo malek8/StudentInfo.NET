@@ -31,11 +31,21 @@ namespace StudentInfo.WebClient.Helpers
         {
             var db = new StudentInfoContext();
 
-            return db.Faculties.Select(x => new SelectListItem()
+            var facultiesSelection = new List<SelectListItem>();
+
+            facultiesSelection.Add(new SelectListItem()
+            {
+                Text = "-- Select Item --",
+                Value = string.Empty
+            });
+
+            facultiesSelection.AddRange(db.Faculties.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Id.ToString()
-            });
+            }));
+
+            return facultiesSelection;
         }
     }
 }

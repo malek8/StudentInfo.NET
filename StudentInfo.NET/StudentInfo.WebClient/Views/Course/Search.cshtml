@@ -45,7 +45,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => x.DepartmentId, new { @class = "control-label" })
                 <div>
-                    @Html.DropDownListFor(x => x.DepartmentId, FieldInputHelpers.GetSchoolDepartments(), 
+                    @Html.DropDownListFor(x => x.DepartmentId, new List<SelectListItem>(), 
                    new { id = "departmentSelector", @class = "form-control" })
                 </div>
             </div>

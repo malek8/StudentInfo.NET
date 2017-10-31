@@ -41,9 +41,8 @@ namespace StudentInfo.WebClient.Controllers
                 x.Name.Contains(searchString));
             }
 
-            int pageSize = 6;
             int pageNumber = (page ?? 1);
-            return View(courses.OrderBy(x => x.Code).ToPagedList(pageNumber, pageSize));
+            return View(courses.OrderBy(x => x.Code).ToPagedList(pageNumber, SearchConstants.PageSize));
         }
 
         [HttpGet]
@@ -162,6 +161,30 @@ namespace StudentInfo.WebClient.Controllers
 
             return Json(departments.Select(x => new { text = x.Name, value = x.Id }),
                 JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Search(CourseSearchModel model, int? page)
+        {
+            var db = new StudentInfoContext();
+
+            var courses = db.Courses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(model.Keyword))
+            {
+                courses = courses.Where(x => x.Code.Contains(model.Keyword) ||
+                x.Name.Contains(model.Keyword));
+            }
+            if (model.DepartmentId.HasValue)
+            {
+                courses = courses.Where(x => x.Department.Id == model.DepartmentId);
+            }
+            if (model.FacultyId.HasValue)
+            {
+                courses = courses.Where(x => x.Department.Faculty.Id == model.FacultyId);
+            }
+
+            int pageNumber = (page ?? 1);
+            return View(courses.OrderBy(x => x.Code).ToPagedList(pageNumber, SearchConstants.PageSize));
         }
     }
 }
