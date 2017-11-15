@@ -147,6 +147,40 @@ namespace StudentInfo.WebClient.Controllers
             return View(new CourseSearchModel());
         }
 
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
+        public ActionResult Enroll(Guid semesterCourseId)
+        {
+            if (semesterCourseId != null && User.IsInRole(SystemRoles.Student))
+            {
+                var context = new StudentInfoContext();
+
+                var userId = User.Identity.GetUserId();
+                var s = context.ApplicationUsers.FirstOrDefault(x => x.Id == userId);
+                var user = context.UserDetails.FirstOrDefault(x => x.ApplicationUser.Id == userId);
+                if (user != null)
+                {
+                    if (!context.StudentCourses.Any(x => x.CourseSemester.Id == semesterCourseId))
+                    {
+                        var semesterCourse = context.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
+                        context.StudentCourses.Add(new StudentCourse
+                        {
+                            Id = Guid.NewGuid(),                            
+                            CourseSemester = semesterCourse,
+                            CourseState = CourseRegistrationState.Added,
+                            CreateDate = DateTime.Now
+                        });
+
+                        context.SaveChanges();
+
+                        return Json(new { success = true });
+                    }
+                }
+            }
+            return Json(new { success = false });
+        }
+
         [HttpGet]
         public JsonResult GetDepartments(Guid facultyId)
         {
@@ -169,28 +203,37 @@ namespace StudentInfo.WebClient.Controllers
 
             var db = new StudentInfoContext();
 
-            var courses = db.Courses.AsQueryable();
+            var courses = db.SemesterCourses.AsQueryable();
 
             if (!string.IsNullOrEmpty(model.Keyword))
             {
-                courses = courses.Where(x => x.Name.Contains(model.Keyword) ||
-                x.Description.Contains(model.Keyword));
+                courses = courses.Where(x => x.Course.Name.Contains(model.Keyword) ||
+                x.Course.Description.Contains(model.Keyword));
             }
             if (!string.IsNullOrEmpty(model.Code))
             {
-                courses = courses.Where(x => x.Code.Contains(model.Code));
+                courses = courses.Where(x => x.Course.Code.Contains(model.Code));
             }
             if (model.DepartmentId.HasValue)
             {
-                courses = courses.Where(x => x.Department.Id == model.DepartmentId);
+                courses = courses.Where(x => x.Course.Department.Id == model.DepartmentId);
             }
             if (model.FacultyId.HasValue)
             {
-                courses = courses.Where(x => x.Department.Faculty.Id == model.FacultyId);
+                courses = courses.Where(x => x.Course.Department.Faculty.Id == model.FacultyId);
+            }
+            if (model.Semester.HasValue)
+            {
+                courses = courses.Where(x => x.Term == model.Semester);
+            }
+            else
+            {
+                var currentTerm = Helper.CurrentTerm();
+                courses = courses.Where(x => x.Term == currentTerm);
             }
 
             int pageNumber = (page ?? 1);
-            model.Results = courses.OrderBy(x => x.Code).ToPagedList(pageNumber, SearchConstants.PageSize);
+            model.Results = courses.OrderBy(x => x.Course.Code).ToPagedList(pageNumber, SearchConstants.PageSize);
             return View("Search", model);
         }
     }

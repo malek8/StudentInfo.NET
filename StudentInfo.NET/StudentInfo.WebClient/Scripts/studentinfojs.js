@@ -57,3 +57,19 @@ function getDepartments(facultyId) {
         }
     });
 }
+
+function enrollCourse(semesterCourseId) {
+    $.ajax({
+        type: 'POST',
+        url: '/Course/Enroll',
+        data: { semesterCourseId },
+        success: function (data) {
+            if (data.success == true) {
+                alert('success');
+            }
+            else {
+                alert('failed');
+            }
+        }
+    })
+}

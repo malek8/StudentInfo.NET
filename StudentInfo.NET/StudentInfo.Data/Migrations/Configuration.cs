@@ -25,6 +25,7 @@ namespace StudentInfo.Data.Migrations
             //}
             CreateUserRoles(context);
             CreateUserAccounts(context);
+            CreateClassrooms(context);
             CreateFaculties(context);
         }
 
@@ -210,6 +211,54 @@ namespace StudentInfo.Data.Migrations
             //{
             //    Console.WriteLine(ex.Message);
             //}
+        }
+
+        public void CreateClassrooms(StudentInfoContext context)
+        {
+            context.Classrooms.AddOrUpdate(
+                c => c.Number,
+                new Classroom
+                {
+                    Id = Guid.NewGuid(),
+                    Capacity = 20,
+                    Campus = "SGW",
+                    Number = "H2.110"
+                },
+                new Classroom
+                {
+                    Id = Guid.NewGuid(),
+                    Capacity = 20,
+                    Campus = "SGW",
+                    Number = "H2.112"
+                },
+                new Classroom
+                {
+                    Id = Guid.NewGuid(),
+                    Capacity = 20,
+                    Campus = "SGW",
+                    Number = "H2.114"
+                },
+                new Classroom
+                {
+                    Id = Guid.NewGuid(),
+                    Capacity = 20,
+                    Campus = "SGW",
+                    Number = "H2.116"
+                },
+                new Classroom
+                {
+                    Id = Guid.NewGuid(),
+                    Capacity = 20,
+                    Campus = "SGW",
+                    Number = "H2.118"
+                },
+                new Classroom
+                {
+                    Id = Guid.NewGuid(),
+                    Capacity = 20,
+                    Campus = "SGW",
+                    Number = "H2.120"
+                });
         }
     }
 }

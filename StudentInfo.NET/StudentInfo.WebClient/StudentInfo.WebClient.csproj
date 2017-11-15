@@ -214,6 +214,7 @@
     </Compile>
     <Compile Include="Helpers\AuthorizeRolesAttribute.cs" />
     <Compile Include="Helpers\FieldInputHelpers.cs" />
+    <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CourseEnrollModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />

@@ -13,6 +13,11 @@
         @using (Html.BeginForm("Search", "Course", FormMethod.Get))
         {
             <div class="form-group">
+                @Html.LabelFor(x => x.Semester, new { @class = "control-label" })
+                @Html.EnumDropDownListFor(x => x.Semester, new { @class = "form-control" })
+            </div>
+            
+            <div class="form-group">
                 @Html.LabelFor(x => x.Code, new { @class = "control-label" })
                 <div>
                     @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
@@ -62,22 +67,22 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(x => item.Code)
+                    @Html.DisplayFor(x => item.Course.Code)
                 </td>
                 <td>
-                    @Html.DisplayFor(x => item.Name)
+                    @Html.DisplayFor(x => item.Course.Name)
                 </td>
                 <td>
                     @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                     {
-                        <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", true)'>
+                        <button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", true)'>
                             <span class="glyphicon glyphicon-pencil"></span> Edit
                         </button>
                     }
-                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false)'>
+                    <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
                         <span class="glyphicon glyphicon-plus"></span> Add
                     </button>
-                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Id", false)'>
+                    <button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", false)'>
                         <span class="glyphicon glyphicon-file"></span> Details
                     </button>
                 </td>

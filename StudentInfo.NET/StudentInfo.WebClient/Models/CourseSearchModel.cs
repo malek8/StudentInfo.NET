@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using StudentInfo.Users.Dto;
+using StudentInfo.Enums;
 
 namespace StudentInfo.WebClient.Models
 {
@@ -19,6 +20,9 @@ namespace StudentInfo.WebClient.Models
         [Display(Name = "Faculty")]
         public Guid? FacultyId { get; set; }
 
-        public PagedList.IPagedList<Course> Results { get; set; }
+        [Display(Name = "Term")]
+        public Term? Semester { get; set; }
+
+        public PagedList.IPagedList<SemesterCourse> Results { get; set; }
     }
 }

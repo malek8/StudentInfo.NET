@@ -22,10 +22,10 @@ namespace StudentInfo.Users.Dto
         [MaxLength(25)]
         public string CellPhone { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public Address MailAddress { get; set; }
-        public Address HomeAddress { get; set; }
+        public virtual Address MailAddress { get; set; }
+        public virtual Address HomeAddress { get; set; }
         public IEnumerable<StudentCourse> StudentCourse { get; set; }
     }
 }

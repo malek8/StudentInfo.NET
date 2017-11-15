@@ -10,7 +10,7 @@ namespace StudentInfo.Enums
     {
         public const string Ascending = "asc";
         public const string Descending = "desc";
-        public const int PageSize = 6;
+        public const int PageSize = 4;
     }
     public class UserSearchConstants
     {

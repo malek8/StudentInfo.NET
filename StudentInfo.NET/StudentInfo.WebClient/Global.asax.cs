@@ -18,6 +18,7 @@ namespace StudentInfo.WebClient
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Data.CustomSeed.AssignUserRoles();
+            Data.CustomSeed.AddSemesterCourses();
         }
     }
 }
