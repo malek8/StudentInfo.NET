@@ -7,18 +7,18 @@ namespace StudentInfo.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ClassRoom : IMigrationMetadata
+    public sealed partial class Student_StudentCourse : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ClassRoom));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Student_StudentCourse));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711150358436_ClassRoom"; }
+            get { return "201711151900048_Student_StudentCourse"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

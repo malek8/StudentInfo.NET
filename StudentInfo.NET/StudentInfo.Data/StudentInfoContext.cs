@@ -10,28 +10,29 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace StudentInfo.Data
 {
-    public class StudentInfoContext : IdentityDbContext
+  public class StudentInfoContext : IdentityDbContext
+  {
+    public StudentInfoContext()
+        : base()
     {
-        public StudentInfoContext()
-            : base()
-        {
 
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public DbSet<Faculty> Faculties { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Program> Programs { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<UserDetails> UserDetails { get; set; }
-        public DbSet<Address> Address { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<StudentCourse> StudentCourses { get; set; }
-        public DbSet<Classroom> Classrooms { get; set; }
-        public DbSet<SemesterCourse> SemesterCourses { get; set; }
     }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+    }
+
+    public DbSet<Faculty> Faculties { get; set; }
+    public DbSet<Department> Departments { get; set; }
+    public DbSet<Program> Programs { get; set; }
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<UserDetails> UserDetails { get; set; }
+    public DbSet<Address> Address { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<StudentCourse> StudentCourses { get; set; }
+    public DbSet<Classroom> Classrooms { get; set; }
+    public DbSet<SemesterCourse> SemesterCourses { get; set; }
+    public DbSet<Student> Students { get; set; }
+  }
 }

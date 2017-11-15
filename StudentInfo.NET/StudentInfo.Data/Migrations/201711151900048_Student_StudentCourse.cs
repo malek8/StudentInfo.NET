@@ -3,16 +3,16 @@ namespace StudentInfo.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ClassRoom : DbMigration
+    public partial class Student_StudentCourse : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Classrooms", "Number", c => c.String());
+            AddColumn("dbo.StudentCourses", "StudentId", c => c.Guid(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Classrooms", "Number");
+            DropColumn("dbo.StudentCourses", "StudentId");
         }
     }
 }

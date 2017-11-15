@@ -1,88 +1,88 @@
 namespace StudentInfo.Data.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-    using System.Collections.Generic;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity;
-    using StudentInfo.Users.Dto;
-    using StudentInfo.Enums;
+  using System;
+  using System.Data.Entity;
+  using System.Data.Entity.Migrations;
+  using System.Linq;
+  using StudentInfo.Users.Dto;
+  using StudentInfo.Enums;
+  using Microsoft.AspNet.Identity.EntityFramework;
+  using System.Collections.Generic;
+  using Microsoft.AspNet.Identity;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<StudentInfoContext>
+  internal sealed class Configuration : DbMigrationsConfiguration<StudentInfoContext>
+  {
+    public Configuration()
     {
-        public Configuration()
+      AutomaticMigrationsEnabled = true;
+    }
+
+    protected override void Seed(StudentInfoContext context)
+    {
+      //if (!System.Diagnostics.Debugger.IsAttached)
+      //{
+      //    System.Diagnostics.Debugger.Launch();
+      //}
+      CreateUserRoles(context);
+      CreateUserAccounts(context);
+      CreateClassrooms(context);
+      CreateFaculties(context);
+    }
+
+    private void CreateUserRoles(StudentInfoContext context)
+    {
+      context.Roles.AddOrUpdate(r => r.Name,
+          new IdentityRole { Name = SystemRoles.Administrator },
+          new IdentityRole { Name = SystemRoles.Student },
+          new IdentityRole { Name = SystemRoles.Instructor },
+          new IdentityRole { Name = SystemRoles.FacultyMember },
+          new IdentityRole { Name = SystemRoles.Advisor });
+    }
+
+    private void CreateUserAccounts(StudentInfoContext context)
+    {
+      var hashedPassword = new PasswordHasher().HashPassword("Playit@Playit2");
+
+      context.Users.AddOrUpdate(
+        p => p.Email,
+        new ApplicationUser
         {
-            AutomaticMigrationsEnabled = true;
+          Email = "malek.atwiz@hotmail.com",
+          UserName = "malek.atwiz@hotmail.com",
+          FirstName = "Malek",
+          LastName = "A",
+          PasswordHash = hashedPassword,
+          SecurityStamp = Guid.NewGuid().ToString(),
+          EmailConfirmed = true
+        },
+        new ApplicationUser
+        {
+          Email = "bruce.wayne@batman.com",
+          UserName = "bruce.wayne@batman.com",
+          FirstName = "Bruce",
+          LastName = "Wayne",
+          PasswordHash = hashedPassword,
+          SecurityStamp = Guid.NewGuid().ToString(),
+          EmailConfirmed = true
         }
+      );
+    }
 
-        protected override void Seed(StudentInfoContext context)
-        {
-            //if (!System.Diagnostics.Debugger.IsAttached)
-            //{
-            //    System.Diagnostics.Debugger.Launch();
-            //}
-            CreateUserRoles(context);
-            CreateUserAccounts(context);
-            CreateClassrooms(context);
-            CreateFaculties(context);
-        }
-
-        private void CreateUserRoles(StudentInfoContext context)
-        {
-            context.Roles.AddOrUpdate(r => r.Name,
-                new IdentityRole { Name = SystemRoles.Administrator },
-                new IdentityRole { Name = SystemRoles.Student },
-                new IdentityRole { Name = SystemRoles.Instructor },
-                new IdentityRole { Name = SystemRoles.FacultyMember },
-                new IdentityRole { Name = SystemRoles.Advisor });
-        }
-
-        private void CreateUserAccounts(StudentInfoContext context)
-        {
-            var hashedPassword = new PasswordHasher().HashPassword("Playit@Playit2");
-
-            context.Users.AddOrUpdate(
-              p => p.Email,
-              new ApplicationUser
-              {
-                  Email = "malek.atwiz@hotmail.com",
-                  UserName = "malek.atwiz@hotmail.com",
-                  FirstName = "Malek",
-                  LastName = "A",
-                  PasswordHash = hashedPassword,
-                  SecurityStamp = Guid.NewGuid().ToString(),
-                  EmailConfirmed = true
-              },
-              new ApplicationUser
-              {
-                  Email = "bruce.wayne@batman.com",
-                  UserName = "bruce.wayne@batman.com",
-                  FirstName = "Bruce",
-                  LastName = "Wayne",
-                  PasswordHash = hashedPassword,
-                  SecurityStamp = Guid.NewGuid().ToString(),
-                  EmailConfirmed = true
-              }
-            );
-        }
-
-        private void CreateFaculties(StudentInfoContext context)
-        {
-            context.Faculties.AddOrUpdate(f =>
-            f.Name,
-            new Faculty
-            {
-                Id = Guid.NewGuid(),
-                Name = "Faculty of Arts and Science"
-            },
-            new Faculty
-            {
-                Id = Guid.NewGuid(),
-                Name = "Faculty of Engineering and Computer Science",
-                Departments = new List<Department>
-                {
+    private void CreateFaculties(StudentInfoContext context)
+    {
+      context.Faculties.AddOrUpdate(f =>
+      f.Name,
+      new Faculty
+      {
+        Id = Guid.NewGuid(),
+        Name = "Faculty of Arts and Science"
+      },
+      new Faculty
+      {
+        Id = Guid.NewGuid(),
+        Name = "Faculty of Engineering and Computer Science",
+        Departments = new List<Department>
+          {
                     new Department{Id = Guid.NewGuid(), Name = "Building, Civil and Environmental Engineering" },
                     new Department{Id = Guid.NewGuid(), Name = "Electrical and Computer Engineering",
                     Programs = new List<Program>
@@ -182,83 +182,83 @@ namespace StudentInfo.Data.Migrations
                     }},
                     new Department{Id = Guid.NewGuid(), Name = "Concordia Institute for Information Systems Engineering (CIISE)" },
                     new Department{Id = Guid.NewGuid(), Name = "Concordia Institute for Aerospace Design and Innovation" }
-                }
-            },
-            new Faculty
-            {
-                Id = Guid.NewGuid(),
-                Name = "Faculty of Fine Arts"
-            },
-            new Faculty
-            {
-                Id = Guid.NewGuid(),
-                Name = "John Molson School of Business",
-                Departments = new List<Department>
-                {
+          }
+      },
+      new Faculty
+      {
+        Id = Guid.NewGuid(),
+        Name = "Faculty of Fine Arts"
+      },
+      new Faculty
+      {
+        Id = Guid.NewGuid(),
+        Name = "John Molson School of Business",
+        Departments = new List<Department>
+          {
                     new Department{Id = Guid.NewGuid(), Name = "Accountancy" },
                     new Department{Id = Guid.NewGuid(), Name = "Finance" },
                     new Department{Id = Guid.NewGuid(), Name = "Management" },
                     new Department{Id = Guid.NewGuid(), Name = "Marketing" },
                     new Department{Id = Guid.NewGuid(), Name = "Supply Chain & Business Technology Management" }
-                }
-            });
+          }
+      });
 
-            //try
-            //{
-            //    context.SaveChanges();
-            //}
-            //catch(Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-        }
-
-        public void CreateClassrooms(StudentInfoContext context)
-        {
-            context.Classrooms.AddOrUpdate(
-                c => c.Number,
-                new Classroom
-                {
-                    Id = Guid.NewGuid(),
-                    Capacity = 20,
-                    Campus = "SGW",
-                    Number = "H2.110"
-                },
-                new Classroom
-                {
-                    Id = Guid.NewGuid(),
-                    Capacity = 20,
-                    Campus = "SGW",
-                    Number = "H2.112"
-                },
-                new Classroom
-                {
-                    Id = Guid.NewGuid(),
-                    Capacity = 20,
-                    Campus = "SGW",
-                    Number = "H2.114"
-                },
-                new Classroom
-                {
-                    Id = Guid.NewGuid(),
-                    Capacity = 20,
-                    Campus = "SGW",
-                    Number = "H2.116"
-                },
-                new Classroom
-                {
-                    Id = Guid.NewGuid(),
-                    Capacity = 20,
-                    Campus = "SGW",
-                    Number = "H2.118"
-                },
-                new Classroom
-                {
-                    Id = Guid.NewGuid(),
-                    Capacity = 20,
-                    Campus = "SGW",
-                    Number = "H2.120"
-                });
-        }
+      //try
+      //{
+      //    context.SaveChanges();
+      //}
+      //catch(Exception ex)
+      //{
+      //    Console.WriteLine(ex.Message);
+      //}
     }
+
+    public void CreateClassrooms(StudentInfoContext context)
+    {
+      context.Classrooms.AddOrUpdate(
+          c => c.Number,
+          new Classroom
+          {
+            Id = Guid.NewGuid(),
+            Capacity = 20,
+            Campus = "SGW",
+            Number = "H2.110"
+          },
+          new Classroom
+          {
+            Id = Guid.NewGuid(),
+            Capacity = 20,
+            Campus = "SGW",
+            Number = "H2.112"
+          },
+          new Classroom
+          {
+            Id = Guid.NewGuid(),
+            Capacity = 20,
+            Campus = "SGW",
+            Number = "H2.114"
+          },
+          new Classroom
+          {
+            Id = Guid.NewGuid(),
+            Capacity = 20,
+            Campus = "SGW",
+            Number = "H2.116"
+          },
+          new Classroom
+          {
+            Id = Guid.NewGuid(),
+            Capacity = 20,
+            Campus = "SGW",
+            Number = "H2.118"
+          },
+          new Classroom
+          {
+            Id = Guid.NewGuid(),
+            Capacity = 20,
+            Campus = "SGW",
+            Number = "H2.120"
+          });
+    }
+  }
 }

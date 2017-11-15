@@ -54,17 +54,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomSeed.cs" />
-    <Compile Include="Migrations\201710121605340_initial.cs" />
-    <Compile Include="Migrations\201710121605340_initial.Designer.cs">
-      <DependentUpon>201710121605340_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201711151857006_initial.cs" />
+    <Compile Include="Migrations\201711151857006_initial.Designer.cs">
+      <DependentUpon>201711151857006_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710282243510_studentCourse.cs" />
-    <Compile Include="Migrations\201710282243510_studentCourse.Designer.cs">
-      <DependentUpon>201710282243510_studentCourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711150358436_ClassRoom.cs" />
-    <Compile Include="Migrations\201711150358436_ClassRoom.Designer.cs">
-      <DependentUpon>201711150358436_ClassRoom.cs</DependentUpon>
+    <Compile Include="Migrations\201711151900048_Student_StudentCourse.cs" />
+    <Compile Include="Migrations\201711151900048_Student_StudentCourse.Designer.cs">
+      <DependentUpon>201711151900048_Student_StudentCourse.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,14 +85,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710121605340_initial.resx">
-      <DependentUpon>201710121605340_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711151857006_initial.resx">
+      <DependentUpon>201711151857006_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710282243510_studentCourse.resx">
-      <DependentUpon>201710282243510_studentCourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711150358436_ClassRoom.resx">
-      <DependentUpon>201711150358436_ClassRoom.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711151900048_Student_StudentCourse.resx">
+      <DependentUpon>201711151900048_Student_StudentCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

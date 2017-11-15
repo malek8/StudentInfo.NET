@@ -84,6 +84,33 @@ namespace StudentInfo.Data.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.Classrooms",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Number = c.String(),
+                        Campus = c.String(),
+                        Capacity = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Courses",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 150),
+                        Code = c.String(nullable: false, maxLength: 12),
+                        Description = c.String(maxLength: 500),
+                        NumberOfCredits = c.Int(nullable: false),
+                        Level = c.Int(nullable: false),
+                        Department_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Departments", t => t.Department_Id)
+                .Index(t => t.Department_Id);
+            
+            CreateTable(
                 "dbo.Departments",
                 c => new
                     {
@@ -118,23 +145,7 @@ namespace StudentInfo.Data.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Departments", t => t.Department_Id)
                 .Index(t => t.Department_Id);
-
-            CreateTable(
-                "dbo.Courses",
-                c => new
-                {
-                    Id = c.Guid(nullable: false),
-                    Name = c.String(nullable: false, maxLength: 150),
-                    Code = c.String(nullable: false, maxLength: 12),
-                    Description = c.String(maxLength: 500),
-                    NumberOfCredits = c.Int(nullable: false),
-                    Level = c.Int(nullable: false),
-                    Department_Id = c.Guid(),
-                })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Departments", t => t.Department_Id)
-                .Index(t => t.Department_Id);
-
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -144,6 +155,45 @@ namespace StudentInfo.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.SemesterCourses",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CourseDate = c.DateTime(nullable: false),
+                        Term = c.Int(nullable: false),
+                        Classroom_Id = c.Guid(),
+                        Course_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Classrooms", t => t.Classroom_Id)
+                .ForeignKey("dbo.Courses", t => t.Course_Id)
+                .Index(t => t.Classroom_Id)
+                .Index(t => t.Course_Id);
+            
+            CreateTable(
+                "dbo.StudentCourses",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CreateDate = c.DateTime(nullable: false),
+                        LastUpdate = c.DateTime(nullable: false),
+                        CourseState = c.Int(nullable: false),
+                        CourseSemester_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SemesterCourses", t => t.CourseSemester_Id)
+                .Index(t => t.CourseSemester_Id);
+            
+            CreateTable(
+                "dbo.Students",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ApplicationUserId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.UserDetails",
@@ -175,6 +225,9 @@ namespace StudentInfo.Data.Migrations
             DropForeignKey("dbo.UserDetails", "MailAddress_Id", "dbo.Addresses");
             DropForeignKey("dbo.UserDetails", "HomeAddress_Id", "dbo.Addresses");
             DropForeignKey("dbo.UserDetails", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.StudentCourses", "CourseSemester_Id", "dbo.SemesterCourses");
+            DropForeignKey("dbo.SemesterCourses", "Course_Id", "dbo.Courses");
+            DropForeignKey("dbo.SemesterCourses", "Classroom_Id", "dbo.Classrooms");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Programs", "Department_Id", "dbo.Departments");
             DropForeignKey("dbo.Departments", "Faculty_Id", "dbo.Faculties");
@@ -182,6 +235,9 @@ namespace StudentInfo.Data.Migrations
             DropIndex("dbo.UserDetails", new[] { "MailAddress_Id" });
             DropIndex("dbo.UserDetails", new[] { "HomeAddress_Id" });
             DropIndex("dbo.UserDetails", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.StudentCourses", new[] { "CourseSemester_Id" });
+            DropIndex("dbo.SemesterCourses", new[] { "Course_Id" });
+            DropIndex("dbo.SemesterCourses", new[] { "Classroom_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Programs", new[] { "Department_Id" });
             DropIndex("dbo.Departments", new[] { "Faculty_Id" });
@@ -192,11 +248,15 @@ namespace StudentInfo.Data.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropTable("dbo.UserDetails");
+            DropTable("dbo.Students");
+            DropTable("dbo.StudentCourses");
+            DropTable("dbo.SemesterCourses");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Programs");
             DropTable("dbo.Faculties");
             DropTable("dbo.Departments");
             DropTable("dbo.Courses");
+            DropTable("dbo.Classrooms");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");

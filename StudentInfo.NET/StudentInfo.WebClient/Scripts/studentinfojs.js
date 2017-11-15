@@ -64,12 +64,22 @@ function enrollCourse(semesterCourseId) {
         url: '/Course/Enroll',
         data: { semesterCourseId },
         success: function (data) {
+            var alertDivId = "alertDiv" + semesterCourseId;
+            var alertDiv = document.createElement("div");
+            alertDiv.setAttribute("id", alertDivId);
+            var alertContent = document.createTextNode(data.message);
+
             if (data.success == true) {
-                alert('success');
+                alertDiv.className = "alert alert-success";
             }
             else {
-                alert('failed');
+                alertDiv.className = "alert alert-danger";
             }
+
+            alertDiv.appendChild(alertContent);
+            document.getElementById("alertsContainer").appendChild(alertDiv);
+
+            $("#" + alertDivId).delay(5000).fadeOut();
         }
     })
 }
