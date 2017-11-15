@@ -43,8 +43,8 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Search", "Index", "Course")</li>
-                            <li>@Html.ActionLink("Enroll", "Enroll", "Course")</li>
+                            <li>@Html.ActionLink("Search", "Search", "Course")</li>
+                            <li>@Html.ActionLink("Enroll", "Search", "Course")</li>
                             @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
                             {
                                 

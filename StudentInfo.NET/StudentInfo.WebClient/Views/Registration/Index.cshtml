@@ -3,9 +3,10 @@
 @using PagedList.Mvc
 
 @{
-    ViewBag.Title = "Enroll";
+    ViewBag.Title = "Course Registration";
 }
 
+<!-- Course Search form -->
 <div class="well">
     <p><h4>Course Search</h4></p>
     <div class="form-inline" role="form">
@@ -41,6 +42,7 @@
     </div>
 </div>
 
+<!-- Search Results table -->
 <table class="table">
     <tr>
         <th>Code</th>
@@ -81,11 +83,10 @@
 @if (Model.Results != null)
 {
     @: Page @(Model.Results.PageCount < Model.Results.PageNumber ? 0 : Model.Results.PageNumber) of @Model.Results.PageCount
-
-
     @Html.PagedListPager(Model.Results, page => Url.Action("SearchCourses", new { page, model = Model }))
 }
 
+<!-- Course Details Modal -->
 <div id="courseDetailsModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseDetailsModalBody" class="modal-content">
@@ -94,6 +95,7 @@
     </div>
 </div>
 
+<!-- Course Edit Modal -->
 <div id="courseEditModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseEditModalBody" class="modal-content">

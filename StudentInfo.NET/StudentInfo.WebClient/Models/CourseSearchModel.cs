@@ -11,6 +11,8 @@ namespace StudentInfo.WebClient.Models
     {
         public string Keyword { get; set; }
 
+        public string Code { get; set; }
+
         [Display(Name = "Department")]
         public Guid? DepartmentId { get; set; }
 

@@ -38,3 +38,22 @@ function processResult(data) {
         showValidationIssues(true);
     }
 }
+
+function updateDepartments() {
+    $("#departmentSelector").empty();
+    getDepartments($('#facultySelector').val());
+}
+
+function getDepartments(facultyId) {
+    var url = '/Course/GetDepartments';
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: { facultyId },
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $('#departmentSelector').append('<option value = "' + data[i].value + '">' + data[i].text + '</option>');
+            }
+        }
+    });
+}
