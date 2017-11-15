@@ -64,18 +64,20 @@ function enrollCourse(semesterCourseId) {
         url: '/Course/Enroll',
         data: { semesterCourseId },
         success: function (data) {
-            var alertDivId = "alertDiv" + semesterCourseId;
+            var className = "";
+            var alertDivId = Date.now();
+            if (data.success === true) {
+                className = "alert alert-success";
+            }
+            else {
+                className = "alert alert-danger";
+            }
+
             var alertDiv = document.createElement("div");
             alertDiv.setAttribute("id", alertDivId);
             var alertContent = document.createTextNode(data.message);
 
-            if (data.success == true) {
-                alertDiv.className = "alert alert-success";
-            }
-            else {
-                alertDiv.className = "alert alert-danger";
-            }
-
+            alertDiv.className = className;
             alertDiv.appendChild(alertContent);
             document.getElementById("alertsContainer").appendChild(alertDiv);
 
