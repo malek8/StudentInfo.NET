@@ -1,0 +1,107 @@
+﻿@model StudentInfo.WebClient.Models.CourseSearchModel
+@using StudentInfo.WebClient.Helpers
+@using PagedList.Mvc
+
+@{
+  ViewBag.Title = "My Courses";
+}
+
+<!-- Course Search form -->
+<div class="well">
+    <div class="form-inline" role="form">
+        @using (Html.BeginForm("StudentCourses", "Course", FormMethod.Get))
+        {
+        <div class="form-group">
+            @Html.LabelFor(x => x.Semester, new { @class = "control-label" })
+            @Html.EnumDropDownListFor(x => x.Semester, new { @class = "form-control" })
+        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Code, new { @class = "control-label" })
+                <div>
+                    @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Keyword, new { @class = "control-label" })
+                <div>
+                    @Html.TextBoxFor(x => x.Keyword, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.FacultyId, new { @class = "control-label" })
+                <div>
+                    @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(),
+                   new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.DepartmentId, new { @class = "control-label" })
+                <div>
+                    @Html.DropDownListFor(x => x.DepartmentId, new List<SelectListItem>(),
+                   new { id = "departmentSelector", @class = "form-control" })
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        }
+    </div>
+</div>
+
+<!-- Search Results table -->
+<table class="table">
+    <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    @if (Model.StudentCourses != null)
+    {
+        foreach (var item in Model.StudentCourses)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(x => item.CourseSemester.Course.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.CourseSemester.Course.Name)
+            </td>
+            <td>
+                <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
+                    <span class="glyphicon glyphicon-plus"></span> Add
+                </button>
+            </td>
+        </tr>
+        }
+    }
+    <tr></tr>
+</table>
+
+@if (Model.Results != null)
+{
+@: Page @(Model.Results.PageCount < Model.Results.PageNumber ? 0 : Model.Results.PageNumber) of @Model.Results.PageCount
+@Html.PagedListPager(Model.Results, page => Url.Action("StudentCourses", new { page, model = Model }))
+}
+
+<!-- Course Details Modal -->
+<div id="courseDetailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseDetailsModalBody" class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<!-- Course Edit Modal -->
+<div id="courseEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseEditModalBody" class="modal-content">
+
+        </div>
+    </div>
+</div>

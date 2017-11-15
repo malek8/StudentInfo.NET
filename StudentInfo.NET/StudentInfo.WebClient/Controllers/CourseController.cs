@@ -239,6 +239,7 @@ namespace StudentInfo.WebClient.Controllers
       {
         courses = courses.Where(x => x.Course.Department.Faculty.Id == model.FacultyId);
       }
+
       if (model.Semester.HasValue)
       {
         courses = courses.Where(x => x.Term == model.Semester);
@@ -252,6 +253,27 @@ namespace StudentInfo.WebClient.Controllers
       int pageNumber = (page ?? 1);
       model.Results = courses.OrderBy(x => x.Course.Code).ToPagedList(pageNumber, SearchConstants.PageSize);
       return View("Search", model);
+    }
+
+    public ActionResult StudentCourses(CourseSearchModel model, int? page)
+    {
+      if (model == null) model = new CourseSearchModel();
+
+      var db = new StudentInfoContext();
+
+      var userId = Guid.Parse(User.Identity.GetUserId());
+      var student = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+
+      var studentCourses = db.StudentCourses.AsQueryable().Where(x => x.StudentId == student.Id);
+
+      if (model.Semester.HasValue)
+      {
+        studentCourses = studentCourses.Where(x => x.CourseSemester.Term == model.Semester);
+      }
+
+      int pageNumber = (page ?? 1);
+      model.StudentCourses = studentCourses.OrderBy(x => x.CourseSemester.Term).ToPagedList(pageNumber, SearchConstants.PageSize);
+      return View("StudentCourses", model);
     }
   }
 }

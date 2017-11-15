@@ -47,7 +47,7 @@
                             <li>@Html.ActionLink("Enroll", "Search", "Course")</li>
                             @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
                             {
-                                
+                            <li>@Html.ActionLink("My Courses", "StudentCourses", "Course")</li>
                             }
                         </ul>
                     </li>
