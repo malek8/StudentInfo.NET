@@ -5,6 +5,13 @@
     })
 }
 
+function loadSemesterCourseDetails(courseId) {
+    $.get('/Course/SemesterCourseDetails?id=' + courseId, function (data) {
+        $('#courseDetailsModalBody').html(data);
+        $('#courseDetailsModal').modal('show');
+    })
+}
+
 function showValidationIssues(isShown) {
     if (isShown) {
         $("#errorContainer").show();
