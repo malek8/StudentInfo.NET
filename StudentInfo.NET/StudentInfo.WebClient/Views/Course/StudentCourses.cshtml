@@ -58,6 +58,9 @@
     <tr>
         <th>Code</th>
         <th>Name</th>
+        <th>Term</th>
+        <th>State</th>
+        <th>Grade</th>
         <th></th>
     </tr>
     @if (Model.StudentCourses != null)
@@ -70,6 +73,15 @@
             </td>
             <td>
                 @Html.DisplayFor(x => item.CourseSemester.Course.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.CourseSemester.Term) 
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.CourseState)
+            </td>
+            <td>
+                @(item.Grade ?? "N/A")
             </td>
             <td>
                 <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
