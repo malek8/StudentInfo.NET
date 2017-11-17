@@ -10,7 +10,7 @@
     <h6>Instructor: </h6>
 </div>
 <div>
-    @Html.DropDownList("Instructors", StudentInfo.WebClient.Helpers.Helper.GetTeachers())
+    @Html.DropDownList("Instructors", StudentInfo.WebClient.Helpers.Helper.GetTeachers(), new { @class = "dropdown"})
 </div>
 <div class="modal-body">
     <div class="modal-footer">
