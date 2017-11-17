@@ -80,53 +80,6 @@ namespace StudentInfo.WebClient.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult AddToCart(CourseEnrollModel model)
-    {
-      var result = false;
-      var message = "Sorry, something bad happened.";
-      var db = new StudentInfoContext();
-      var student = db.UserDetails.FirstOrDefault(x => x.ApplicationUser.Id == User.Identity.GetUserId());
-
-      //if (student != null)
-      //{
-      //    var hasCourse = db.StudentCourses.Any(x => x.Course.Id == model.CourseId &&
-      //    x.CourseDate.Year == model.CourseDate.Year);
-
-      //    if (hasCourse)
-      //    {
-      //        message = "You are registered for this course.";
-      //    }
-      //    else
-      //    {
-      //        db.StudentCourses.Add(new Users.Dto.StudentCourse
-      //        {
-      //            CourseDate = model.CourseDate,
-      //            CourseState = CourseRegistrationState.Added,
-      //            Term = model.Term,
-      //            CreateDate = DateTime.UtcNow,
-      //            LastUpdate = DateTime.UtcNow
-      //        });
-
-      //        try
-      //        {
-      //            db.SaveChanges();
-
-      //            message = "You have been registered for this course.";
-      //            result = true;
-      //        }
-      //        catch(Exception ex)
-      //        {
-      //            Console.WriteLine(ex.Message);
-      //        }
-      //    }
-      //}
-
-      return Json(new { success = result, message = message },
-          JsonRequestBehavior.AllowGet);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
     [AuthorizeRoles(SystemRoles.Administrator)]
     public JsonResult Edit(Course course)
     {
