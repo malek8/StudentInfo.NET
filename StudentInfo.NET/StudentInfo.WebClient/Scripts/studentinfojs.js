@@ -71,24 +71,39 @@ function enrollCourse(semesterCourseId) {
         url: '/Course/Enroll',
         data: { semesterCourseId },
         success: function (data) {
-            var className = "";
-            var alertDivId = Date.now();
-            if (data.success === true) {
-                className = "alert alert-success";
-            }
-            else {
-                className = "alert alert-danger";
-            }
-
-            var alertDiv = document.createElement("div");
-            alertDiv.setAttribute("id", alertDivId);
-            var alertContent = document.createTextNode(data.message);
-
-            alertDiv.className = className;
-            alertDiv.appendChild(alertContent);
-            document.getElementById("alertsContainer").appendChild(alertDiv);
-
-            $("#" + alertDivId).delay(5000).fadeOut();
+            displayAlert(data.message, data.success);
         }
     })
+}
+
+function dropCourse(studentCourseId) {
+    $.ajax({
+        type: 'POST',
+        url: '/Course/Drop',
+        data: { studentCourseId },
+        success: function (data) {
+            displayAlert(data.message, data.success);
+        }
+    })
+}
+
+function displayAlert(messageContent, state) {
+    var className = "";
+    var alertDivId = Date.now();
+    if (state === true) {
+        className = "alert alert-success";
+    }
+    else {
+        className = "alert alert-danger";
+    }
+
+    var alertDiv = document.createElement("div");
+    alertDiv.setAttribute("id", alertDivId);
+    var alertContent = document.createTextNode(messageContent);
+
+    alertDiv.className = className;
+    alertDiv.appendChild(alertContent);
+    document.getElementById("alertsContainer").appendChild(alertDiv);
+
+    $("#" + alertDivId).delay(5000).fadeOut();
 }

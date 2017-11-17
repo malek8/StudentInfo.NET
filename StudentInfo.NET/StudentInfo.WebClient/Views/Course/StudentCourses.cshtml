@@ -75,7 +75,7 @@
                 @Html.DisplayFor(x => item.CourseSemester.Course.Name)
             </td>
             <td>
-                @Html.DisplayFor(x => item.CourseSemester.Term) 
+                @Html.DisplayFor(x => item.CourseSemester.Term) - @item.CreateDate.Year
             </td>
             <td>
                 @Html.DisplayFor(x => item.CourseState)
@@ -84,8 +84,8 @@
                 @(item.Grade ?? "N/A")
             </td>
             <td>
-                <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
-                    <span class="glyphicon glyphicon-plus"></span> Add
+                <button class="btn btn-primary" onclick='dropCourse("@item.Id")'>
+                    <span class="glyphicon glyphicon-remove"></span> Drop
                 </button>
             </td>
         </tr>
