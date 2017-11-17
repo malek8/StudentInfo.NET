@@ -82,6 +82,9 @@ function dropCourse(studentCourseId) {
         url: '/Course/Drop',
         data: { studentCourseId },
         success: function (data) {
+            if (data.success === true) {
+                $('#tr_item' + studentCourseId).remove();
+            }
             displayAlert(data.message, data.success);
         }
     })
