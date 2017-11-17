@@ -9,10 +9,14 @@
     <h4 class="modal-title">@Model.Course.Code - @Model.Course.Name</h4>
     <h6>Instructor: </h6>
 </div>
-<div>
-    @Html.DropDownList("Instructors", StudentInfo.WebClient.Helpers.Helper.GetTeachers(), new { @class = "dropdown"})
-</div>
+
 <div class="modal-body">
+    <div class="row">
+        <div class="col-xs-8">
+            <label for="dropdownIns">Select Instructor</label>
+            @Html.DropDownList("Instructors", StudentInfo.WebClient.Helpers.Helper.GetTeachers(), new { @class= "form-control"})
+        </div>
+    </div>
     <div class="modal-footer">
         <input type="submit" value="Save" class="btn btn-success" />
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
