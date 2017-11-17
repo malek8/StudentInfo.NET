@@ -7,14 +7,10 @@ using StudentInfo.Enums;
 
 namespace StudentInfo.Users.Dto
 {
-    public class StudentCourse
+    public class StudentCourse : UserCourseBase
     {
-        public Guid Id { get; set; }
         public Guid StudentId { get; set; }
         public string Grade { get; set; }
-        public virtual SemesterCourse CourseSemester { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime LastUpdate { get; set; }
         public CourseRegistrationState CourseState { get; set; }
     }
 }

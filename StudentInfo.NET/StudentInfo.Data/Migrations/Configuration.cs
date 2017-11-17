@@ -64,6 +64,16 @@ namespace StudentInfo.Data.Migrations
           PasswordHash = hashedPassword,
           SecurityStamp = Guid.NewGuid().ToString(),
           EmailConfirmed = true
+        },
+        new ApplicationUser
+        {
+            Email = "mr.garrison@southpark.com",
+            UserName = "mr.garrison@southpark.com",
+            FirstName = "Mr.Garrison",
+            LastName = "ABC",
+            PasswordHash = hashedPassword,
+            SecurityStamp = Guid.NewGuid().ToString(),
+            EmailConfirmed = true
         }
       );
     }

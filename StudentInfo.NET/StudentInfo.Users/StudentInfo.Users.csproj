@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Dto\Address.cs" />
     <Compile Include="Dto\ApplicationUser.cs" />
+    <Compile Include="Dto\BaseClass.cs" />
     <Compile Include="Dto\Classroom.cs" />
     <Compile Include="Dto\Course.cs" />
     <Compile Include="Dto\Department.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="Dto\SemesterCourse.cs" />
     <Compile Include="Dto\Student.cs" />
     <Compile Include="Dto\StudentCourse.cs" />
+    <Compile Include="Dto\TeacherCourse.cs" />
+    <Compile Include="Dto\UserCourseBase.cs" />
     <Compile Include="Dto\UserDetails.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

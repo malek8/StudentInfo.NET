@@ -70,13 +70,13 @@
             var trId = "tr_item" + item.Id;
             <tr id=@trId>
             <td>
-                @Html.DisplayFor(x => item.CourseSemester.Course.Code)
+                @Html.DisplayFor(x => item.SemesterCourse.Course.Code)
             </td>
             <td>
-                @Html.DisplayFor(x => item.CourseSemester.Course.Name)
+                @Html.DisplayFor(x => item.SemesterCourse.Course.Name)
             </td>
             <td>
-                @Html.DisplayFor(x => item.CourseSemester.Term) - @item.CreateDate.Year
+                @Html.DisplayFor(x => item.SemesterCourse.Term) - @item.CreateDate.Year
             </td>
             <td>
                 @Html.DisplayFor(x => item.CourseState)

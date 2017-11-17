@@ -66,6 +66,10 @@
     <Compile Include="Migrations\201711160325288_StudentCourse_Grade.Designer.cs">
       <DependentUpon>201711160325288_StudentCourse_Grade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711170250088_TeacherCourse.cs" />
+    <Compile Include="Migrations\201711170250088_TeacherCourse.Designer.cs">
+      <DependentUpon>201711170250088_TeacherCourse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711160325288_StudentCourse_Grade.resx">
       <DependentUpon>201711160325288_StudentCourse_Grade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711170250088_TeacherCourse.resx">
+      <DependentUpon>201711170250088_TeacherCourse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

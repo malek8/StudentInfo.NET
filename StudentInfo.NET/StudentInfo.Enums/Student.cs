@@ -50,4 +50,11 @@ namespace StudentInfo.Enums
         Pass = 5,
         Fail = 6
     }
+
+    public enum CourseState
+    {
+        Open = 1,
+        Closed = 2,
+        Completed = 3,
+    }
 }
