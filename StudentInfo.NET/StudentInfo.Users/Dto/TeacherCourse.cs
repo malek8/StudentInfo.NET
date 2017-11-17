@@ -11,5 +11,6 @@ namespace StudentInfo.Users.Dto
     {
         public Guid TeacherId { get; set; }
         public CourseState State { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

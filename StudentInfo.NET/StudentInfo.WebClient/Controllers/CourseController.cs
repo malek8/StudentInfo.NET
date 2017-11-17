@@ -47,6 +47,7 @@ namespace StudentInfo.WebClient.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
         public ActionResult Details(Guid id, bool allowEdit = false)
         {
             var db = new StudentInfoContext();
@@ -55,11 +56,7 @@ namespace StudentInfo.WebClient.Controllers
 
             if (courseDetails != null)
             {
-                if (allowEdit && User.IsInRole(SystemRoles.Administrator))
-                {
-                    return PartialView("_EditDetails", courseDetails);
-                }
-                return PartialView("_Details", courseDetails);
+                return PartialView("_EditDetails", courseDetails);
             }
             return HttpNotFound();
         }
@@ -313,6 +310,70 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             return Helper.CreateResponse(false, "Failed to assign instructor to course");
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult GetInstructor1(Guid semesterCourseId)
+        {
+            var db = new StudentInfoContext();
+
+            var teacherCourse = db.TeacherCourses.FirstOrDefault(x => x.SemesterCourse.Id == semesterCourseId);
+            if (teacherCourse != null)
+            {
+                if (teacherCourse.Teacher.User == null)
+                {
+                    teacherCourse.Teacher.User = new ApplicationUser()
+                    {
+                        FirstName = Helper.GetUserFirstName(teacherCourse.Teacher.ApplicationUserId),
+                        LastName = Helper.GetUserLastName(teacherCourse.Teacher.ApplicationUserId)
+                    };
+                }
+            }
+            else
+            {
+                teacherCourse = new TeacherCourse();
+            }
+
+            return View("_AssignTeacher", teacherCourse);
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult GetInstructor(Guid semesterCourseId)
+        {
+            var db = new StudentInfoContext();
+
+            var semesterCourse = db.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
+            if (semesterCourse != null)
+            {
+                if (semesterCourse.Teacher != null)
+                {
+                    semesterCourse.Teacher.User = new ApplicationUser()
+                    {
+                        FirstName = Helper.GetUserFirstName(semesterCourse.Teacher.ApplicationUserId),
+                        LastName = Helper.GetUserLastName(semesterCourse.Teacher.ApplicationUserId)
+                    };
+                }
+            }
+            else
+            {
+                semesterCourse = new SemesterCourse();
+            }
+
+            return View("_AssignTeacher", semesterCourse);
+        }
+
+        [HttpGet]
+        public ActionResult GetTeachers()
+        {
+            var db = new StudentInfoContext();
+
+            var teachers = db.Teachers.Select(x => x.ApplicationUserId.ToString()).AsQueryable();
+            var teachersInfo = db.ApplicationUsers.Where(x => teachers.Contains(x.Id));
+
+            return Json(teachersInfo.Select(x => new { userId = x.Id, FullName = x.FirstName + " " + x.LastName }),
+                JsonRequestBehavior.AllowGet);
         }
 
         //public ActionResult MyCourses(CourseSearchModel model, int? page)

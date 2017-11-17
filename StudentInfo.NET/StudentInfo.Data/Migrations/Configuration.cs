@@ -74,6 +74,16 @@ namespace StudentInfo.Data.Migrations
             PasswordHash = hashedPassword,
             SecurityStamp = Guid.NewGuid().ToString(),
             EmailConfirmed = true
+        },
+        new ApplicationUser
+        {
+            Email = "donald.duck@disney.com",
+            UserName = "donald.duck@disney.com",
+            FirstName = "Donald",
+            LastName = "Duck",
+            PasswordHash = hashedPassword,
+            SecurityStamp = Guid.NewGuid().ToString(),
+            EmailConfirmed = true
         }
       );
     }

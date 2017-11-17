@@ -26,6 +26,9 @@ namespace StudentInfo.Data
 
             var teacherUser = userManager.FindByEmail("mr.garrison@southpark.com");
             userManager.AddToRole(teacherUser.Id, SystemRoles.Instructor);
+
+            var facultyUser = userManager.FindByEmail("donald.duck@disney.com");
+            userManager.AddToRole(facultyUser.Id, SystemRoles.FacultyMember);
         }
 
         public static void AddSemesterCourses()

@@ -12,6 +12,13 @@ function loadSemesterCourseDetails(courseId) {
     })
 }
 
+function loadTeachersModal(semesterCourseId) {
+    $.get('/Course/GetInstructor?semesterCourseId=' + semesterCourseId, function (data) {
+        $('#courseInstructorModalBody').html(data);
+        $('#courseInstructorModal').modal('show');
+    })
+}
+
 function showValidationIssues(isShown) {
     if (isShown) {
         $("#errorContainer").show();

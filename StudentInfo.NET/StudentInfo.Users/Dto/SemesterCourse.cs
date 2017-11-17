@@ -14,5 +14,6 @@ namespace StudentInfo.Users.Dto
         public Term Term { get; set; }
         public virtual Course Course { get; set; }
         public virtual Classroom Classroom { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }
