@@ -60,6 +60,7 @@
     <Compile Include="Dto\Course.cs" />
     <Compile Include="Dto\Department.cs" />
     <Compile Include="Dto\Faculty.cs" />
+    <Compile Include="Dto\Teacher.cs" />
     <Compile Include="Dto\Program.cs" />
     <Compile Include="Dto\SemesterCourse.cs" />
     <Compile Include="Dto\Student.cs" />

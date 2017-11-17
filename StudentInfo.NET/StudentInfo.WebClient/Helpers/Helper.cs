@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using StudentInfo.Enums;
+using System.Web.Mvc;
 
 namespace StudentInfo.WebClient.Helpers
 {
@@ -33,6 +34,19 @@ namespace StudentInfo.WebClient.Helpers
                 default:
                     return Term.Fall;
             }
+        }
+
+        public static JsonResult CreateResponse(bool success, string message)
+        {
+            return new JsonResult()
+            {
+                Data = new
+                {
+                    success = success,
+                    message = message
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
     }
 }

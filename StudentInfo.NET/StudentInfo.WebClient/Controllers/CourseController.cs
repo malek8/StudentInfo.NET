@@ -152,18 +152,10 @@ namespace StudentInfo.WebClient.Controllers
                     });
                     context.SaveChanges();
 
-                    return Json(new
-                    {
-                        success = true,
-                        message = $"{semesterCourse.Course.Name} was added successfully!"
-                    });
+                    return Helper.CreateResponse(true, $"{semesterCourse.Course.Name} was added successfully!");
                 }
             }
-            return Json(new
-            {
-                success = false,
-                message = "Failed to add selected course"
-            });
+            return Helper.CreateResponse(false, "Failed to add selected course");
         }
 
         [HttpPost]
@@ -277,6 +269,50 @@ namespace StudentInfo.WebClient.Controllers
             int pageNumber = (page ?? 1);
             model.StudentCourses = studentCourses.ToPagedList(pageNumber, SearchConstants.PageSize);
             return View("StudentCourses", model);
+        }
+
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult AssignInstructor(Guid userId, Guid semesterCourseId)
+        {
+            var context = new StudentInfoContext();
+
+            var applicationUser = context.ApplicationUsers.FirstOrDefault(x => x.Id == userId.ToString());
+            if (applicationUser != null && applicationUser.EmailConfirmed)
+            {
+                var teacherFile = context.Teachers.FirstOrDefault(x => x.ApplicationUserId == userId);
+                if (teacherFile == null)
+                {
+                    context.Teachers.Add(new Teacher
+                    {
+                        Id = Guid.NewGuid(),
+                        ApplicationUserId = userId
+                    });
+
+                    context.SaveChanges();
+                }
+                if (!context.TeacherCourses.Any(x => x.TeacherId == teacherFile.Id && x.SemesterCourse.Id == semesterCourseId))
+                {
+                    var semesterCourse = context.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
+                    if (semesterCourse != null)
+                    {
+                        context.TeacherCourses.Add(new TeacherCourse
+                        {
+                            Id = Guid.NewGuid(),
+                            TeacherId = teacherFile.Id,
+                            State = CourseState.Open,
+                            SemesterCourse= semesterCourse,
+                            CreateDate = DateTime.Now,
+                            LastUpdate = DateTime.Now,
+                        });
+
+                        context.SaveChanges();
+
+                        return Helper.CreateResponse(true, $"{applicationUser.FirstName} {applicationUser.LastName} was assigned to {semesterCourse.Course.Name} successfully!");
+                    }
+                }
+            }
+
+            return Helper.CreateResponse(false, "Failed to assign instructor to course");
         }
 
         //public ActionResult MyCourses(CourseSearchModel model, int? page)

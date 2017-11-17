@@ -35,5 +35,6 @@ namespace StudentInfo.Data
         public DbSet<SemesterCourse> SemesterCourses { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<TeacherCourse> TeacherCourses { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
     }
 }
