@@ -117,3 +117,14 @@ function displayAlert(messageContent, state) {
 
     $("#" + alertDivId).delay(5000).fadeOut();
 }
+
+function assignInstructor(userId, semesterCourseId) {
+    $.ajax({
+        type: 'POST',
+        url: '/Course/AssignInstructor',
+        data: { userId, semesterCourseId },
+        success: function (data) {
+            displayAlert(data.message, data.success);
+        }
+    })
+}
