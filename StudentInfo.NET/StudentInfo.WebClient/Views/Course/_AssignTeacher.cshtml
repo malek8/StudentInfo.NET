@@ -6,19 +6,22 @@
 }
 
 <div class="modal-header">
+    @{ 
+      var teacherName = Model.Teacher == null ? string.Empty : StudentInfo.WebClient.Helpers.Helper.GetUserFullName(Model.Teacher.ApplicationUserId);
+    }
     <h4 class="modal-title">@Model.Course.Code - @Model.Course.Name</h4>
-    <h6>Instructor: </h6>
+    <h6>Instructor: @teacherName</h6>
 </div>
 
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-8">
             <label for="dropdownIns">Select Instructor</label>
-            @Html.DropDownList("Instructors", StudentInfo.WebClient.Helpers.Helper.GetTeachers(), new { @class= "form-control"})
+            @Html.DropDownList("Instructors", StudentInfo.WebClient.Helpers.Helper.GetTeachers(), new { @class= "form-control", @id = "instructorsDropdown"})
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="assignInstructor(@Model.Id)">Save</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick='assignInstructor("@Model.Id")'>Save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </div>
 </div>
