@@ -125,10 +125,12 @@ namespace StudentInfo.WebClient.Controllers
         var student = context.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
         if (student == null)
         {
+          var externalStudentId = Helper.GenerateExternalStudentId();
           student = new Student
           {
             Id = Guid.NewGuid(),
-            ApplicationUserId = userId
+            ApplicationUserId = userId,
+            ExternalStudentId = externalStudentId
           };
 
           context.Students.Add(student);
@@ -284,12 +286,13 @@ namespace StudentInfo.WebClient.Controllers
         var teacherFile = context.Teachers.FirstOrDefault(x => x.ApplicationUserId == userId);
         if (teacherFile == null)
         {
-          context.Teachers.Add(new Teacher
+          teacherFile = new Teacher()
           {
             Id = Guid.NewGuid(),
             ApplicationUserId = userId
-          });
+          };
 
+          context.Teachers.Add(teacherFile);
           context.SaveChanges();
         }
         if (!context.TeacherCourses.Any(x => x.TeacherId == teacherFile.Id && x.SemesterCourse.Id == semesterCourseId))
@@ -355,12 +358,13 @@ namespace StudentInfo.WebClient.Controllers
       var db = new StudentInfoContext();
 
       var semesterCourse = db.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
+
       var courseStudents = db.StudentCourses.Where(x => x.SemesterCourse.Id == semesterCourseId);
 
       var model = new CourseGradesModel
       {
         SemesterCourse = semesterCourse,
-        Students = courseStudents
+        Students = courseStudents.ToList()
       };
 
       return View("_Grades", model);

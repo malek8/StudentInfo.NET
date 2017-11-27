@@ -183,5 +183,17 @@ namespace StudentInfo.WebClient.Helpers
         }
       };
     }
+
+    public static long GenerateExternalStudentId()
+    {
+      var db = new StudentInfoContext();
+
+      var student = db.Students.OrderByDescending(x => x.ExternalStudentId).FirstOrDefault();
+      if (student != null)
+      {
+        return student.ExternalStudentId + 5;
+      }
+      return 234789;
+    }
   }
 }

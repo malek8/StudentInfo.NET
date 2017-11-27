@@ -219,6 +219,7 @@
     <Compile Include="Models\CourseEnrollModel.cs" />
     <Compile Include="Models\CourseGradesModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />
+    <Compile Include="Models\StudentCourseModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />

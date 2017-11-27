@@ -18,7 +18,7 @@
             foreach(var item in Model.Students)
             {
             <tr>
-                <td>@Html.DisplayFor(x => item.StudentId)</td>
+                <td>@Html.DisplayFor(x => item.Student.ExternalStudentId)</td>
                 @if (string.IsNullOrEmpty(item.Grade))
                 {
                 <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems())</td>
@@ -29,6 +29,10 @@
                 }
             </tr>
             }
+        }
+        else
+        {
+          @Html.Label("Empty", "No students were found.")
         }
     </table>
 </div>
