@@ -113,6 +113,11 @@ namespace StudentInfo.WebClient.Helpers
       {
         new SelectListItem()
         {
+          Text = string.Empty,
+          Value = string.Empty
+        },
+        new SelectListItem()
+        {
           Text = Grade.APlus,
           Value = Grade.APlus
         },

@@ -10,6 +10,7 @@ namespace StudentInfo.Users.Dto
   {
     public Guid Id { get; set; }
     public Guid ApplicationUserId { get; set; }
+    public long ExternalStudentId { get; set; }
     public virtual IEnumerable<StudentCourse> StudentCourses { get; set; }
   }
 }
