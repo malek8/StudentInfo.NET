@@ -85,9 +85,12 @@
                         </button>
                 }
 
+                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+                {
                 <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
                     <span class="glyphicon glyphicon-plus"></span> Add
                 </button>
+                }
 
                 <button class="btn btn-primary" onclick='loadSemesterCourseDetails("@item.Course.Id")'>
                     <span class="glyphicon glyphicon-file"></span> Details
