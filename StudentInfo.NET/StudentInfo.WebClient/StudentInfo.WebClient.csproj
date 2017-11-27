@@ -217,6 +217,7 @@
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CourseEnrollModel.cs" />
+    <Compile Include="Models\CourseGradesModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -341,6 +342,7 @@
     <Content Include="Views\Registration\Index.cshtml" />
     <Content Include="Views\Course\StudentCourses.cshtml" />
     <Content Include="Views\Course\_AssignTeacher.cshtml" />
+    <Content Include="Views\Course\_Grades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

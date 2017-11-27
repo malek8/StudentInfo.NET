@@ -1,0 +1,37 @@
+﻿@model StudentInfo.WebClient.Models.CourseGradesModel
+
+@{
+  Layout = "";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@Model.SemesterCourse.Course.Code - @Model.SemesterCourse.Course.Name</h4>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tr>
+            <th>Student ID</th>
+            <th>Grade</th>
+        </tr>
+        @if(Model.Students.Count() > 0)
+        {
+            foreach(var item in Model.Students)
+            {
+            <tr>
+                <td>@Html.DisplayFor(x => item.StudentId)</td>
+                @if (string.IsNullOrEmpty(item.Grade))
+                {
+                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems())</td>
+                }
+                else
+                {
+                <td>@Html.Label("Grade", item.Grade)</td>
+                }
+            </tr>
+            }
+        }
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

@@ -349,6 +349,23 @@ namespace StudentInfo.WebClient.Controllers
       return View("_AssignTeacher", semesterCourse);
     }
 
+    [HttpGet]
+    public ActionResult GetCourseGrades(Guid semesterCourseId)
+    {
+      var db = new StudentInfoContext();
+
+      var semesterCourse = db.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
+      var courseStudents = db.StudentCourses.Where(x => x.SemesterCourse.Id == semesterCourseId);
+
+      var model = new CourseGradesModel
+      {
+        SemesterCourse = semesterCourse,
+        Students = courseStudents
+      };
+
+      return View("_Grades", model);
+    }
+
     //public ActionResult MyCourses(CourseSearchModel model, int? page)
     //{
     //    if (model == null) model = new CourseSearchModel();

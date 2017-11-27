@@ -129,3 +129,10 @@ function assignInstructor(semesterCourseId) {
         }
     });
 }
+
+function loadGradesModal(semesterCourseId) {
+    $.get("/Course/GetCourseGrades?semesterCourseId=" + semesterCourseId, function (data) {
+        $("#courseGradesModalBody").html(data);
+        $("#courseGradesModal").modal("show");
+    })
+}

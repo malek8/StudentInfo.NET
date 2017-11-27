@@ -92,6 +92,13 @@
                 </button>
                 }
 
+                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
+                {
+                <button class="btn btn-primary" onclick='loadGradesModal("@item.Id")'>
+                    <span class="glyphicon glyphicon-list-alt"></span> Grades
+                </button>
+                }
+
                 <button class="btn btn-primary" onclick='loadSemesterCourseDetails("@item.Course.Id")'>
                     <span class="glyphicon glyphicon-file"></span> Details
                 </button>
@@ -127,6 +134,14 @@
 <div id="courseInstructorModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseInstructorModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Grades Modal -->
+<div id="courseGradesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseGradesModalBody" class="modal-content">
         </div>
     </div>
 </div>
