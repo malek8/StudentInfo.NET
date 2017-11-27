@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using StudentInfo.Data;
+using System.Collections.Generic;
 using PagedList;
 using StudentInfo.Enums;
 using StudentInfo.WebClient.Helpers;
@@ -353,6 +354,7 @@ namespace StudentInfo.WebClient.Controllers
     }
 
     [HttpGet]
+    [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember, SystemRoles.Instructor)]
     public ActionResult GetCourseGrades(Guid semesterCourseId)
     {
       var db = new StudentInfoContext();
@@ -368,6 +370,14 @@ namespace StudentInfo.WebClient.Controllers
       };
 
       return View("_Grades", model);
+    }
+
+    [HttpPost]
+    [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember, SystemRoles.Instructor)]
+    public ActionResult SubmitGrades(Guid semesterCourseId)
+    {
+
+      return Helper.CreateResponse(true, "Saved");
     }
 
     //public ActionResult MyCourses(CourseSearchModel model, int? page)

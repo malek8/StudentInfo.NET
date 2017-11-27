@@ -8,20 +8,21 @@
     <h4 class="modal-title">@Model.SemesterCourse.Course.Code - @Model.SemesterCourse.Course.Name</h4>
 </div>
 <div class="modal-body">
-    <table class="table">
-        <tr>
-            <th>Student ID</th>
-            <th>Grade</th>
-        </tr>
-        @if(Model.Students.Count() > 0)
+    
+        @if (Model.Students.Count() > 0)
         {
-            foreach(var item in Model.Students)
+        <table class="table">
+            <tr>
+                <th>Student ID</th>
+                <th>Grade</th>
+            </tr>
+            @foreach (var item in Model.Students)
             {
             <tr>
                 <td>@Html.DisplayFor(x => item.Student.ExternalStudentId)</td>
                 @if (string.IsNullOrEmpty(item.Grade))
                 {
-                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems())</td>
+                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems(), new { id = item.StudentId, onchange = "captureGrade()" })</td>
                 }
                 else
                 {
@@ -29,12 +30,12 @@
                 }
             </tr>
             }
+        </table>
         }
         else
         {
-          @Html.Label("Empty", "No students were found.")
+        @Html.Label("Empty", "No results.")
         }
-    </table>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

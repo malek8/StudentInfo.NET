@@ -136,3 +136,7 @@ function loadGradesModal(semesterCourseId) {
         $("#courseGradesModal").modal("show");
     })
 }
+
+function captureGrade() {
+    //$('[name="Grades"]')
+}
