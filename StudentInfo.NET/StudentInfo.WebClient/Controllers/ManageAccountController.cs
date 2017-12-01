@@ -176,6 +176,12 @@ namespace StudentInfo.WebClient.Controllers
                 if (password.Length > 100) errors.Add("Password is too long");
                 if (!password.Equals(confirmPassword, StringComparison.CurrentCulture))
                     errors.Add("Confirmation does not match password");
+                if (password.Count(x => char.IsUpper(x)) < 2)
+                    errors.Add("Password must contain at least 2 capital letters");
+                if (password.Count(x => char.IsDigit(x)) == 0)
+                    errors.Add("Password must contain at least 1 number");
+                if (password.Count(x => !char.IsLetterOrDigit(x)) == 0)
+                    errors.Add("Password must contain at least 1 special character");
             }
 
             return errors;
