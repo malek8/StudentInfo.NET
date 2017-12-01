@@ -205,6 +205,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\FacultyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageAccountController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\StudentCenterController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -348,6 +349,7 @@
     <Content Include="Views\Course\StudentCourses.cshtml" />
     <Content Include="Views\Course\_AssignTeacher.cshtml" />
     <Content Include="Views\Course\_Grades.cshtml" />
+    <Content Include="Views\ManageAccount\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,7 +10,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using StudentInfo.WebClient.App_Start;
 using StudentInfo.Users.Dto;
+using StudentInfo.Enums;
 using StudentInfo.Data;
+using System.Security.Claims;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -164,6 +166,14 @@ namespace StudentInfo.WebClient.Controllers
 
             if (user != null && user.EmailConfirmed)
             {
+                var identity = await UserManager.ClaimsIdentityFactory.CreateAsync(UserManager, user, DefaultAuthenticationTypes.ApplicationCookie);
+
+                identity.AddClaim(new Claim(CustomClaims.FirstName, user.FirstName));
+                identity.AddClaim(new Claim(CustomClaims.FirstName, user.LastName));
+
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignIn(identity);
+
                 return RedirectToLocal(returnUrl);
             }
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
