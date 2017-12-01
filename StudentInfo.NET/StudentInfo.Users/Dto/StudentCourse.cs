@@ -8,12 +8,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentInfo.Users.Dto
 {
-  public class StudentCourse : UserCourseBase
-  {
-    public Guid StudentId { get; set; }
-    public string Grade { get; set; }
-    public CourseRegistrationState CourseState { get; set; }
-
-    public virtual Student Student { get; set; }
-  }
+    public class StudentCourse : UserCourseBase
+    {
+        public Guid StudentId { get; set; }
+        public string Grade { get; set; }
+        public CourseRegistrationState CourseState { get; set; }
+        public bool Paid { get; set; }
+        public virtual Student Student { get; set; }
+    }
 }
