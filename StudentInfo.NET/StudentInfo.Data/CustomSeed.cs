@@ -44,7 +44,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.112"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 6281"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Winter
+                    Term = Term.Winter,
+                    Cost = 450,
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -53,7 +54,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.114"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "SOEN 6441"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Winter
+                    Term = Term.Winter,
+                    Cost = 500
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -62,7 +64,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.116"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "SOEN 6431"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Winter
+                    Term = Term.Winter,
+                    Cost = 725
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -71,7 +74,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.118"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 6231"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Winter
+                    Term = Term.Winter,
+                    Cost = 630
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -80,7 +84,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.120"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 691"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Winter
+                    Term = Term.Winter,
+                    Cost = 650
                 });
 
                 // Fall
@@ -90,7 +95,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.112"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 6281"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Fall
+                    Term = Term.Fall,
+                    Cost = 450
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -99,7 +105,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.114"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "SOEN 6441"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Fall
+                    Term = Term.Fall,
+                    Cost = 325
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -108,7 +115,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.116"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "SOEN 6431"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Fall
+                    Term = Term.Fall,
+                    Cost = 450
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -117,7 +125,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.118"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 6231"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Fall
+                    Term = Term.Fall,
+                    Cost = 425
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -126,7 +135,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.120"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 691"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Fall
+                    Term = Term.Fall,
+                    Cost = 425
                 });
 
                 // Summer 1
@@ -136,7 +146,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.112"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 6281"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Summer1
+                    Term = Term.Summer1,
+                    Cost = 425
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -145,7 +156,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.114"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "SOEN 6441"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Summer1
+                    Term = Term.Summer1,
+                    Cost = 425
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -154,7 +166,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.116"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "SOEN 6431"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Summer1
+                    Term = Term.Summer1,
+                    Cost = 425
                 });
 
                 // Summer 2
@@ -164,7 +177,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.118"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 6231"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Summer2
+                    Term = Term.Summer2,
+                    Cost = 425
                 });
 
                 context.SemesterCourses.Add(new SemesterCourse
@@ -173,7 +187,8 @@ namespace StudentInfo.Data
                     Classroom = context.Classrooms.FirstOrDefault(x => x.Number == "H2.120"),
                     Course = context.Courses.FirstOrDefault(x => x.Code == "COMP 691"),
                     CourseDate = DateTime.Now,
-                    Term = Term.Summer2
+                    Term = Term.Summer2,
+                    Cost = 425
                 });
 
                 context.SaveChanges();

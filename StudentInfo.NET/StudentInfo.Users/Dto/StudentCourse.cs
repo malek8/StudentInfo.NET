@@ -13,7 +13,6 @@ namespace StudentInfo.Users.Dto
         public Guid StudentId { get; set; }
         public string Grade { get; set; }
         public CourseRegistrationState CourseState { get; set; }
-        public bool Paid { get; set; }
         public virtual Student Student { get; set; }
     }
 }
