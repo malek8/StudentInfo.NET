@@ -399,17 +399,6 @@ namespace StudentInfo.WebClient.Controllers
             return HttpNotFound();
         }
 
-        //public ActionResult MyCourses(CourseSearchModel model, int? page)
-        //{
-        //    if (model == null) model = new CourseSearchModel();
-
-        //    var db = new StudentInfoContext();
-
-        //    var userId = Guid.Parse(User.Identity.GetUserId());
-
-
-        //}
-
         private IEnumerable<StudentCourse> GetStudentCourses()
         {
             return new List<StudentCourse>();
