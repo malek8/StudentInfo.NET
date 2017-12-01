@@ -23,6 +23,11 @@ namespace StudentInfo.WebClient
             get { return ReadKeyValue("SystemName"); }
         }
 
+        public static string SupportEmail
+        {
+            get { return ReadKeyValue("SupportEmail"); }
+        }
+
         private static string ReadKeyValue(string key)
         {
             return ConfigurationManager.AppSettings[key];

@@ -26,39 +26,45 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
+                    @if (User.Identity.IsAuthenticated)
                     {
+                        if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Users
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Search", "Index", "User")</li>
+                                    <li>@Html.ActionLink("Create", "Register", "Account")</li>
+                                </ul>
+                            </li>
+                        }
+
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users
-                            <span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Courses
+                                <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Search", "Index", "User")</li>
-                                <li>@Html.ActionLink("Create", "Register", "Account")</li>
+                                <li>@Html.ActionLink("Search", "Search", "Course")</li>
+                                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+                                {
+                                    <li>@Html.ActionLink("Enroll", "Search", "Course")</li>
+                                    <li>@Html.ActionLink("My Courses", "StudentCourses", "Course")</li>
+                                }
+                                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
+                                {
+                                    <li>@Html.ActionLink("Manage", "Search", "Course")</li>
+                                }
+                                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
+                                {
+                                    <li>@Html.ActionLink("Manage", "Search", "Course")</li>
+                                }
                             </ul>
                         </li>
                     }
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Courses
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Search", "Search", "Course")</li>
-                            @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
-                            {
-                                <li>@Html.ActionLink("Enroll", "Search", "Course")</li>
-                                <li>@Html.ActionLink("My Courses", "StudentCourses", "Course")</li>
-                            }
-                            @if (User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
-                            {
-                                <li>@Html.ActionLink("Manage", "Search", "Course")</li>
-                            }
-                            @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
-                            {
-                                <li>@Html.ActionLink("Manage", "Search", "Course")</li>
-                            }
-                        </ul>
-                    </li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
