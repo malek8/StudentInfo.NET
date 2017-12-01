@@ -150,6 +150,9 @@ namespace StudentInfo.WebClient.Controllers
                         CreateDate = DateTime.Now,
                         LastUpdate = DateTime.Now
                     });
+
+                    student.Balance += semesterCourse.Cost;
+
                     context.SaveChanges();
 
                     return Helper.CreateResponse(true, $"{semesterCourse.Course.Name} was added successfully!");
