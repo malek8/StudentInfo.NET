@@ -40,7 +40,7 @@
 <br />
 <div class="row">
     <div class="col-md-4">
-        <button class="btn btn-primary" onclick=''>
+        <button class="btn btn-primary" onclick='loadPasswordChangeModal()'>
             <span class="glyphicon glyphicon-lock"></span> Change Password
         </button>
     </div>
@@ -62,7 +62,7 @@
 <div id="passwordChangeModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="passwordChangeModalBody" class="modal-content">
-            @*@Html.Partial("_ChangePassword")*@
+            @Html.Partial("_ChangePassword", new StudentInfo.WebClient.Models.ChangePasswordModel())
         </div>
     </div>
 </div>

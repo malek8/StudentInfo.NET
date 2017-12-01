@@ -42,6 +42,20 @@ function fillValidationErrors(errors) {
     $("#errors").html(errorsList);
 }
 
+function fillPasswordChangeValidationErrors(errors) {
+    $("#passwordChangeErrors").html("");
+
+    var errorsList = document.createElement("ul");
+
+    for (var i = 0; i < errors.length; i++) {
+        var item = document.createElement("li");
+        item.appendChild(document.createTextNode(errors[i]));
+        errorsList.appendChild(item);
+    }
+
+    $("#passwordChangeErrors").html(errorsList);
+}
+
 function processResult(data) {
     if (data.success) {
         showValidationIssues(false);
@@ -55,7 +69,7 @@ function processResult(data) {
 
 function processEmailChangeResult(data) {
     if (data.success) {
-        showValidationIssues(false);
+        showElement(false, "#emailChangeErrorContainer");
         $("#emailChangeModal").on("hide.bs.modal", function (e) {
             window.location = "/Account/Login/";
         });
@@ -65,8 +79,25 @@ function processEmailChangeResult(data) {
         }, 500);
     }
     else {
-        fillValidationErrors(data);
-        showValidationIssues(true);
+        fillValidationErrorsGeneric(data, "#emailChangeErrors");
+        showElement(true, "#emailChangeErrorContainer");
+    }
+}
+
+function processPasswordChangeResult(data) {
+    if (data.success) {
+        showElement(false, "#passwordChangeErrorContainer");
+        $("#passwordChangeModal").on("hide.bs.modal", function (e) {
+            window.location = "/Account/Login/";
+        });
+
+        setTimeout(function () {
+            $("#passwordChangeModal").modal("hide");
+        }, 500);
+    }
+    else {
+        fillValidationErrorsGeneric(data, "#passwordChangeErrors");
+        showElement(true, "#passwordChangeErrorContainer");
     }
 }
 

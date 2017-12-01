@@ -218,6 +218,7 @@
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangeEmailModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CourseEnrollModel.cs" />
     <Compile Include="Models\CourseGradesModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />
@@ -313,6 +314,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\studentinfogeneric.js" />
     <Content Include="Scripts\studentinfojs.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -352,6 +354,7 @@
     <Content Include="Views\Course\_Grades.cshtml" />
     <Content Include="Views\ManageAccount\Index.cshtml" />
     <Content Include="Views\ManageAccount\_ChangeEmail.cshtml" />
+    <Content Include="Views\ManageAccount\_ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

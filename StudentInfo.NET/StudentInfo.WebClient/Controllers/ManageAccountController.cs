@@ -110,6 +110,44 @@ namespace StudentInfo.WebClient.Controllers
             return Json(errors);
         }
 
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> ChangePassword(ChangePasswordModel model)
+        {
+            var errors = ValidatePassword(model.Password, model.ConfirmPassword);
+
+            if (errors.Count == 0)
+            {
+                var emailAddress = ((ClaimsIdentity)User.Identity).FindFirstValue(CustomClaims.EmailAddress);
+                if (!string.IsNullOrEmpty(emailAddress))
+                {
+                    var user = await UserManager.FindByEmailAsync(emailAddress);
+
+                    if (user != null)
+                    {
+                        if (UserManager.CheckPassword(user, model.CurrentPassword))
+                        {
+                            var newHashedPassword = new PasswordHasher().HashPassword(model.Password);
+                            user.PasswordHash = newHashedPassword;
+
+                            var result = UserManager.Update(user);
+
+                            if (result.Succeeded)
+                            {
+                                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                                return Json(new { success = true });
+                            }
+                        }
+                        else
+                        {
+                            errors.Add("Current password is not correct");
+                        }
+                    }
+                }
+            }
+
+            return Json(errors);
+        }
+
         private bool ValidateEmail(string email)
         {
             if (string.IsNullOrEmpty(email)) return false;
@@ -124,6 +162,23 @@ namespace StudentInfo.WebClient.Controllers
             {
                 return false;
             }
+        }
+
+        private List<string> ValidatePassword(string password, string confirmPassword)
+        {
+            var errors = new List<string>();
+
+            if (string.IsNullOrEmpty(password)) errors.Add("Password is required");
+
+            if (!string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(confirmPassword))
+            {
+                if (password.Length < 6) errors.Add("Password is too short");
+                if (password.Length > 100) errors.Add("Password is too long");
+                if (!password.Equals(confirmPassword, StringComparison.CurrentCulture))
+                    errors.Add("Confirmation does not match password");
+            }
+
+            return errors;
         }
     }
 }
