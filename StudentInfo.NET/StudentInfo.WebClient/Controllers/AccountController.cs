@@ -162,14 +162,15 @@ namespace StudentInfo.WebClient.Controllers
 
         private async Task<ActionResult> CheckAccount(string email, string returnUrl)
         {
-            var user = await UserManager.FindByEmailAsync(email);
+            var user = await UserManager.FindByNameAsync(email);
 
             if (user != null && user.EmailConfirmed)
             {
                 var identity = await UserManager.ClaimsIdentityFactory.CreateAsync(UserManager, user, DefaultAuthenticationTypes.ApplicationCookie);
 
                 identity.AddClaim(new Claim(CustomClaims.FirstName, user.FirstName));
-                identity.AddClaim(new Claim(CustomClaims.FirstName, user.LastName));
+                identity.AddClaim(new Claim(CustomClaims.LastName, user.LastName));
+                identity.AddClaim(new Claim(CustomClaims.EmailAddress, user.Email));
 
                 AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 AuthenticationManager.SignIn(identity);

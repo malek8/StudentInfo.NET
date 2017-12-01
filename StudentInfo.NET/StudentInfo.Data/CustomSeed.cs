@@ -19,16 +19,16 @@ namespace StudentInfo.Data
             var userManager = new UserManager<ApplicationUser>(userStore);
 
             var adminUser = userManager.FindByEmail("malek.atwiz@hotmail.com");
-            userManager.AddToRole(adminUser.Id, SystemRoles.Administrator);
+            if (adminUser != null) userManager.AddToRole(adminUser.Id, SystemRoles.Administrator);
 
             var studentUser = userManager.FindByEmail("bruce.wayne@batman.com");
-            userManager.AddToRole(studentUser.Id, SystemRoles.Student);
+            if (studentUser != null) userManager.AddToRole(studentUser.Id, SystemRoles.Student);
 
             var teacherUser = userManager.FindByEmail("mr.garrison@southpark.com");
-            userManager.AddToRole(teacherUser.Id, SystemRoles.Instructor);
+            if (teacherUser != null) userManager.AddToRole(teacherUser.Id, SystemRoles.Instructor);
 
             var facultyUser = userManager.FindByEmail("donald.duck@disney.com");
-            userManager.AddToRole(facultyUser.Id, SystemRoles.FacultyMember);
+            if (facultyUser != null) userManager.AddToRole(facultyUser.Id, SystemRoles.FacultyMember);
         }
 
         public static void AddSemesterCourses()

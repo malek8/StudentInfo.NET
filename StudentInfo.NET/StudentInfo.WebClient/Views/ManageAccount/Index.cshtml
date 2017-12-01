@@ -1,7 +1,67 @@
-﻿
+﻿@model StudentInfo.WebClient.Models.RegisterViewModel
+
 @{
     ViewBag.Title = "Manage Account";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
+    <div class="row">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @readonly = true })
+        </div>
+    </div>
+<br />
+    <div class="row">
+        @Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @readonly = true })
+        </div>
+    </div>
+<br />
+    <div class="row">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @readonly = true })
+        </div>
+    </div>
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-primary" onclick='loadChangeEmailModal()'>
+            <span class="glyphicon glyphicon-envelope"></span> Change Email
+        </button>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-primary" onclick=''>
+            <span class="glyphicon glyphicon-lock"></span> Change Password
+        </button>
+    </div>
+</div>
+
+<!-- Email Change Modal -->
+<div id="emailChangeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="emailChangeModalBody" class="modal-content">
+            @Html.Partial("_ChangeEmail", new StudentInfo.WebClient.Models.ChangeEmailModel())
+        </div>
+    </div>
+</div>
+
+<!-- Password Change Modal -->
+<div id="passwordChangeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="passwordChangeModalBody" class="modal-content">
+            @*@Html.Partial("_ChangePassword")*@
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

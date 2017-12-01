@@ -53,6 +53,16 @@ function processResult(data) {
     }
 }
 
+function processEmailChangeResult(data) {
+    if (data.success) {
+        showValidationIssues(false);
+        $("#emailChangeModal").modal("hide");
+    }
+    else {
+
+    }
+}
+
 function updateDepartments() {
     $("#departmentSelector").empty();
     getDepartments($("#facultySelector").val());
@@ -139,4 +149,12 @@ function loadGradesModal(semesterCourseId) {
 
 function captureGrade() {
     //$('[name="Grades"]')
+}
+
+function loadChangeEmailModal() {
+    $("#emailChangeModal").modal("show");
+}
+
+function loadPasswordChangeModal() {
+    $("#passwordChangeModal").modal("show");
 }
