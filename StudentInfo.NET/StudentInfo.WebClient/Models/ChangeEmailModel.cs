@@ -8,8 +8,6 @@ namespace StudentInfo.WebClient.Models
 {
     public class ChangeEmailModel
     {
-        [Required]
-        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }

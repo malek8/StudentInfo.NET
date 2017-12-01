@@ -9,7 +9,7 @@
 </div>
 <div class="modal-body">
     <div class="alert alert-warning">
-        <strong>Warning!</strong> You will be signed off after changing your email address.
+        <strong>Warning!</strong> You will be signed off when email is changed successfully.
     </div>
     <div class="form-horizontal" role="form">
         @using (Ajax.BeginForm("ChangeEmail", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "processEmailChangeResult" }))

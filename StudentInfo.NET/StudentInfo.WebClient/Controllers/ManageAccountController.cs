@@ -10,6 +10,7 @@ using StudentInfo.Enums;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using StudentInfo.WebClient.Models;
+using Microsoft.Owin.Security;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -28,6 +29,11 @@ namespace StudentInfo.WebClient.Controllers
             {
                 _userManager = value;
             }
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         // GET: ManageAccount
@@ -63,7 +69,7 @@ namespace StudentInfo.WebClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> ChangeEmail(ChangeEmailModel model)
         {
-            if (ModelState.IsValid)
+            if (ValidateEmail(model.Email))
             {
                 var oldEmailAddress = ((ClaimsIdentity)User.Identity).FindFirstValue(CustomClaims.EmailAddress);
                 if (!string.IsNullOrEmpty(oldEmailAddress))
@@ -78,6 +84,7 @@ namespace StudentInfo.WebClient.Controllers
 
                         if (result.Succeeded)
                         {
+                            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                             return Json(new { success = true });
                         }
 
@@ -91,12 +98,32 @@ namespace StudentInfo.WebClient.Controllers
                 }
             }
 
+            ModelState.AddModelError("invalidInput", "Invalid email address");
+
             var errors = new List<string>();
             foreach (var e in ModelState.Values)
             {
                 errors.AddRange(e.Errors.Select(x => x.ErrorMessage));
             }
+
+            ModelState.Clear();
             return Json(errors);
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return false;
+            if (email.Length > 256) return false;
+
+            try
+            {
+                var address = new System.Net.Mail.MailAddress(email);
+                return address.Address == email;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
     }
 }

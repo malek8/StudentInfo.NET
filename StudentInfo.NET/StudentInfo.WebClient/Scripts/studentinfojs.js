@@ -56,10 +56,17 @@ function processResult(data) {
 function processEmailChangeResult(data) {
     if (data.success) {
         showValidationIssues(false);
-        $("#emailChangeModal").modal("hide");
+        $("#emailChangeModal").on("hide.bs.modal", function (e) {
+            window.location = "/Account/Login/";
+        });
+
+        setTimeout(function () {
+            $("#emailChangeModal").modal("hide");
+        }, 500);
     }
     else {
-
+        fillValidationErrors(data);
+        showValidationIssues(true);
     }
 }
 
