@@ -355,6 +355,7 @@
     <Content Include="Views\ManageAccount\Index.cshtml" />
     <Content Include="Views\ManageAccount\_ChangeEmail.cshtml" />
     <Content Include="Views\ManageAccount\_ChangePassword.cshtml" />
+    <Content Include="Views\Course\_StudentCourseDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

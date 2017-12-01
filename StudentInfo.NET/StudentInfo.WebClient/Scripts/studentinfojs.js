@@ -12,6 +12,13 @@ function loadSemesterCourseDetails(courseId) {
     });
 }
 
+function loadStudentCourseDetails(studentCourseId) {
+    $.get("/Course/StudentCourse?studentCourseId=" + studentCourseId, function (data) {
+        $("#studentCourseDetailsModalBody").html(data);
+        $("#studentCourseDetailsModal").modal("show");
+    })
+}
+
 function loadTeachersModal(semesterCourseId) {
     $.get("/Course/GetInstructor?semesterCourseId=" + semesterCourseId, function (data) {
         $("#courseInstructorModalBody").html(data);

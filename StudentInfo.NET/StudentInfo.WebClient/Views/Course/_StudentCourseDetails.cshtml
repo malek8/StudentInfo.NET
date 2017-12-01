@@ -1,0 +1,24 @@
+﻿@model StudentInfo.Users.Dto.StudentCourse
+@{
+    Layout = "";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@Model.SemesterCourse.Course.Code - @Model.SemesterCourse.Course.Name</h4>
+</div>
+<div class="modal-body">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">@Model.SemesterCourse.Course.Department.Faculty.Name</li>
+        <li class="breadcrumb-item">@Model.SemesterCourse.Course.Department.Name</li>
+    </ol>
+    <p>Course Description:</p>
+    <p class="text-info">@Model.SemesterCourse.Course.Description</p>
+
+    <p>State: @((StudentInfo.Enums.CourseState)Model.CourseState)</p>
+    <p>Grade: @(@Model.Grade ?? string.Empty)</p>
+    <p>Course Period: @Model.SemesterCourse.CourseDate.Year - @Model.SemesterCourse.Term</p>
+    <p>Location: @Model.SemesterCourse.Classroom.Campus - @Model.SemesterCourse.Classroom.Number</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
