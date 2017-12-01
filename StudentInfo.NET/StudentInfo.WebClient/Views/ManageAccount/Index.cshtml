@@ -1,4 +1,6 @@
-﻿@model StudentInfo.WebClient.Models.RegisterViewModel
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@model StudentInfo.WebClient.Models.RegisterViewModel
 
 @{
     ViewBag.Title = "Manage Account";
@@ -48,7 +50,10 @@
 <div id="emailChangeModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="emailChangeModalBody" class="modal-content">
-            @Html.Partial("_ChangeEmail", new StudentInfo.WebClient.Models.ChangeEmailModel())
+            @Html.Partial("_ChangeEmail", new StudentInfo.WebClient.Models.ChangeEmailModel
+       {
+           Email = ((ClaimsIdentity)User.Identity).FindFirstValue(StudentInfo.Enums.CustomClaims.EmailAddress)
+       })
         </div>
     </div>
 </div>
