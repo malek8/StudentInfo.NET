@@ -108,6 +108,23 @@ function processPasswordChangeResult(data) {
     }
 }
 
+function processPayBalanceResult(data) {
+    if (data.success === true) {
+        showElement(false, "#payBalanceErrorContainer");
+        $("#payBalanceModal").on("hide.bs.modal", function (e) {
+            setTimeout(function () {
+                window.location = "/ManageAccount/";
+            }, 500);
+        })
+        $("#payBalanceModal").modal("hide");
+        displayAlert(data.messages[0], true);
+    }
+    else {
+        fillValidationErrorsGeneric(data.messages, "#payBalanceErrors");
+        showElement(true, "#payBalanceErrorContainer");
+    }
+}
+
 function updateDepartments() {
     $("#departmentSelector").empty();
     getDepartments($("#facultySelector").val());

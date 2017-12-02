@@ -165,7 +165,7 @@ namespace StudentInfo.WebClient.Controllers
 
         [HttpGet]
         [AuthorizeRoles(SystemRoles.Student)]
-        public async Task<ActionResult> GetStudentBalance()
+        public ActionResult GetStudentBalance()
         {
             var model = new StudentBalanceModel();
             if (User.Identity.IsAuthenticated)
@@ -181,6 +181,51 @@ namespace StudentInfo.WebClient.Controllers
                 }
             }
             return View("_PayBalance", model);
+        }
+
+        public JsonResult PayBalance(StudentBalanceModel model)
+        {
+            var messages = new List<string>();
+
+            if (!ValidateCreditCardInformation(model))
+            {
+                messages.Add("Invalid card information");
+            }
+            else if (model.AmountToPay <= 0)
+            {
+                messages.Add("Invalid amount");
+            }
+            else
+            {
+                var userId = Guid.Parse(User.Identity.GetUserId());
+                var db = new StudentInfoContext();
+
+                var student = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+                if (student != null)
+                {
+                    var previousBalance = student.Balance;
+                    student.Balance -= model.AmountToPay;
+
+                    db.SaveChanges();
+
+                    if (model.AmountToPay > previousBalance)
+                    {
+                        messages.Add($"You have been credited ${model.AmountToPay - previousBalance}");
+                    }
+                    else
+                    {
+                        messages.Add("Payment has been deposited successfully");
+                    }
+
+                    return Json(new { success = true, messages = messages });
+                }
+                else
+                {
+                    messages.Add("There is no outstanding balance");
+                }
+            }
+
+            return Json(new { success = false, messages = messages });
         }
 
         private bool ValidateEmail(string email)
@@ -220,6 +265,24 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             return errors;
+        }
+
+        private bool ValidateCreditCardInformation(StudentBalanceModel model)
+        {
+            if (string.IsNullOrEmpty(model.NameOnCreditCard) ||
+                string.IsNullOrEmpty(model.CreditProvider) ||
+                string.IsNullOrEmpty(model.CreditCardNumber) ||
+                string.IsNullOrEmpty(model.CreditCardCode) ||
+                string.IsNullOrEmpty(model.ExpirationMonth) ||
+                string.IsNullOrEmpty(model.ExpirationYear) ||
+                model.NameOnCreditCard.Length <= 3 ||
+                model.CreditCardCode.Length != 3 ||
+                model.CreditCardNumber.Length != 16 ||
+                !model.NameOnCreditCard.All(x => char.IsLetter(x)) ||
+                !model.CreditCardNumber.All(x => char.IsNumber(x)) ||
+                !model.CreditCardCode.All(x => char.IsNumber(x))
+                ) return false;
+            return true;
         }
     }
 }

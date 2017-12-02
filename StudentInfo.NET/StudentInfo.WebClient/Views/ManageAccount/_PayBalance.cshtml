@@ -1,4 +1,5 @@
-﻿@model StudentInfo.WebClient.Models.StudentBalanceModel
+﻿@using StudentInfo.WebClient.Helpers
+@model StudentInfo.WebClient.Models.StudentBalanceModel
 @{
     Layout = "";
 }
@@ -14,10 +15,48 @@
     @if(Model.HasBalance)
     {
         <div class="form-horizontal" role="form">
-                @using (Ajax.BeginForm("ChangeEmail", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "processEmailChangeResult" }))
+                @using (Ajax.BeginForm("PayBalance", new AjaxOptions() { HttpMethod = "Post", OnSuccess = "processPayBalanceResult" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CreditProvider, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(m => m.CreditProvider, Helper.GetCreditProviders(), new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.NameOnCreditCard, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.NameOnCreditCard, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CreditCardNumber, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Expiration Date", new { @class = "col-md-3 control-label" })
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(x => x.ExpirationMonth, Helper.GetExpiryMonths(), new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.DropDownListFor(x => x.ExpirationYear, Helper.GetExpiryYears(), new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CreditCardCode, new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.CreditCardCode, new { @class = "form-control" })
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         @Html.LabelFor(x => x.Balance, new { @class = "col-md-3 control-label" })
@@ -34,7 +73,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <input type="submit" value="Save" class="btn btn-success" />
+                        <input type="submit" value="Pay" class="btn btn-success" />
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 }

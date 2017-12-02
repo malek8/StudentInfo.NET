@@ -14,6 +14,7 @@ namespace StudentInfo.WebClient.Models
         public string MiddleName { get; set; }
 
         [DataType(DataType.Currency)]
+        [Display(Name = "Balance/Credit")]
         public decimal Balance { get; set; }
     }
 }
