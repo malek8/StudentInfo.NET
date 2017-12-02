@@ -29,6 +29,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li>@Html.ActionLink("Account", "Index", "ManageAccount")</li>
+
                         if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                         {
                             <li class="dropdown">
