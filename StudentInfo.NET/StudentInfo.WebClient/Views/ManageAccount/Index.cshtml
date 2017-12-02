@@ -41,14 +41,17 @@
     <br />
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <button class="btn btn-primary" onclick='loadPayBalanceModal()'>
-            <span class="glyphicon glyphicon-usd"></span> Pay Balance
-        </button>
+@if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-primary" onclick='loadPayBalanceModal()'>
+                <span class="glyphicon glyphicon-usd"></span> Pay Balance
+            </button>
+        </div>
     </div>
-</div>
-<br />
+    <br />
+}
 
 <div class="row">
     <div class="col-md-4">
@@ -92,7 +95,6 @@
 <div id="payBalanceModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="payBalanceModalBody" class="modal-content">
-            
         </div>
     </div>
 </div>

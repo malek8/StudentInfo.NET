@@ -38,7 +38,6 @@ namespace StudentInfo.WebClient.Controllers
             get { return HttpContext.GetOwinContext().Authentication; }
         }
 
-        // GET: ManageAccount
         public async Task<ActionResult> Index()
         {
             ViewBag.Title = "Account Manager";

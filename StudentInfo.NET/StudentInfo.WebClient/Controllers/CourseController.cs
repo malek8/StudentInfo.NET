@@ -5,13 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using StudentInfo.Data;
-using System.Collections.Generic;
 using PagedList;
 using StudentInfo.Enums;
 using StudentInfo.WebClient.Helpers;
 using StudentInfo.WebClient.Models;
 using StudentInfo.Users.Dto;
-using StudentInfo.Data.UserDbContext;
+using StudentInfo.Helpers;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -244,7 +243,7 @@ namespace StudentInfo.WebClient.Controllers
             }
             else
             {
-                var currentTerm = Helper.CurrentTerm();
+                var currentTerm = CourseHelper.CurrentTerm();
                 courses = courses.Where(x => x.Term == currentTerm);
             }
 
