@@ -216,12 +216,14 @@
     <Compile Include="Helpers\AuthorizeRolesAttribute.cs" />
     <Compile Include="Helpers\FieldInputHelpers.cs" />
     <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Models\AccountDetailsModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangeEmailModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CourseEnrollModel.cs" />
     <Compile Include="Models\CourseGradesModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />
+    <Compile Include="Models\StudentBalanceModel.cs" />
     <Compile Include="Models\StudentCourseModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -356,6 +358,7 @@
     <Content Include="Views\ManageAccount\_ChangeEmail.cshtml" />
     <Content Include="Views\ManageAccount\_ChangePassword.cshtml" />
     <Content Include="Views\Course\_StudentCourseDetails.cshtml" />
+    <Content Include="Views\ManageAccount\_PayBalance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using StudentInfo.WebClient.Models;
 using Microsoft.Owin.Security;
+using StudentInfo.Data;
+using StudentInfo.WebClient.Helpers;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -50,13 +52,26 @@ namespace StudentInfo.WebClient.Controllers
 
                     if (user != null)
                     {
-                        var model = new RegisterViewModel
+                        var model = new AccountDetailsModel
                         {
                             Email = user.Email,
                             FirstName = user.FirstName,
                             MiddleName = user.MiddleName,
                             LastName = user.LastName
                         };
+
+                        if (User.IsInRole(SystemRoles.Student))
+                        {
+                            var db = new StudentInfoContext();
+
+                            var userId = Guid.Parse(user.Id);
+                            var studentInfo = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+
+                            if (studentInfo != null)
+                            {
+                                model.Balance = studentInfo.Balance;
+                            }
+                        }
 
                         return View(model);
                     }
@@ -146,6 +161,26 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             return Json(errors);
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Student)]
+        public async Task<ActionResult> GetStudentBalance()
+        {
+            var model = new StudentBalanceModel();
+            if (User.Identity.IsAuthenticated)
+            {
+                var db = new StudentInfoContext();
+                var userId = Guid.Parse(User.Identity.GetUserId());
+
+                var student = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+
+                if (student != null && student.Balance > 0)
+                {
+                    model.Balance = student.Balance;
+                }
+            }
+            return View("_PayBalance", model);
         }
 
         private bool ValidateEmail(string email)

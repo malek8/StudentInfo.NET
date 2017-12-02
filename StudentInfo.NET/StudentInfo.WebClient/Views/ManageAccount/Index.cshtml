@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using System.Security.Claims
-@model StudentInfo.WebClient.Models.RegisterViewModel
+@model StudentInfo.WebClient.Models.AccountDetailsModel
 
 @{
     ViewBag.Title = "Manage Account";
@@ -30,6 +30,26 @@
     </div>
 <br />
 
+@if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+{
+    <div class="row">
+        @Html.LabelFor(m => m.Balance, new { @class = "col-md-2 control-label" })
+        <div class="col-md-2">
+            @Html.DisplayFor(m => m.Balance, new { @class = "form-control"})
+        </div>
+    </div>
+    <br />
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-primary" onclick='loadPayBalanceModal()'>
+            <span class="glyphicon glyphicon-usd"></span> Pay Balance
+        </button>
+    </div>
+</div>
+<br />
+
 <div class="row">
     <div class="col-md-4">
         <button class="btn btn-primary" onclick='loadChangeEmailModal()'>
@@ -38,6 +58,7 @@
     </div>
 </div>
 <br />
+
 <div class="row">
     <div class="col-md-4">
         <button class="btn btn-primary" onclick='loadPasswordChangeModal()'>
@@ -63,6 +84,15 @@
     <div class="modal-dialog">
         <div id="passwordChangeModalBody" class="modal-content">
             @Html.Partial("_ChangePassword", new StudentInfo.WebClient.Models.ChangePasswordModel())
+        </div>
+    </div>
+</div>
+
+<!-- Pay Balance Modal -->
+<div id="payBalanceModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="payBalanceModalBody" class="modal-content">
+            
         </div>
     </div>
 </div>

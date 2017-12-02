@@ -203,3 +203,10 @@ function loadChangeEmailModal() {
 function loadPasswordChangeModal() {
     $("#passwordChangeModal").modal("show");
 }
+
+function loadPayBalanceModal() {
+    $.get("/ManageAccount/GetStudentBalance/", function (data) {
+        $("#payBalanceModalBody").html(data);
+        $("#payBalanceModal").modal("show");
+    })
+}
