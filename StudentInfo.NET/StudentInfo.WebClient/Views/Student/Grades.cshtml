@@ -1,0 +1,35 @@
+﻿@model List<StudentInfo.Users.Dto.StudentCourse>
+
+@{
+    ViewBag.Title = "Grades";
+}
+
+<h2>Grades</h2>
+
+<table class="table">
+    <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Term</th>
+        <th>Year</th>
+        <th>Grade</th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.SemesterCourse.Course.Code</td>
+                <td>@item.SemesterCourse.Course.Name</td>
+                <td>@item.SemesterCourse.Term</td>
+                <td>@item.SemesterCourse.CourseDate.Year</td>
+                <td>@(item.Grade ?? "N/A")</td>
+            </tr>
+        }
+    }
+    else
+    {
+        Html.Label("Empty", "No Results");
+    }
+</table>

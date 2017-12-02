@@ -33,7 +33,7 @@ namespace StudentInfo.WebClient.Controllers
                 var studentCourses = _studentService.GetCurrentStudentCourses(User.Identity.GetUserId());
                 if (studentCourses != null)
                 {
-
+                    return View(studentCourses);
                 }
             }
             return HttpNotFound();
