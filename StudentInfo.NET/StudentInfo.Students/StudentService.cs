@@ -18,15 +18,15 @@ namespace StudentInfo.Students
             _db = new StudentInfoContext();
         }
 
-        public Student FindByUserId(string id)
+        public Student FindByUserId(string userId)
         {
-            var studentId = Guid.Parse(id);
+            var studentId = Guid.Parse(userId);
             return FindStudent(studentId);
         }
 
-        public Student FindByUserId(Guid id)
+        public Student FindByUserId(Guid userId)
         {
-            return FindStudent(id);
+            return FindStudent(userId);
         }
 
         public List<StudentCourse> GetAllCourses(Student student)
@@ -35,9 +35,10 @@ namespace StudentInfo.Students
 
             if (student != null)
             {
-                if (student.StudentCourses != null)
+                var studentCourses = _db.StudentCourses.Where(x => x.StudentId == student.Id);
+                if (studentCourses != null)
                 {
-                    courses.AddRange(student.StudentCourses);
+                    courses.AddRange(studentCourses);
                 }
             }
 
@@ -48,27 +49,21 @@ namespace StudentInfo.Students
         {
             var courses = new List<StudentCourse>();
 
-            if (student != null)
-            {
-                if (student.StudentCourses != null)
-                {
-                    var allCourses = GetAllCourses(student);
-                    courses.AddRange(allCourses.Where(x => x.SemesterCourse.Term == CourseHelper.CurrentTerm()));
-                }
-            }
+            var allCourses = GetAllCourses(student);
+            courses.AddRange(allCourses.Where(x => x.SemesterCourse.Term == CourseHelper.CurrentTerm()));
 
             return courses;
         }
 
-        public List<StudentCourse> GetCurrentStudentCourses(string id)
+        public List<StudentCourse> GetCurrentStudentCourses(string userId)
         {
-            var student = FindByUserId(id);
+            var student = FindByUserId(userId);
             return GetCurrentCourses(student);
         }
 
-        private Student FindStudent(Guid id)
+        private Student FindStudent(Guid userId)
         {
-            var student = _db.Students.Find(id);
+            var student = _db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
 
             return student;
         }

@@ -30,8 +30,8 @@ namespace StudentInfo.WebClient.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var student = _studentService.FindByUserId(User.Identity.GetUserId());
-                if (student != null)
+                var studentCourses = _studentService.GetCurrentStudentCourses(User.Identity.GetUserId());
+                if (studentCourses != null)
                 {
 
                 }
