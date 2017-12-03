@@ -53,24 +53,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dto\Address.cs" />
-    <Compile Include="Dto\ApplicationUser.cs" />
-    <Compile Include="Dto\BaseClass.cs" />
-    <Compile Include="Dto\Classroom.cs" />
-    <Compile Include="Dto\Course.cs" />
-    <Compile Include="Dto\Department.cs" />
-    <Compile Include="Dto\Faculty.cs" />
-    <Compile Include="Dto\Program.cs" />
-    <Compile Include="Dto\SemesterCourse.cs" />
-    <Compile Include="Dto\Student.cs" />
-    <Compile Include="Dto\StudentCourse.cs" />
-    <Compile Include="Dto\Teacher.cs" />
-    <Compile Include="Dto\TeacherCourse.cs" />
-    <Compile Include="Dto\UserCourseBase.cs" />
-    <Compile Include="Dto\UserDetails.cs" />
+    <Compile Include="Filters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSearch.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.Data.UserDbContext\StudentInfo.Data.UserDbContext.csproj">
+      <Project>{83f6f84e-e09a-48de-b49d-9ee66bbbb242}</Project>
+      <Name>StudentInfo.Data.UserDbContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StudentInfo.Data\StudentInfo.Data.csproj">
+      <Project>{39a85bca-6bf0-4796-8c9d-004316095f6f}</Project>
+      <Name>StudentInfo.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StudentInfo.Dto\StudentInfo.Dto.csproj">
+      <Project>{77b03b67-8c70-4e21-a5a3-ac1dc60c5f85}</Project>
+      <Name>StudentInfo.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Enums\StudentInfo.Enums.csproj">
       <Project>{b6a408cc-9c4c-4dc2-86b5-bb8102d9e07d}</Project>
       <Name>StudentInfo.Enums</Name>

@@ -403,6 +403,10 @@
       <Project>{67fb2b51-5ba0-47ef-8374-edc3174c6432}</Project>
       <Name>StudentInfo.UsersManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StudentInfo.Users\StudentInfo.Users.csproj">
+      <Project>{15bb1717-7224-48d9-9b30-fab987b6dc27}</Project>
+      <Name>StudentInfo.Users</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

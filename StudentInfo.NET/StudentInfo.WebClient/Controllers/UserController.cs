@@ -7,6 +7,7 @@ using PagedList;
 using StudentInfo.Dto;
 using StudentInfo.Data;
 using StudentInfo.Enums;
+using StudentInfo.Users;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -16,7 +17,7 @@ namespace StudentInfo.WebClient.Controllers
     {
         public ActionResult Index(string sortBy, string sortDirection, string currentFilter, string searchString, int? page)
         {
-            if (searchString != null)
+            if (!string.IsNullOrEmpty(searchString))
             {
                 page = 1;
             }
@@ -25,33 +26,21 @@ namespace StudentInfo.WebClient.Controllers
                 searchString = currentFilter;
             }
 
+            var filters = new Filters
+            {
+                Keyword = searchString,
+                SortBy = sortBy,
+                SortDirection = sortDirection
+            };
+
             ViewBag.CurrentFilter = searchString;
 
-            var db = new StudentInfoContext();
+            var userSearch = new UserSearch();
 
-            var users = db.ApplicationUsers.AsQueryable();
+            var results = userSearch.Search(filters);
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                users = users.Where(x => x.LastName.Contains(searchString) ||
-                x.FirstName.Contains(searchString));
-            }
-
-            switch(sortBy)
-            {
-                case UserSearchConstants.FirstName:
-                    if (sortDirection == SearchConstants.Ascending) users = users.OrderBy(x => x.FirstName);
-                    else users = users.OrderByDescending(x => x.FirstName);
-                    break;
-                default:
-                case UserSearchConstants.LastName:
-                    if (sortDirection == SearchConstants.Ascending) users = users.OrderBy(x => x.LastName);
-                    else users = users.OrderByDescending(x => x.LastName);
-                    break;
-            }
-            int pageSize = 6;
             int pageNumber = (page ?? 1);
-            return View(users.ToPagedList(pageNumber, pageSize));
+            return View(results.ToPagedList(pageNumber, SearchConstants.PageSize));
         }
     }
 }
