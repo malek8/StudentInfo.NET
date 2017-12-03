@@ -38,8 +38,9 @@
                 @Html.DisplayFor(x => item.LastName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                <button class="btn btn-primary" onclick='loadUserDetailsModal("@item.Id")'>
+                    <span class="glyphicon glyphicon-file"></span> Details
+                </button>
             </td>
         </tr>
     }
@@ -53,3 +54,10 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
 
+<!-- User Details Modal -->
+<div id="userDetailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="userDetailsModalBody" class="modal-content">
+        </div>
+    </div>
+</div>

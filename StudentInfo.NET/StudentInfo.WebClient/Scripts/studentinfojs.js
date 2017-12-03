@@ -125,6 +125,16 @@ function processPayBalanceResult(data) {
     }
 }
 
+function processEditUserResults(data) {
+    if (data.success === true) {
+        displayAlert(false, "Updated successfully");
+        $("#userDetailsModal").modal("hide");
+    }
+    else {
+        displayAlert(data.message, false);
+    }
+}
+
 function updateDepartments() {
     $("#departmentSelector").empty();
     getDepartments($("#facultySelector").val());
@@ -225,5 +235,12 @@ function loadPayBalanceModal() {
     $.get("/ManageAccount/GetStudentBalance/", function (data) {
         $("#payBalanceModalBody").html(data);
         $("#payBalanceModal").modal("show");
+    })
+}
+
+function loadUserDetailsModal(userId) {
+    $.get("/User/Details/" + userId, function (data) {
+        $("#userDetailsModalBody").html(data);
+        $("#userDetailsModal").modal("show");
     })
 }

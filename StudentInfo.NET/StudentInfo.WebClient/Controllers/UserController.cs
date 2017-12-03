@@ -15,6 +15,15 @@ namespace StudentInfo.WebClient.Controllers
     [Authorize(Roles =SystemRoles.Administrator)]
     public class UserController : Controller
     {
+        private UserSearch _userSearch;
+        private UserService _userService;
+
+        public UserController()
+        {
+            _userSearch = new UserSearch();
+            _userService = new UserService();
+        }
+
         public ActionResult Index(string sortBy, string sortDirection, string currentFilter, string searchString, int? page)
         {
             if (!string.IsNullOrEmpty(searchString))
@@ -35,12 +44,40 @@ namespace StudentInfo.WebClient.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var userSearch = new UserSearch();
-
-            var results = userSearch.Search(filters);
+            var results = _userSearch.Search(filters);
 
             int pageNumber = (page ?? 1);
             return View(results.ToPagedList(pageNumber, SearchConstants.PageSize));
+        }
+
+        public ActionResult Details(string id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = _userService.FindById(id);
+
+                if (user != null)
+                {
+                    return View("_UserDetails", user);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
+        public JsonResult Edit(ApplicationUser user)
+        {
+            if (user != null)
+            {
+                var result = _userService.Edit(user);
+
+                if (result)
+                {
+                    return Json(new { success = true });
+                }
+            }
+
+            return Json(new { success = false, message = "Something wrong happened" });
         }
     }
 }
