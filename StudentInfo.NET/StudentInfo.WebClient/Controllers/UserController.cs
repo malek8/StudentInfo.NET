@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Data;
 using StudentInfo.Enums;
 

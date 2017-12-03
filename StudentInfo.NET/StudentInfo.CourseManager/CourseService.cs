@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StudentInfo.Data;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Enums;
 
 namespace StudentInfo.CourseManager

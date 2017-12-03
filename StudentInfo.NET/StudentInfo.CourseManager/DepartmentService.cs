@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 

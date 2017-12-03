@@ -197,7 +197,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\CustomSeed.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -384,6 +383,10 @@
       <Project>{39a85bca-6bf0-4796-8c9d-004316095f6f}</Project>
       <Name>StudentInfo.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StudentInfo.Dto\StudentInfo.Dto.csproj">
+      <Project>{77b03b67-8c70-4e21-a5a3-ac1dc60c5f85}</Project>
+      <Name>StudentInfo.Dto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Enums\StudentInfo.Enums.csproj">
       <Project>{b6a408cc-9c4c-4dc2-86b5-bb8102d9e07d}</Project>
       <Name>StudentInfo.Enums</Name>
@@ -399,10 +402,6 @@
     <ProjectReference Include="..\StudentInfo.UsersManager\StudentInfo.UsersManager.csproj">
       <Project>{67fb2b51-5ba0-47ef-8374-edc3174c6432}</Project>
       <Name>StudentInfo.UsersManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StudentInfo.Users\StudentInfo.Users.csproj">
-      <Project>{15bb1717-7224-48d9-9b30-fab987b6dc27}</Project>
-      <Name>StudentInfo.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

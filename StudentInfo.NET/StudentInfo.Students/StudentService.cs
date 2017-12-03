@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using StudentInfo.Data;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Helpers;
 
 namespace StudentInfo.Students

@@ -9,7 +9,7 @@ using PagedList;
 using StudentInfo.Enums;
 using StudentInfo.WebClient.Helpers;
 using StudentInfo.WebClient.Models;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Helpers;
 
 namespace StudentInfo.WebClient.Controllers

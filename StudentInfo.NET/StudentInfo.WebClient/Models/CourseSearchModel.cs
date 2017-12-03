@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Enums;
 
 namespace StudentInfo.WebClient.Models

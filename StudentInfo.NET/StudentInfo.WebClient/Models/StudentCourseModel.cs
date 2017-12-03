@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 
 namespace StudentInfo.WebClient.Models
 {

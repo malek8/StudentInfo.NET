@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StudentInfo.Data.UserDbContext;
 using Microsoft.AspNet.Identity.EntityFramework;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Enums;
 using Microsoft.AspNet.Identity;
 

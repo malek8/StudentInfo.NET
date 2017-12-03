@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using StudentInfo.Enums;
 using System.Web.Mvc;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using StudentInfo.Data;
 
 namespace StudentInfo.WebClient.Helpers

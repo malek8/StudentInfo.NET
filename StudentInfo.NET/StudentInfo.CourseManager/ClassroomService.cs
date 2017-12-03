@@ -1,5 +1,5 @@
 ﻿using StudentInfo.Data;
-using StudentInfo.Users.Dto;
+using StudentInfo.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
