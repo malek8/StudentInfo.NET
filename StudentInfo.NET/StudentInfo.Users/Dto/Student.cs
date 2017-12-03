@@ -12,6 +12,7 @@ namespace StudentInfo.Users.Dto
         public Guid ApplicationUserId { get; set; }
         public long ExternalStudentId { get; set; }
         public decimal Balance { get; set; }
+        public virtual Program Program { get; set; }
         public virtual IEnumerable<StudentCourse> StudentCourses { get; set; }
     }
 }

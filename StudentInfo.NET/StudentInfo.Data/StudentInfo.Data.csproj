@@ -102,6 +102,10 @@
     <Compile Include="Migrations\201712012342154_StudentBalance.Designer.cs">
       <DependentUpon>201712012342154_StudentBalance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712030133275_StudentProgram.cs" />
+    <Compile Include="Migrations\201712030133275_StudentProgram.Designer.cs">
+      <DependentUpon>201712030133275_StudentProgram.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -160,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712012342154_StudentBalance.resx">
       <DependentUpon>201712012342154_StudentBalance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712030133275_StudentProgram.resx">
+      <DependentUpon>201712030133275_StudentProgram.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
