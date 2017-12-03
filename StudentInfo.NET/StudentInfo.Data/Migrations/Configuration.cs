@@ -25,8 +25,8 @@ namespace StudentInfo.Data.Migrations
       //}
       CreateUserRoles(context);
       CreateUserAccounts(context);
-      CreateClassrooms(context);
-      CreateFaculties(context);
+      //CreateClassrooms(context);
+      //CreateFaculties(context);
     }
 
     private void CreateUserRoles(StudentInfoContext context)

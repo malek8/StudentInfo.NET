@@ -372,6 +372,10 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.CourseManager\StudentInfo.CourseManager.csproj">
+      <Project>{5b089a07-b044-4164-8a74-f12308fd918f}</Project>
+      <Name>StudentInfo.CourseManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Data.UserDbContext\StudentInfo.Data.UserDbContext.csproj">
       <Project>{83f6f84e-e09a-48de-b49d-9ee66bbbb242}</Project>
       <Name>StudentInfo.Data.UserDbContext</Name>
