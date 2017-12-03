@@ -70,6 +70,12 @@
                                 {
                                     <li>@Html.ActionLink("Manage", "Search", "Course")</li>
                                 }
+
+                                <!-- Admin -->
+                                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
+                                {
+                                    <li>@Html.ActionLink("Manage", "Search", "Course")</li>
+                                }
                             </ul>
                         </li>
                     }
