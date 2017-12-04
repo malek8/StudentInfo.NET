@@ -11,6 +11,7 @@ using StudentInfo.WebClient.Helpers;
 using StudentInfo.WebClient.Models;
 using StudentInfo.Dto;
 using StudentInfo.Helpers;
+using StudentInfo.CourseManager;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -18,6 +19,13 @@ namespace StudentInfo.WebClient.Controllers
     [Authorize]
     public class CourseController : Controller
     {
+        private CourseService _courseService;
+
+        public CourseController()
+        {
+            _courseService = new CourseService();
+        }
+
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
@@ -399,6 +407,32 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             return HttpNotFound();
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator)]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AuthorizeRoles(SystemRoles.Administrator)]
+        public JsonResult Create(CreateCourseModel model)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (model != null)
+                {
+                    var newCourse = _courseService.CreateCourse(model.Code, model.Title, model.Description, model.NumberOfCredits, model.Level, model.DepartmentId);
+
+                    if (newCourse != null)
+                    {
+                        return Json(new { success = true });
+                    }
+                }
+            }
+            return Json(new { success = false });
         }
 
         private IEnumerable<StudentCourse> GetStudentCourses()

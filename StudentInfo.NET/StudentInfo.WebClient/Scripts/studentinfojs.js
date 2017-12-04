@@ -135,6 +135,16 @@ function processEditUserResults(data) {
     }
 }
 
+function processNewCourseResults(data) {
+    if (data.success === true) {
+        document.getElementById("createCourseForm").reset();
+        displayAlert("Course created successfully", true);
+    }
+    else {
+        displayAlert("Failed to create new course, check inputs", false);
+    }
+}
+
 function updateDepartments() {
     $("#departmentSelector").empty();
     getDepartments($("#facultySelector").val());

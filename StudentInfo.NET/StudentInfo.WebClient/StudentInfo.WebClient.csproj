@@ -223,6 +223,7 @@
     <Compile Include="Models\CourseEnrollModel.cs" />
     <Compile Include="Models\CourseGradesModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />
+    <Compile Include="Models\CreateCourseModel.cs" />
     <Compile Include="Models\StudentBalanceModel.cs" />
     <Compile Include="Models\StudentCourseModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -361,6 +362,7 @@
     <Content Include="Views\ManageAccount\_PayBalance.cshtml" />
     <Content Include="Views\Student\Grades.cshtml" />
     <Content Include="Views\User\_UserDetails.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

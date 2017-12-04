@@ -22,7 +22,7 @@ namespace StudentInfo.CourseManager
 
         public Course CreateCourse(string code, string name, string desc, int credits, ProgramLevel level, Department department)
         {
-            if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(name) && !IsCourseExists(code))
+            if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(name) && !IsCourseExists(code) && credits > 0)
             {
                 var d = _db.Departments.FirstOrDefault(x => x.Id == department.Id);
                 var course = new Course
@@ -49,6 +49,18 @@ namespace StudentInfo.CourseManager
                     Console.WriteLine(ex.Message);
                 }
             }
+            return null;
+        }
+
+        public Course CreateCourse(string code, string name, string desc, int credits, ProgramLevel level, Guid departmentId)
+        {
+            var department = _db.Departments.FirstOrDefault(x => x.Id == departmentId);
+
+            if (department != null)
+            {
+                return CreateCourse(code, name, desc, credits, level, department);
+            }
+
             return null;
         }
 
