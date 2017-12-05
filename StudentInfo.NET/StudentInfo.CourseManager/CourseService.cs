@@ -64,6 +64,32 @@ namespace StudentInfo.CourseManager
             return null;
         }
 
+        public bool UpdateCourse(Guid id, string name, string desc, int credits, ProgramLevel level)
+        {
+            if (ValidateCourseInput(name, desc, credits, level))
+            {
+                var course = _db.Courses.FirstOrDefault(x => x.Id == id);
+                if (course != null)
+                {
+                    course.Name = name;
+                    course.Description = desc;
+                    course.NumberOfCredits = credits;
+                    course.Level = level;
+
+                    try
+                    {
+                        _db.SaveChanges();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return false;
+        }
+
         public Course FindById(Guid id)
         {
             return _db.Courses.Find(id);
@@ -76,7 +102,7 @@ namespace StudentInfo.CourseManager
 
         public bool AssignSemester(Guid courseId, Guid classroomId, Guid userId, decimal cost, Term term, DateTime courseDate)
         {
-            if (ValidateCourseInput(cost, term, courseDate))
+            if (ValidateSemesterCourseInput(cost, term, courseDate))
             {
                 var course = FindById(courseId);
                 var teacher = _db.Teachers.FirstOrDefault(x => x.ApplicationUserId == userId);
@@ -122,11 +148,21 @@ namespace StudentInfo.CourseManager
             return _db.Courses.Any(x => x.Code == code);
         }
 
-        private bool ValidateCourseInput(decimal cost, Term term, DateTime date)
+        private bool ValidateSemesterCourseInput(decimal cost, Term term, DateTime date)
         {
             if (cost <= 0 ||
                 (int)term == 0 ||
                 date < DateTime.Now.AddDays(-1))
+                return false;
+            return true;
+        }
+
+        private bool ValidateCourseInput(string name, string desc, int credits, ProgramLevel level)
+        {
+            if (string.IsNullOrEmpty(name) ||
+                name.Length <= 3 ||
+                credits <= 0 ||
+                (int)level == 0)
                 return false;
             return true;
         }

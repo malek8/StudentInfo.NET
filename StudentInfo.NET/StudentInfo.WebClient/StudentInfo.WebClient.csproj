@@ -225,6 +225,7 @@
     <Compile Include="Models\CourseGradesModel.cs" />
     <Compile Include="Models\CourseSearchModel.cs" />
     <Compile Include="Models\CreateCourseModel.cs" />
+    <Compile Include="Models\EditCourseModel.cs" />
     <Compile Include="Models\StudentBalanceModel.cs" />
     <Compile Include="Models\StudentCourseModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -366,6 +367,7 @@
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\CoursesSeach.cshtml" />
     <Content Include="Views\Course\_AssignSemesterCourse.cshtml" />
+    <Content Include="Views\Course\_EditCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

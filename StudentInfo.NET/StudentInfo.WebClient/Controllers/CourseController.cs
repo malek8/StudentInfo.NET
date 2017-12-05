@@ -70,6 +70,46 @@ namespace StudentInfo.WebClient.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult CourseDetails(Guid id)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var course = _courseService.FindById(id);
+                if (course != null)
+                {
+                    var model = new EditCourseModel()
+                    {
+                        Id = course.Id,
+                        Code = course.Code,
+                        Title = course.Name,
+                        Description = course.Description,
+                        NumberOfCredits = course.NumberOfCredits,
+                        Level = course.Level
+                    };
+
+                    return View("_EditCourse", model);
+                }
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public JsonResult EditCourse(EditCourseModel model)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var result = _courseService.UpdateCourse(model.Id, model.Title, model.Description, model.NumberOfCredits, model.Level);
+                if (result)
+                {
+                    return Json(new { success = true });
+                }
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpGet]
         public ActionResult SemesterCourseDetails(Guid id)
         {
             var db = new StudentInfoContext();

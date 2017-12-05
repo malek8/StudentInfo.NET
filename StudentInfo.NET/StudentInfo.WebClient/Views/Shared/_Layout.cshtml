@@ -62,7 +62,8 @@
                                 <!-- FacultyMember -->
                                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
                                 {
-                                    <li>@Html.ActionLink("Manage", "Search", "Course")</li>
+                                    <li>@Html.ActionLink("Manage", "SearchAll", "Course")</li>
+                                    <li>@Html.ActionLink("Assigned Courses", "Search", "Course")</li>
                                 }
 
                                 <!-- Instructor -->
@@ -74,7 +75,8 @@
                                 <!-- Admin -->
                                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                                 {
-                                    <li>@Html.ActionLink("Manage", "Search", "Course")</li>
+                                    <li>@Html.ActionLink("Manage", "SearchAll", "Course")</li>
+                                    <li>@Html.ActionLink("Assigned Courses", "Search", "Course")</li>
                                     <li>@Html.ActionLink("Create", "Create", "Course")</li>
                                 }
                             </ul>

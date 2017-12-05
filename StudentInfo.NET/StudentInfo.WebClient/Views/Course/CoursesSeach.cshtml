@@ -76,13 +76,9 @@
                             <span class="glyphicon glyphicon-calendar"></span> Semester
                         </button>
 
-                        @*<button class="btn btn-primary" onclick='loadAssignInstructorModal("@item.Id")'>
-                            <span class="glyphicon glyphicon-user"></span> Instructor
-                        </button>*@
-
-                        @*<button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", true)'>
+                        <button class="btn btn-primary" onclick='loadEditCourse("@item.Id", true)'>
                             <span class="glyphicon glyphicon-pencil"></span> Edit
-                        </button>*@
+                        </button>
                     }
 
                     @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
@@ -126,22 +122,6 @@
 <div id="courseEditModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseEditModalBody" class="modal-content">
-        </div>
-    </div>
-</div>
-
-<!-- Assign Instructor Modal -->
-<div id="assignInstructorModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div id="assignInstructorModalBody" class="modal-content">
-        </div>
-    </div>
-</div>
-
-<!-- Grades Modal -->
-<div id="courseGradesModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div id="courseGradesModalBody" class="modal-content">
         </div>
     </div>
 </div>

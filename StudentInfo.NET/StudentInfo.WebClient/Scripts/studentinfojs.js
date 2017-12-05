@@ -145,6 +145,15 @@ function processNewCourseResults(data) {
     }
 }
 
+function processEditCourseResults(data) {
+    if (data.success === true) {
+        displayAlert("Course updated successfully", true);
+    }
+    else {
+        displayAlert("Failed to update course", false);
+    }
+}
+
 function updateDepartments() {
     $("#departmentSelector").empty();
     getDepartments($("#facultySelector").val());
@@ -280,5 +289,12 @@ function assignSemesterCourse(courseId) {
                 displayAlert("Failed to assign", false);
             }
         }
+    });
+}
+
+function loadEditCourse(courseId) {
+    $.get("/Course/CourseDetails?id=" + courseId, function (data) {
+        $("#courseEditModalBody").html(data);
+        $("#courseEditModal").modal("show");
     });
 }
