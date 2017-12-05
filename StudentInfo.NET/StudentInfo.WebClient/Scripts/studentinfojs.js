@@ -340,4 +340,5 @@ function assignStudentsGrades() {
             }
         });
     }
+    $("#courseGradesModal").modal("hide");
 }

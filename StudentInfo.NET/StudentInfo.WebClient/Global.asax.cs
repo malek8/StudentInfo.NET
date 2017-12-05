@@ -21,14 +21,13 @@ namespace StudentInfo.WebClient
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             CustomSeed();
-            Data.CustomSeed.AddSemesterCourses();
+            //Data.CustomSeed.AddSemesterCourses();
         }
 
         private void CustomSeed()
         {
             AssignUserRoles();
             CreateCourses();
-            CreateTeachers();
         }
 
         private void AssignUserRoles()
@@ -97,6 +96,8 @@ namespace StudentInfo.WebClient
                     var course7 = courseService.CreateCourse("SOEN 6441", "ADV. PROG. PRACTICES", "", 4, ProgramLevel.Graduate, department5);
                     var course8 = courseService.CreateCourse("SOEN 6841", "SOFTWARE PROJECT MANAGEMENT", "", 4, ProgramLevel.Graduate, department5);
                     var course9 = courseService.CreateCourse("COMP 6961", "GRADUATE SEMINAR-COMP.SC.", "", 1, ProgramLevel.Graduate, department5);
+
+                    CreateTeachers(new List<Dto.Course> { course1, course2 , course3 , course4 , course5 , course6 , course7 , course8 , course9 }, class1);
                 }
             }
 
@@ -110,7 +111,7 @@ namespace StudentInfo.WebClient
             }
         }
 
-        private void CreateTeachers()
+        private void CreateTeachers(List<Dto.Course> courses, Guid classroomId)
         {
             var db = new Data.StudentInfoContext();
 
@@ -129,6 +130,12 @@ namespace StudentInfo.WebClient
                     });
 
                     db.SaveChanges();
+
+                    var courseService = new CourseService();
+                    foreach (var c in courses)
+                    {
+                        courseService.AssignSemester(c.Id, classroomId, userId, 350, Term.Fall, DateTime.Now);
+                    }
                 }
             }
         }
