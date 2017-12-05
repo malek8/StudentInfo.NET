@@ -543,7 +543,11 @@ namespace StudentInfo.WebClient.Controllers
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Instructor)]
         public JsonResult AddStudentGrade(Guid studentId, string grade)
         {
-
+            var result = _courseService.AssignStudentGrade(studentId, grade);
+            if (result)
+            {
+                return Json(new { success = true });
+            }
             return Json(new { success = false });
         }
 

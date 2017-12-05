@@ -22,7 +22,7 @@
                 <td>@Html.DisplayFor(x => item.Student.ExternalStudentId)</td>
                 @if (string.IsNullOrEmpty(item.Grade))
                 {
-                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems(), new { id = item.StudentId, onchange = "captureGrade(this)" })</td>
+                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems(), new { id = item.Id, onchange = "captureGrade(this)" })</td>
                 }
                 else
                 {

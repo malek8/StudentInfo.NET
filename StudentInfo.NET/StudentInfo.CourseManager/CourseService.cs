@@ -138,6 +138,29 @@ namespace StudentInfo.CourseManager
             return false;
         }
 
+        public bool AssignStudentGrade(Guid studentCourseId, string grade)
+        {
+            if (!string.IsNullOrEmpty(grade))
+            {
+                var studentCourse = _db.StudentCourses.FirstOrDefault(x => x.Id == studentCourseId);
+                if (studentCourse != null)
+                {
+                    studentCourse.Grade = grade;
+
+                    try
+                    {
+                        _db.SaveChanges();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return false;
+        }
+
         private bool SemesterCourseExists(Guid courseId, Term term)
         {
             return _db.SemesterCourses.Any(x => x.Course.Id == courseId && x.Term == term && x.CourseDate.Year == DateTime.Now.Year);
