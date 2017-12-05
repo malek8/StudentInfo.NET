@@ -277,5 +277,12 @@ namespace StudentInfo.WebClient.Helpers
             }
             return 234789;
         }
+
+        public static int CountRegisterdStudents(Guid semesterCourseId)
+        {
+            var db = new StudentInfoContext();
+
+            return db.StudentCourses.Count(x => x.SemesterCourse.Id == semesterCourseId);
+        }
     }
 }

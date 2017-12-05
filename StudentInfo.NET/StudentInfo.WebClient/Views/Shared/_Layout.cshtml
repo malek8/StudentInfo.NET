@@ -69,7 +69,7 @@
                                 <!-- Instructor -->
                                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
                                 {
-                                    <li>@Html.ActionLink("Manage", "Search", "Course")</li>
+                                    <li>@Html.ActionLink("Assigned Courses", "Search", "Course")</li>
                                 }
 
                                 <!-- Admin -->

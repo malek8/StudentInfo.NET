@@ -17,6 +17,10 @@
     <p>Instructor: @instructorName</p>
     <p>Course Period: @Model.CourseDate.Year - @Model.Term</p>
     <p>Location: @Model.Classroom.Campus - @Model.Classroom.Number</p>
+    @{ 
+        var classCapacity = $"{Helper.CountRegisterdStudents(Model.Id)} / {Model.Classroom.Capacity}";
+    }
+    <p>Capacity: @classCapacity</p>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
