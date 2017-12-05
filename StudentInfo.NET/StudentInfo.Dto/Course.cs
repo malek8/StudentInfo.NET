@@ -33,6 +33,5 @@ namespace StudentInfo.Dto
         public ProgramLevel Level { get; set; }
 
         public virtual Department Department { get; set; }
-
     }
 }

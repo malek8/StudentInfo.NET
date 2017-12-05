@@ -1,0 +1,155 @@
+﻿@model StudentInfo.WebClient.Models.CourseSearchModel
+@using StudentInfo.WebClient.Helpers
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Course Search";
+}
+
+<!-- Course Search form -->
+<div class="well">
+    <p><h4>Course Search</h4></p>
+
+    @using (Html.BeginForm("SearchAll", "Course", FormMethod.Get))
+    {
+        <div class="form-group row">
+            <div class="col-md-2">
+                @Html.LabelFor(x => x.Code)
+                @Html.TextBoxFor(x => x.Code, new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(x => x.Keyword)
+                @Html.TextBoxFor(x => x.Keyword, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.FacultyId)
+                @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(), new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.DepartmentId)
+                @Html.DropDownListFor(x => x.DepartmentId, new List<SelectListItem>(), new { id = "departmentSelector", @class = "form-control" })
+            </div>
+        </div>
+            <div>
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+            </div>
+    }
+</div>
+
+<!-- Search Results table -->
+<table class="table">
+    <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Faculty</th>
+        <th>Department</th>
+        <th></th>
+    </tr>
+    @if (Model.CoursesResults != null)
+    {
+        foreach (var item in Model.CoursesResults)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Department.Faculty.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Department.Name)
+                </td>
+                <td>
+
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator) || User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
+                    {
+                        <button class="btn btn-primary" onclick='loadAssignSemesterModal("@item.Id")'>
+                            <span class="glyphicon glyphicon-calendar"></span> Semester
+                        </button>
+
+                        @*<button class="btn btn-primary" onclick='loadTeachersModal("@item.Id")'>
+                            <span class="glyphicon glyphicon-user"></span> Instructor
+                        </button>
+
+                        <button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", true)'>
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>*@
+                    }
+
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+                    {
+                        <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    }
+
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
+                    {
+                        <button class="btn btn-primary" onclick='loadGradesModal("@item.Id")'>
+                            <span class="glyphicon glyphicon-list-alt"></span> Grades
+                        </button>
+                    }
+
+                    @*<button class="btn btn-primary" onclick='loadSemesterCourseDetails("@item.Course.Id")'>
+                        <span class="glyphicon glyphicon-file"></span> Details
+                    </button>*@
+                </td>
+            </tr>
+                            }
+                        }
+</table>
+
+@if (Model.CoursesResults != null)
+{
+    @: Page @(Model.CoursesResults.PageCount < Model.CoursesResults.PageNumber ? 0 : Model.CoursesResults.PageNumber) of @Model.CoursesResults.PageCount
+    @Html.PagedListPager(Model.CoursesResults, page => Url.Action("SearchAll", new { page, model = Model }))
+}
+
+<!-- Course Details Modal -->
+<div id="courseDetailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseDetailsModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Course Edit Modal -->
+<div id="courseEditModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseEditModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Assign Instructor Modal -->
+<div id="courseInstructorModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseInstructorModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Grades Modal -->
+<div id="courseGradesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseGradesModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Assign Semester Modal -->
+<div id="assignSemesterModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="assignSemesterModalBody" class="modal-content">
+        </div>
+    </div>
+</div>

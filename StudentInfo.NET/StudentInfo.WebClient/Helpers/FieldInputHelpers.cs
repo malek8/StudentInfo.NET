@@ -47,5 +47,27 @@ namespace StudentInfo.WebClient.Helpers
 
             return facultiesSelection;
         }
+
+        public static IEnumerable<SelectListItem> GetClassrooms()
+        {
+            var db = new StudentInfoContext();
+
+            var classrooms = db.Classrooms.ToList();
+            var classroomsSelection = new List<SelectListItem>();
+
+            classroomsSelection.Add(new SelectListItem()
+            {
+                Text = "-- Select Item --",
+                Value = string.Empty
+            });
+
+            classroomsSelection.AddRange(classrooms.Select(x => new SelectListItem()
+            {
+                Text = $"{x.Number} / {x.Campus}",
+                Value = x.Id.ToString()
+            }));
+
+            return classroomsSelection;
+        }
     }
 }

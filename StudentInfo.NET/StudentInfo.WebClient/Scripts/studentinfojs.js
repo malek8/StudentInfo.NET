@@ -254,3 +254,30 @@ function loadUserDetailsModal(userId) {
         $("#userDetailsModal").modal("show");
     })
 }
+
+function loadAssignSemesterModal(courseId) {
+    $.get("/Course/AssignSemesterCourse?courseId=" + courseId, function (data){
+        $("#assignSemesterModalBody").html(data);
+        $("#assignSemesterModal").modal("show");
+    })
+}
+
+function assignSemesterCourse(courseId) {
+    var date = $("#assignCourseDateInput").val();
+    var term = $("#assignCourseTermInput").val();
+    var classroomId = $("#assignCourseClassroomInput").val();
+    var cost = $("#assignCourseCostInput").val();
+    $.ajax({
+        type: "POST",
+        url: "/Course/AssignSemesterCourse",
+        data: { courseId, classroomId, cost, term, date },
+        success: function (data) {
+            if (data.success === true) {
+                displayAlert("Assigned successfully", true);
+            }
+            else {
+                displayAlert("Failed to assign", false);
+            }
+        }
+    });
+}

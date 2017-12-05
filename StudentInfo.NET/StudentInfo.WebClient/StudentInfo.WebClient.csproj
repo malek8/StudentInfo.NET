@@ -218,6 +218,7 @@
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Models\AccountDetailsModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AssignSemesterCourseModel.cs" />
     <Compile Include="Models\ChangeEmailModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CourseEnrollModel.cs" />
@@ -363,6 +364,8 @@
     <Content Include="Views\Student\Grades.cshtml" />
     <Content Include="Views\User\_UserDetails.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Course\CoursesSeach.cshtml" />
+    <Content Include="Views\Course\_AssignSemesterCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

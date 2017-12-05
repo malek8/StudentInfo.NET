@@ -1,0 +1,77 @@
+﻿@model StudentInfo.WebClient.Models.AssignSemesterCourseModel
+@using StudentInfo.WebClient.Helpers   
+
+@{
+    Layout = "";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@Model.Course.Code - @Model.Course.Name</h4>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+
+            @if (Model.SemesterCourse == null || !Model.SemesterCourse.Any())
+            {
+                @Html.Label("Empty", "Never assigned before")
+            }
+            else
+            {
+                <table class="table">
+                    <tr>
+                        <td>Term</td>
+                        <td>Year</td>
+                        <td>Instructor</td>
+                        <td>Classroom</td>
+                    </tr>
+                    @foreach (var item in Model.SemesterCourse)
+                    {
+                    <tr>
+                        <td>@item.Term</td>
+                        <td>@item.CourseDate.Year</td>
+                        @{ 
+                            var teacherName = "TBD";
+                            if (item.Teacher != null)
+                            {
+                                teacherName = item.Teacher.User.FirstName + " " + item.Teacher.User.LastName;
+                            }
+                        }
+                        <td>@teacherName</td>
+                        <td>@item.Classroom.Campus / @item.Classroom.Number</td>
+                    </tr>
+                    }
+                </table>
+            }
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Term, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.EnumDropDownListFor(x => x.Term, new { id = "assignCourseTermInput", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CourseDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.CourseDate, "{0:yyyy-MM-dd}", new { id = "assignCourseDateInput", @class = "dateInput form-control", value = DateTime.Now })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ClassroomId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(x => x.ClassroomId, FieldInputHelpers.GetClassrooms(), new { id = "assignCourseClassroomInput", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Cost, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.Cost, new { id = "assignCourseCostInput", @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick='assignSemesterCourse("@Model.Course.Id")'>Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>

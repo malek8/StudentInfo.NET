@@ -83,6 +83,53 @@ namespace StudentInfo.WebClient.Controllers
             return HttpNotFound();
         }
 
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult AssignSemesterCourse(Guid courseId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var model = new AssignSemesterCourseModel();
+
+                var db = new StudentInfoContext();
+
+                var course = db.Courses.FirstOrDefault(x => x.Id == courseId);
+                if (course != null)
+                {
+                    var semesterCourses = db.SemesterCourses.Where(x => x.Course.Id == courseId);
+
+                    if (semesterCourses.Any())
+                    {
+                        model.SemesterCourse = semesterCourses.OrderByDescending(x => x.CourseDate).ToList();
+                    }
+                    else
+                    {
+                        model.SemesterCourse = new List<SemesterCourse>();
+                    }
+                    model.Course = course;
+
+                    return View("_AssignSemesterCourse", model);
+                }
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public JsonResult AssignSemesterCourse(Guid courseId, Guid classroomId, decimal cost, Term term, DateTime date)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var result = _courseService.AssignSemester(courseId, classroomId, cost, term, date);
+                if (result)
+                {
+                    return Json(new { success = true });
+                }
+            }
+
+            return Json(new { success = false });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeRoles(SystemRoles.Administrator)]
@@ -258,6 +305,42 @@ namespace StudentInfo.WebClient.Controllers
             int pageNumber = (page ?? 1);
             model.Results = courses.OrderBy(x => x.Course.Code).ToPagedList(pageNumber, SearchConstants.PageSize);
             return View("Search", model);
+        }
+
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult SearchAll(CourseSearchModel model, int? page)
+        {
+            if (model == null) model = new CourseSearchModel();
+            IEnumerable<Course> courses = new List<Course>();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var db = new StudentInfoContext();
+
+                courses = db.Courses.AsQueryable();
+
+                if (!string.IsNullOrEmpty(model.Keyword))
+                {
+                    courses = courses.Where(x => x.Name.Contains(model.Keyword) ||
+                    x.Description.Contains(model.Keyword));
+                }
+                if (!string.IsNullOrEmpty(model.Code))
+                {
+                    courses = courses.Where(x => x.Code.Contains(model.Code));
+                }
+                if (model.DepartmentId.HasValue)
+                {
+                    courses = courses.Where(x => x.Department.Id == model.DepartmentId);
+                }
+                if (model.FacultyId.HasValue)
+                {
+                    courses = courses.Where(x => x.Department.Faculty.Id == model.FacultyId);
+                }
+            }
+
+            int pageNumber = (page ?? 1);
+            model.CoursesResults = courses.OrderBy(x => x.Code).ToPagedList(pageNumber, SearchConstants.PageSize);
+            return View("CoursesSeach", model);
         }
 
         public ActionResult StudentCourses(CourseSearchModel model, int? page)

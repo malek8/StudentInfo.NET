@@ -74,33 +74,36 @@ namespace StudentInfo.CourseManager
             return _db.Courses.FirstOrDefault(x => x.Code == code);
         }
 
-        public bool AssignSemester(Guid classroomId, string courseCode, decimal cost, Term term)
+        public bool AssignSemester(Guid courseId, Guid classroomId, decimal cost, Term term, DateTime courseDate)
         {
-            var course = FindByCode(courseCode);
-            if (course != null && !SemesterCourseExists(course.Id, term))
+            if (ValidateCourseInput(cost, term, courseDate))
             {
-                var classroom = _classroomService.FindById(classroomId);
-
-                if (classroom != null)
+                var course = FindById(courseId);
+                if (course != null && !SemesterCourseExists(course.Id, term))
                 {
-                    _db.SemesterCourses.Add(new SemesterCourse
-                    {
-                        Id = Guid.NewGuid(),
-                        Classroom = classroom,
-                        Course = course,
-                        Term = term,
-                        Cost = cost,
-                        CourseDate = DateTime.Now
-                    });
+                    var classroom = _db.Classrooms.FirstOrDefault(x => x.Id == classroomId);
 
-                    try
+                    if (classroom != null)
                     {
-                        _db.SaveChanges();
-                        return true;
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
+                        _db.SemesterCourses.Add(new SemesterCourse
+                        {
+                            Id = Guid.NewGuid(),
+                            Classroom = classroom,
+                            Course = course,
+                            Term = term,
+                            Cost = cost,
+                            CourseDate = courseDate
+                        });
+
+                        try
+                        {
+                            _db.SaveChanges();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     }
                 }
             }
@@ -115,6 +118,15 @@ namespace StudentInfo.CourseManager
         private bool IsCourseExists(string code)
         {
             return _db.Courses.Any(x => x.Code == code);
+        }
+
+        private bool ValidateCourseInput(decimal cost, Term term, DateTime date)
+        {
+            if (cost <= 0 ||
+                (int)term == 0 ||
+                date < DateTime.Now.AddDays(-1))
+                return false;
+            return true;
         }
     }
 }
