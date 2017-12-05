@@ -238,8 +238,31 @@ function loadGradesModal(semesterCourseId) {
     })
 }
 
-function captureGrade() {
-    //$('[name="Grades"]')
+function captureGrade(_this) {
+    var grade = $(_this).val();
+    var studentId = _this.id;
+
+    addStudentGrade(studentId, grade);
+}
+
+function addStudentGrade(studentId, grade) {
+    var gradeItem = { id: studentId, grade: grade };
+    var existingItemIndex = searchGrades(studentId);
+
+    if (existingItemIndex >= 0) {
+        studentGradesArray[existingItemIndex].grade = grade;
+    }
+    else {
+        studentGradesArray.push(gradeItem);
+    }
+}
+
+function searchGrades(studentId) {
+    for (var i= 0; i < studentGradesArray.length;i++){
+        if (studentGradesArray[i].id === studentId) {
+            return i;
+        }
+    }
 }
 
 function loadChangeEmailModal() {
@@ -297,4 +320,24 @@ function loadEditCourse(courseId) {
         $("#courseEditModalBody").html(data);
         $("#courseEditModal").modal("show");
     });
+}
+
+function assignStudentsGrades() {
+    for (var i = 0; i < studentGradesArray.length; i++) {
+        var studentId = studentGradesArray[i].id;
+        var grade = studentGradesArray[i].grade;
+        $.ajax({
+            type: "POST",
+            url: "/Course/AddStudentGrade",
+            data: { studentId, grade },
+            success: function (data) {
+                if (data.success === true) {
+                    displayAlert("Grade assigned successfully", true);
+                }
+                else {
+                    displayAlert("Failed to assign grade", false);
+                }
+            }
+        });
+    }
 }

@@ -540,6 +540,14 @@ namespace StudentInfo.WebClient.Controllers
         }
 
         [HttpPost]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Instructor)]
+        public JsonResult AddStudentGrade(Guid studentId, string grade)
+        {
+
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
         [AuthorizeRoles(SystemRoles.Administrator)]
         public JsonResult Create(CreateCourseModel model)
         {

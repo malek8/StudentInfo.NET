@@ -22,7 +22,7 @@
                 <td>@Html.DisplayFor(x => item.Student.ExternalStudentId)</td>
                 @if (string.IsNullOrEmpty(item.Grade))
                 {
-                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems(), new { id = item.StudentId, onchange = "captureGrade()" })</td>
+                <td>@Html.DropDownList("Grades", StudentInfo.WebClient.Helpers.Helper.GetGradeItems(), new { id = item.StudentId, onchange = "captureGrade(this)" })</td>
                 }
                 else
                 {
@@ -34,9 +34,14 @@
         }
         else
         {
-        @Html.Label("Empty", "No results.")
+            @Html.Label("Empty", "No results.")
         }
 </div>
 <div class="modal-footer">
+    <input type="button" value="Save" class="btn btn-success" onclick="assignStudentsGrades()" />
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
+
+<script type="text/javascript">
+    var studentGradesArray = [];
+</script>
