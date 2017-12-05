@@ -23,5 +23,8 @@ namespace StudentInfo.WebClient.Models
         [Display(Name = "Cost")]
         [DataType(DataType.Currency)]
         public decimal Cost { get; set; }
+
+        [Display(Name = "Instructor")]
+        public Guid InstructorId { get; set; }
     }
 }

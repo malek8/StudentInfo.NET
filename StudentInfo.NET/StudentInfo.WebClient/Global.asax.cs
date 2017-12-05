@@ -28,6 +28,7 @@ namespace StudentInfo.WebClient
         {
             AssignUserRoles();
             CreateCourses();
+            CreateTeachers();
         }
 
         private void AssignUserRoles()
@@ -106,6 +107,29 @@ namespace StudentInfo.WebClient
                 var department10 = departmentService.CreateDepartment("Management", faculty4);
                 var department11 = departmentService.CreateDepartment("Marketing", faculty4);
                 var department12 = departmentService.CreateDepartment("Supply Chain & Business Technology Management", faculty4);
+            }
+        }
+
+        private void CreateTeachers()
+        {
+            var db = new Data.StudentInfoContext();
+
+            var userAccount = db.ApplicationUsers.FirstOrDefault(x => x.Email == "mr.garrison@southpark.com");
+
+            if (userAccount != null)
+            {
+                var userId = Guid.Parse(userAccount.Id);
+
+                if (!db.Teachers.Any(x => x.ApplicationUserId == userId))
+                {
+                    db.Teachers.Add(new Dto.Teacher()
+                    {
+                        Id = Guid.NewGuid(),
+                        ApplicationUserId = userId
+                    });
+
+                    db.SaveChanges();
+                }
             }
         }
     }

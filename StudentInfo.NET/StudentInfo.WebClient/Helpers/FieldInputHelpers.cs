@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StudentInfo.Data;
+using StudentInfo.Dto;
 
 namespace StudentInfo.WebClient.Helpers
 {
@@ -68,6 +69,39 @@ namespace StudentInfo.WebClient.Helpers
             }));
 
             return classroomsSelection;
+        }
+
+        public static IEnumerable<SelectListItem> GetInstructors()
+        {
+            var selections = new List<SelectListItem>();
+
+            selections.Add(new SelectListItem
+            {
+                Text = "-- Select Item --",
+                Value = string.Empty
+            });
+
+            var db = new StudentInfoContext();
+            var teacherIds = db.Teachers.Select(x => x.ApplicationUserId).ToList();
+
+            var teachersInfo = new List<ApplicationUser>();
+
+            foreach(var t in teacherIds)
+            {
+                var u = db.ApplicationUsers.FirstOrDefault(x => x.Id == t.ToString());
+                if (u != null)
+                {
+                    teachersInfo.Add(u);
+                }
+            }
+
+            selections.AddRange(teachersInfo.Select(x => new SelectListItem
+            {
+                Text = $"{x.FirstName} {x.LastName}",
+                Value = x.Id.ToString()
+            }));
+
+            return selections;
         }
     }
 }

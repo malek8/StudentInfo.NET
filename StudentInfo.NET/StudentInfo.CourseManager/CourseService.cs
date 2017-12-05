@@ -74,12 +74,13 @@ namespace StudentInfo.CourseManager
             return _db.Courses.FirstOrDefault(x => x.Code == code);
         }
 
-        public bool AssignSemester(Guid courseId, Guid classroomId, decimal cost, Term term, DateTime courseDate)
+        public bool AssignSemester(Guid courseId, Guid classroomId, Guid userId, decimal cost, Term term, DateTime courseDate)
         {
             if (ValidateCourseInput(cost, term, courseDate))
             {
                 var course = FindById(courseId);
-                if (course != null && !SemesterCourseExists(course.Id, term))
+                var teacher = _db.Teachers.FirstOrDefault(x => x.ApplicationUserId == userId);
+                if (course != null && teacher != null && !SemesterCourseExists(course.Id, term))
                 {
                     var classroom = _db.Classrooms.FirstOrDefault(x => x.Id == classroomId);
 
@@ -92,7 +93,8 @@ namespace StudentInfo.CourseManager
                             Course = course,
                             Term = term,
                             Cost = cost,
-                            CourseDate = courseDate
+                            CourseDate = courseDate,
+                            Teacher = teacher
                         });
 
                         try

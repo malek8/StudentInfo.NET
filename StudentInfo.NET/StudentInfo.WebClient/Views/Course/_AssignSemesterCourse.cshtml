@@ -34,7 +34,7 @@
                             var teacherName = "TBD";
                             if (item.Teacher != null)
                             {
-                                teacherName = item.Teacher.User.FirstName + " " + item.Teacher.User.LastName;
+                                teacherName = Helper.GetUserFullName(item.Teacher.ApplicationUserId);
                             }
                         }
                         <td>@teacherName</td>
@@ -49,6 +49,12 @@
             @Html.LabelFor(x => x.Term, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
                 @Html.EnumDropDownListFor(x => x.Term, new { id = "assignCourseTermInput", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.InstructorId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(x => x.InstructorId, FieldInputHelpers.GetInstructors(),  new { id = "assignCourseInstructorInput", @class = "form-control" })
             </div>
         </div>
         <div class="form-group">

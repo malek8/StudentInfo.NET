@@ -76,11 +76,11 @@
                             <span class="glyphicon glyphicon-calendar"></span> Semester
                         </button>
 
-                        @*<button class="btn btn-primary" onclick='loadTeachersModal("@item.Id")'>
+                        @*<button class="btn btn-primary" onclick='loadAssignInstructorModal("@item.Id")'>
                             <span class="glyphicon glyphicon-user"></span> Instructor
-                        </button>
+                        </button>*@
 
-                        <button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", true)'>
+                        @*<button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", true)'>
                             <span class="glyphicon glyphicon-pencil"></span> Edit
                         </button>*@
                     }
@@ -131,9 +131,9 @@
 </div>
 
 <!-- Assign Instructor Modal -->
-<div id="courseInstructorModal" class="modal fade" role="dialog">
+<div id="assignInstructorModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-        <div id="courseInstructorModalBody" class="modal-content">
+        <div id="assignInstructorModalBody" class="modal-content">
         </div>
     </div>
 </div>

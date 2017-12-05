@@ -266,11 +266,12 @@ function assignSemesterCourse(courseId) {
     var date = $("#assignCourseDateInput").val();
     var term = $("#assignCourseTermInput").val();
     var classroomId = $("#assignCourseClassroomInput").val();
+    var teacherId = $("#assignCourseInstructorInput").val();
     var cost = $("#assignCourseCostInput").val();
     $.ajax({
         type: "POST",
         url: "/Course/AssignSemesterCourse",
-        data: { courseId, classroomId, cost, term, date },
+        data: { courseId, classroomId, teacherId, cost, term, date },
         success: function (data) {
             if (data.success === true) {
                 displayAlert("Assigned successfully", true);
