@@ -1,4 +1,5 @@
 ﻿@model StudentInfo.Dto.SemesterCourse
+@using StudentInfo.WebClient.Helpers
 
 <div class="modal-header">
     <h4 class="modal-title">@Model.Course.Code - @Model.Course.Name</h4>
@@ -10,7 +11,10 @@
     </ol>
     <p>Course Description:</p>
     <p class="text-info">@Model.Course.Description</p>
-
+    @{ 
+        var instructorName = Model.Teacher == null ? "TBD" : Helper.GetUserFullName(Model.Teacher.ApplicationUserId);
+    }
+    <p>Instructor: @instructorName</p>
     <p>Course Period: @Model.CourseDate.Year - @Model.Term</p>
     <p>Location: @Model.Classroom.Campus - @Model.Classroom.Number</p>
 </div>

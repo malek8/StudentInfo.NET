@@ -73,15 +73,6 @@
                 @Html.DisplayFor(x => instructorName)
             </td>
             <td>
-
-                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator) || User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
-                {
-
-                        <button class="btn btn-primary" onclick='loadCourseDetails("@item.Course.Id", true)'>
-                            <span class="glyphicon glyphicon-pencil"></span> Edit
-                        </button>
-                }
-
                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
                 {
                 <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
@@ -115,14 +106,6 @@
 <div id="courseDetailsModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseDetailsModalBody" class="modal-content">
-        </div>
-    </div>
-</div>
-
-<!-- Course Edit Modal -->
-<div id="courseEditModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div id="courseEditModalBody" class="modal-content">
         </div>
     </div>
 </div>
