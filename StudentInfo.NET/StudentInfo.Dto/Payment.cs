@@ -17,7 +17,7 @@ namespace StudentInfo.Dto
 
         public virtual Student Student { get; set; }
 
-        public virtual IEnumerable<Transaction> Transactions { get; set; }
+        public virtual IList<Transaction> Transactions { get; set; }
     }
 
     public class PaymentItem

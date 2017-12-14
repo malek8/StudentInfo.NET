@@ -24,6 +24,7 @@ namespace StudentInfo.WebClient.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private StudentService _studentService;
+        private StudentPaymentService _studentPaymentService;
 
         public ApplicationSignInManager SignInManager
         {
@@ -57,11 +58,13 @@ namespace StudentInfo.WebClient.Controllers
         public AccountController()
         {
             _studentService = new StudentService();
+            _studentPaymentService = new StudentPaymentService();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             _studentService = new StudentService();
+            _studentPaymentService = new StudentPaymentService();
         }
 
         [AllowAnonymous]
@@ -126,11 +129,11 @@ namespace StudentInfo.WebClient.Controllers
                     UserManager.AddToRole(user.Id, model.Role);
                     if (model.Role == SystemRoles.Student)
                     {
-                        _studentService.CreateStudent(user.Id, model.ProgramId);
+                        var studentId = _studentService.CreateStudent(user.Id, model.ProgramId);
+                        _studentPaymentService.InitTermPayment(studentId);
                     }
                     await SendConfirmationEmail(user.Id);
-
-                    // Redirect to Accounts management area.
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

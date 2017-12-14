@@ -117,6 +117,26 @@ namespace StudentInfo.Students
             return true;
         }
 
+        public decimal GetBalance(Guid studentId)
+        {
+            var student = _db.Students.Find(studentId);
+            var currentTerm = CourseHelper.CurrentTerm();
+            if (student != null && student.Payments != null)
+            {
+                var currentPayment = student.Payments.FirstOrDefault(x => x.Term == currentTerm);
+                var toPay = currentPayment.Items.Sum(x => x.Amount);
+
+                if (currentPayment.Transactions == null)
+                {
+                    return toPay;
+                }
+
+                var paid = currentPayment.Transactions.Sum(x => x.Amount);
+                return toPay - paid;
+            }
+            return 0;
+        }
+
         private IList<PaymentItem> GetProgramCharges(Guid programId)
         {
             var charges = new List<PaymentItem>();

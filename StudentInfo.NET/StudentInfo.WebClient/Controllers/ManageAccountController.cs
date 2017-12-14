@@ -13,6 +13,7 @@ using StudentInfo.WebClient.Models;
 using Microsoft.Owin.Security;
 using StudentInfo.Data;
 using StudentInfo.WebClient.Helpers;
+using StudentInfo.Students;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -21,6 +22,8 @@ namespace StudentInfo.WebClient.Controllers
     public class ManageAccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        private StudentPaymentService _studentPaymentService;
+        private StudentService _studentService;
         public ApplicationUserManager UserManager
         {
             get
@@ -36,6 +39,12 @@ namespace StudentInfo.WebClient.Controllers
         private IAuthenticationManager AuthenticationManager
         {
             get { return HttpContext.GetOwinContext().Authentication; }
+        }
+
+        public ManageAccountController()
+        {
+            _studentPaymentService = new StudentPaymentService();
+            _studentService = new StudentService();
         }
 
         public async Task<ActionResult> Index()
@@ -61,14 +70,12 @@ namespace StudentInfo.WebClient.Controllers
 
                         if (User.IsInRole(SystemRoles.Student))
                         {
-                            var db = new StudentInfoContext();
+                            var student = _studentService.FindByUserId(user.Id);
 
-                            var userId = Guid.Parse(user.Id);
-                            var studentInfo = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
-
-                            if (studentInfo != null)
+                            if (student != null)
                             {
-                                model.Balance = studentInfo.Balance;
+                                var balance = _studentPaymentService.GetBalance(student.Id);
+                                model.Balance = balance;
                             }
                         }
 
