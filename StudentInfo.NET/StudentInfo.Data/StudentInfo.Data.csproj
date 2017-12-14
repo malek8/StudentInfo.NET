@@ -54,73 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomSeed.cs" />
-    <Compile Include="Migrations\201711151857006_initial.cs" />
-    <Compile Include="Migrations\201711151857006_initial.Designer.cs">
-      <DependentUpon>201711151857006_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711151900048_Student_StudentCourse.cs" />
-    <Compile Include="Migrations\201711151900048_Student_StudentCourse.Designer.cs">
-      <DependentUpon>201711151900048_Student_StudentCourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711160325288_StudentCourse_Grade.cs" />
-    <Compile Include="Migrations\201711160325288_StudentCourse_Grade.Designer.cs">
-      <DependentUpon>201711160325288_StudentCourse_Grade.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711170250088_TeacherCourse.cs" />
-    <Compile Include="Migrations\201711170250088_TeacherCourse.Designer.cs">
-      <DependentUpon>201711170250088_TeacherCourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711170312240_Teacher.cs" />
-    <Compile Include="Migrations\201711170312240_Teacher.Designer.cs">
-      <DependentUpon>201711170312240_Teacher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711170333535_TeachToSemesterCourse.cs" />
-    <Compile Include="Migrations\201711170333535_TeachToSemesterCourse.Designer.cs">
-      <DependentUpon>201711170333535_TeachToSemesterCourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711170424592_Teacher_TeacherCourse.cs" />
-    <Compile Include="Migrations\201711170424592_Teacher_TeacherCourse.Designer.cs">
-      <DependentUpon>201711170424592_Teacher_TeacherCourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711202139387_CourseTeacher.cs" />
-    <Compile Include="Migrations\201711202139387_CourseTeacher.Designer.cs">
-      <DependentUpon>201711202139387_CourseTeacher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711271854130_externalStudentId.cs" />
-    <Compile Include="Migrations\201711271854130_externalStudentId.Designer.cs">
-      <DependentUpon>201711271854130_externalStudentId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711272101563_StudentCourseStudent.cs" />
-    <Compile Include="Migrations\201711272101563_StudentCourseStudent.Designer.cs">
-      <DependentUpon>201711272101563_StudentCourseStudent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712012333531_CourseCost.cs" />
-    <Compile Include="Migrations\201712012333531_CourseCost.Designer.cs">
-      <DependentUpon>201712012333531_CourseCost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712012342154_StudentBalance.cs" />
-    <Compile Include="Migrations\201712012342154_StudentBalance.Designer.cs">
-      <DependentUpon>201712012342154_StudentBalance.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712030133275_StudentProgram.cs" />
-    <Compile Include="Migrations\201712030133275_StudentProgram.Designer.cs">
-      <DependentUpon>201712030133275_StudentProgram.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712140511101_Payments.cs" />
-    <Compile Include="Migrations\201712140511101_Payments.Designer.cs">
-      <DependentUpon>201712140511101_Payments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712140514225_Payments1.cs" />
-    <Compile Include="Migrations\201712140514225_Payments1.Designer.cs">
-      <DependentUpon>201712140514225_Payments1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712140520054_Transactions.cs" />
-    <Compile Include="Migrations\201712140520054_Transactions.Designer.cs">
-      <DependentUpon>201712140520054_Transactions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712140522141_Payments2.cs" />
-    <Compile Include="Migrations\201712140522141_Payments2.Designer.cs">
-      <DependentUpon>201712140522141_Payments2.cs</DependentUpon>
+    <Compile Include="Migrations\201712140637339_Initial.cs" />
+    <Compile Include="Migrations\201712140637339_Initial.Designer.cs">
+      <DependentUpon>201712140637339_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,56 +81,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711151857006_initial.resx">
-      <DependentUpon>201711151857006_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711151900048_Student_StudentCourse.resx">
-      <DependentUpon>201711151900048_Student_StudentCourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711160325288_StudentCourse_Grade.resx">
-      <DependentUpon>201711160325288_StudentCourse_Grade.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711170250088_TeacherCourse.resx">
-      <DependentUpon>201711170250088_TeacherCourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711170312240_Teacher.resx">
-      <DependentUpon>201711170312240_Teacher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711170333535_TeachToSemesterCourse.resx">
-      <DependentUpon>201711170333535_TeachToSemesterCourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711170424592_Teacher_TeacherCourse.resx">
-      <DependentUpon>201711170424592_Teacher_TeacherCourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711202139387_CourseTeacher.resx">
-      <DependentUpon>201711202139387_CourseTeacher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711271854130_externalStudentId.resx">
-      <DependentUpon>201711271854130_externalStudentId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711272101563_StudentCourseStudent.resx">
-      <DependentUpon>201711272101563_StudentCourseStudent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712012333531_CourseCost.resx">
-      <DependentUpon>201712012333531_CourseCost.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712012342154_StudentBalance.resx">
-      <DependentUpon>201712012342154_StudentBalance.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712030133275_StudentProgram.resx">
-      <DependentUpon>201712030133275_StudentProgram.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712140511101_Payments.resx">
-      <DependentUpon>201712140511101_Payments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712140514225_Payments1.resx">
-      <DependentUpon>201712140514225_Payments1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712140520054_Transactions.resx">
-      <DependentUpon>201712140520054_Transactions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712140522141_Payments2.resx">
-      <DependentUpon>201712140522141_Payments2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712140637339_Initial.resx">
+      <DependentUpon>201712140637339_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

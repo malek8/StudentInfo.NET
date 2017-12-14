@@ -12,7 +12,7 @@ namespace StudentInfo.Dto
         public string PaymentMethod { get; set; }
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
-        public decimal CardNumber { get; set; }
+        public string CardNumber { get; set; }
         public virtual Payment Payment { get; set; }
     }
 }

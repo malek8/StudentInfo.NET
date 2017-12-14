@@ -25,5 +25,7 @@ namespace StudentInfo.Dto
         public ProgramStudyType StudyType { get; set; }
 
         public Department Department { get; set; }
+
+        public decimal TermCost { get; set; }
     }
 }
