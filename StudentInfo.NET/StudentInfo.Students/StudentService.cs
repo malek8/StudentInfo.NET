@@ -75,6 +75,7 @@ namespace StudentInfo.Students
                     var externalStudentId = GenerateStudentId();
                     var student = new Student
                     {
+                        Id = Guid.NewGuid(),
                         ApplicationUserId = applicationUserId,
                         Balance = 0,
                         Program = program,

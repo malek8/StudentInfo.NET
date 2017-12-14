@@ -14,39 +14,22 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Role, new List<SelectListItem>
-       {
-           new SelectListItem()
-           {
-               Selected = true,
-               Text = SystemRoles.Student,
-               Value = SystemRoles.Student
-           },
-           new SelectListItem()
-           {
-               Selected = false,
-               Text = SystemRoles.Instructor,
-               Value = SystemRoles.Instructor
-           },
-           new SelectListItem()
-           {
-               Selected = false,
-               Text = SystemRoles.FacultyMember,
-               Value = SystemRoles.FacultyMember
-           },
-           new SelectListItem()
-           {
-               Selected = false,
-               Text = SystemRoles.Advisor,
-               Value = SystemRoles.Advisor
-           },
-           new SelectListItem()
-           {
-               Selected = false,
-               Text = SystemRoles.Administrator,
-               Value = SystemRoles.Administrator
-           }
-       }, new { @class = "form-control"})
+            @Html.DropDownListFor(m => m.Role, StudentInfo.WebClient.Helpers.FieldInputHelpers.GetRoles(),
+           new { id = "roleDropdown", @class = "form-control", onchange = "checkHiddenLists()" })
+        </div>
+    </div>
+    <div id="departmentDiv" class="form-group" style="display: none">
+        @Html.Label("Department", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("Departments", StudentInfo.WebClient.Helpers.FieldInputHelpers.GetSchoolDepartments(), 
+           new { id = "departmentDropdown", @class = "form-control", onchange = "updatePrograms()" })
+        </div>
+    </div>
+    <div id="programDiv" class="form-group" style="display: none">
+        @Html.LabelFor(m => m.ProgramId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.ProgramId, StudentInfo.WebClient.Helpers.FieldInputHelpers.GetRoles(), 
+           new { id = "programDropdown", @class = "form-control" })
         </div>
     </div>
     @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -96,3 +79,43 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript">
+    $(document).ready(checkHiddenLists());
+
+    function displayStudentLists(show) {
+        if (show) {
+            $("#departmentDiv").show();
+            $("#programDiv").show();
+        }
+        else {
+            $("#departmentDiv").hide();
+            $("#programDiv").hide();
+        }
+    }
+
+    function checkHiddenLists() {
+        if ($("#roleDropdown").find(":selected").val() === "Student") {
+            displayStudentLists(true);
+        }
+        else {
+            displayStudentLists(false);
+        }
+    }
+
+    function updatePrograms() {
+        $("#programDropdown").empty();
+        var departmentId = $("#departmentDropdown").find(":selected").val();
+
+        $.ajax({
+            type: "GET",
+            url: "/Course/GetPrograms",
+            data: { departmentId: departmentId },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#programDropdown").append('<option value = "' + data[i].value + '">' + data[i].text + '</option>');
+                }
+            }
+        });
+    }
+</script>

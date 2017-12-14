@@ -13,6 +13,7 @@ using StudentInfo.Dto;
 using StudentInfo.Enums;
 using StudentInfo.Data;
 using System.Security.Claims;
+using StudentInfo.Students;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -22,6 +23,7 @@ namespace StudentInfo.WebClient.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private StudentService _studentService;
 
         public ApplicationSignInManager SignInManager
         {
@@ -54,12 +56,12 @@ namespace StudentInfo.WebClient.Controllers
 
         public AccountController()
         {
-
+            _studentService = new StudentService();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
-            
+            _studentService = new StudentService();
         }
 
         [AllowAnonymous]
@@ -122,6 +124,10 @@ namespace StudentInfo.WebClient.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, model.Role);
+                    if (model.Role == SystemRoles.Student)
+                    {
+                        _studentService.CreateStudent(user.Id, model.ProgramId);
+                    }
                     await SendConfirmationEmail(user.Id);
 
                     // Redirect to Accounts management area.

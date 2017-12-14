@@ -301,6 +301,17 @@ namespace StudentInfo.WebClient.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetPrograms(Guid departmentId)
+        {
+            var db = new StudentInfoContext();
+
+            var programs = db.Programs.Where(x => x.Department.Id == departmentId);
+
+            return Json(programs.Select(x => new { text = x.Name, value = x.Id }),
+                JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Search(CourseSearchModel model, int? page)
         {
             if (model == null) model = new CourseSearchModel();

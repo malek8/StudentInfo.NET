@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using StudentInfo.Data;
 using StudentInfo.Dto;
+using StudentInfo.Enums;
 
 namespace StudentInfo.WebClient.Helpers
 {
@@ -86,7 +87,7 @@ namespace StudentInfo.WebClient.Helpers
 
             var teachersInfo = new List<ApplicationUser>();
 
-            foreach(var t in teacherIds)
+            foreach (var t in teacherIds)
             {
                 var u = db.ApplicationUsers.FirstOrDefault(x => x.Id == t.ToString());
                 if (u != null)
@@ -102,6 +103,55 @@ namespace StudentInfo.WebClient.Helpers
             }));
 
             return selections;
+        }
+
+        public static IEnumerable<SelectListItem> GetRoles()
+        {
+            return new List<SelectListItem>
+       {
+           new SelectListItem()
+           {
+               Selected = true,
+               Text = SystemRoles.Student,
+               Value = SystemRoles.Student
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.Instructor,
+               Value = SystemRoles.Instructor
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.FacultyMember,
+               Value = SystemRoles.FacultyMember
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.Advisor,
+               Value = SystemRoles.Advisor
+           },
+           new SelectListItem()
+           {
+               Selected = false,
+               Text = SystemRoles.Administrator,
+               Value = SystemRoles.Administrator
+           }
+       };
+        }
+
+        public static IEnumerable<SelectListItem> GetPrograms(Guid departmentId)
+        {
+            var db = new StudentInfoContext();
+            var programs = db.Programs.Where(x => x.Department.Id == departmentId);
+
+            return programs.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });            
         }
     }
 }
