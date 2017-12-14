@@ -106,6 +106,22 @@
     <Compile Include="Migrations\201712030133275_StudentProgram.Designer.cs">
       <DependentUpon>201712030133275_StudentProgram.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712140511101_Payments.cs" />
+    <Compile Include="Migrations\201712140511101_Payments.Designer.cs">
+      <DependentUpon>201712140511101_Payments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712140514225_Payments1.cs" />
+    <Compile Include="Migrations\201712140514225_Payments1.Designer.cs">
+      <DependentUpon>201712140514225_Payments1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712140520054_Transactions.cs" />
+    <Compile Include="Migrations\201712140520054_Transactions.Designer.cs">
+      <DependentUpon>201712140520054_Transactions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712140522141_Payments2.cs" />
+    <Compile Include="Migrations\201712140522141_Payments2.Designer.cs">
+      <DependentUpon>201712140522141_Payments2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -167,6 +183,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712030133275_StudentProgram.resx">
       <DependentUpon>201712030133275_StudentProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712140511101_Payments.resx">
+      <DependentUpon>201712140511101_Payments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712140514225_Payments1.resx">
+      <DependentUpon>201712140514225_Payments1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712140520054_Transactions.resx">
+      <DependentUpon>201712140520054_Transactions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712140522141_Payments2.resx">
+      <DependentUpon>201712140522141_Payments2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

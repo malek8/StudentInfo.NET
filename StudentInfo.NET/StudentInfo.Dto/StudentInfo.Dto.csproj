@@ -60,6 +60,7 @@
     <Compile Include="Course.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Faculty.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SemesterCourse.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="StudentCourse.cs" />
     <Compile Include="Teacher.cs" />
     <Compile Include="TeacherCourse.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="UserCourseBase.cs" />
     <Compile Include="UserDetails.cs" />
   </ItemGroup>
