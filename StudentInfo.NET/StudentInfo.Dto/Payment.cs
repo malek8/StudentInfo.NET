@@ -10,6 +10,7 @@ namespace StudentInfo.Dto
     {
         public Guid Id { get; set; }
         public Enums.Term Term { get; set; }
+        public DateTime Date { get; set; }
         
         public virtual IList<PaymentItem> Items { get; set; }
 
