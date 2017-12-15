@@ -14,7 +14,11 @@ namespace StudentInfo.Dto
         
         public virtual IList<PaymentItem> Items { get; set; }
 
-        public decimal Total => Items.Sum(x => x.Amount);
+        public decimal TotalToPay => Items.Sum(x => x.Amount);
+
+        public decimal TotalPaid => Transactions.Sum(x => x.Amount);
+
+        public decimal Balance => TotalToPay - TotalPaid;
 
         public virtual Student Student { get; set; }
 

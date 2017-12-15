@@ -14,6 +14,7 @@ using Microsoft.Owin.Security;
 using StudentInfo.Data;
 using StudentInfo.WebClient.Helpers;
 using StudentInfo.Students;
+using StudentInfo.Dto;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -173,8 +174,10 @@ namespace StudentInfo.WebClient.Controllers
         public ActionResult GetStudentBalance()
         {
             var model = new StudentBalanceModel();
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
             {
+                
+
                 var db = new StudentInfoContext();
                 var userId = Guid.Parse(User.Identity.GetUserId());
 
@@ -186,6 +189,27 @@ namespace StudentInfo.WebClient.Controllers
                 }
             }
             return View("_PayBalance", model);
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Student)]
+        public ActionResult BalanceToPay(Guid paymentId)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
+            {
+                var payment = _studentPaymentService.GetPayment(paymentId);
+                if (payment != null)
+                {
+                    var model = new StudentBalanceModel
+                    {
+                        Balance = payment.Balance
+                    };
+
+                    return View("_PayBalance", model);
+                }
+            }
+
+            return HttpNotFound();
         }
 
         public JsonResult PayBalance(StudentBalanceModel model)
@@ -246,6 +270,25 @@ namespace StudentInfo.WebClient.Controllers
                     var payments = _studentPaymentService.GetPayments(studentId);
 
                     return View(payments);
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Student)]
+        public ActionResult PaymentItemDetails(Guid paymentId)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
+            {
+                var payment = _studentPaymentService.GetPayment(paymentId);
+                if (payment != null)
+                {
+                    return View(payment);
+                }
+                else
+                {
+                    return View(new Payment());
                 }
             }
             return RedirectToAction("Index", "Home");

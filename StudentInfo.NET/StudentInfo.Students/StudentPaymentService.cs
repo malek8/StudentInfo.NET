@@ -69,7 +69,8 @@ namespace StudentInfo.Students
                         Id = Guid.NewGuid(),
                         Student = student,
                         Term = currentTerm,
-                        Items = charges
+                        Items = charges,
+                        Date = DateTime.Now
                     };
 
                     _db.Payments.Add(payment);
@@ -146,6 +147,11 @@ namespace StudentInfo.Students
             }
 
             return new List<Payment>();
+        }
+
+        public Payment GetPayment(Guid id)
+        {
+            return _db.Payments.Find(id);
         }
 
         private IList<PaymentItem> GetProgramCharges(Guid programId)

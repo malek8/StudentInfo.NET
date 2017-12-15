@@ -1,0 +1,47 @@
+﻿@model StudentInfo.Dto.Payment
+@{
+    ViewBag.Title = $"{Model.Term} - {Model.Date.Year}";
+}
+
+<h2>@Model.Term - @Model.Date.Year</h2>
+
+@Html.ActionLink("Back", "PaymentInquiry", null, new { @class = "btn btn-secondary" })
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>$@item.Amount</td>
+            </tr>
+        }
+        <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>$@Model.Items.Sum(x => x.Amount)</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-primary" onclick='loadPayBalanceModal("@Model.Id")'>
+            <span class="glyphicon glyphicon-usd"></span> Pay Balance
+        </button>
+    </div>
+</div>
+<br />
+
+<!-- Pay Balance Modal -->
+<div id="payBalanceModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="payBalanceModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
