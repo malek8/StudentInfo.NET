@@ -368,6 +368,7 @@
     <Content Include="Views\Course\CoursesSeach.cshtml" />
     <Content Include="Views\Course\_AssignSemesterCourse.cshtml" />
     <Content Include="Views\Course\_EditCourse.cshtml" />
+    <Content Include="Views\ManageAccount\PaymentInquiry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

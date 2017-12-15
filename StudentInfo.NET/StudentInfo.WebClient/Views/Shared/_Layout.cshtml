@@ -29,7 +29,23 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Account", "Index", "ManageAccount")</li>
+                        if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Account
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Details", "Index", "ManageAccount")</li>
+                                    <li>@Html.ActionLink("Payment Inquiry", "PaymentInquiry", "ManageAccount")</li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Account", "Index", "ManageAccount")</li>
+                        }
 
                         if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator))
                         {

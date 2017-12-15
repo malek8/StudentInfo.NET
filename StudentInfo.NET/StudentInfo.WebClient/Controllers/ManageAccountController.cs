@@ -74,8 +74,7 @@ namespace StudentInfo.WebClient.Controllers
 
                             if (student != null)
                             {
-                                var balance = _studentPaymentService.GetBalance(student.Id);
-                                model.Balance = balance;
+                                model.Balance = _studentPaymentService.GetBalance(student.Id);
                             }
                         }
 
@@ -232,6 +231,24 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             return Json(new { success = false, messages = messages });
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Student)]
+        public ActionResult PaymentInquiry()
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
+            {
+                var studentIdAsStr = Helper.GetClaimValue(User.Identity, CustomClaims.StudentId);
+                if (!string.IsNullOrEmpty(studentIdAsStr))
+                {
+                    var studentId = Guid.Parse(studentIdAsStr);
+                    var payments = _studentPaymentService.GetPayments(studentId);
+
+                    return View(payments);
+                }
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         private bool ValidateEmail(string email)

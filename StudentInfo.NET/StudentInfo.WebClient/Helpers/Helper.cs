@@ -6,6 +6,8 @@ using StudentInfo.Enums;
 using System.Web.Mvc;
 using StudentInfo.Dto;
 using StudentInfo.Data;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace StudentInfo.WebClient.Helpers
 {
@@ -283,6 +285,11 @@ namespace StudentInfo.WebClient.Helpers
             var db = new StudentInfoContext();
 
             return db.StudentCourses.Count(x => x.SemesterCourse.Id == semesterCourseId);
+        }
+
+        public static string GetClaimValue(System.Security.Principal.IIdentity identity, string claimName)
+        {
+            return ((ClaimsIdentity)identity).FindFirstValue(claimName);
         }
     }
 }

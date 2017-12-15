@@ -177,6 +177,12 @@ namespace StudentInfo.WebClient.Controllers
             {
                 var identity = await UserManager.ClaimsIdentityFactory.CreateAsync(UserManager, user, DefaultAuthenticationTypes.ApplicationCookie);
 
+                var student = _studentService.FindByUserId(user.Id);
+                if (student != null)
+                {
+                    identity.AddClaim(new Claim(CustomClaims.StudentId, student.Id.ToString()));
+                }
+
                 identity.AddClaim(new Claim(CustomClaims.FirstName, user.FirstName));
                 identity.AddClaim(new Claim(CustomClaims.LastName, user.LastName));
                 identity.AddClaim(new Claim(CustomClaims.EmailAddress, user.Email));

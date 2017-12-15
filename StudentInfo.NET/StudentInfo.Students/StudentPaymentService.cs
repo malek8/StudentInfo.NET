@@ -137,6 +137,17 @@ namespace StudentInfo.Students
             return 0;
         }
 
+        public IList<Payment> GetPayments(Guid studentId)
+        {
+            var student = _db.Students.Find(studentId);
+            if (student != null)
+            {
+                return student.Payments;
+            }
+
+            return new List<Payment>();
+        }
+
         private IList<PaymentItem> GetProgramCharges(Guid programId)
         {
             var charges = new List<PaymentItem>();

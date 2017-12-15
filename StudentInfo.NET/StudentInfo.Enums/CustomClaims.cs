@@ -11,5 +11,6 @@ namespace StudentInfo.Enums
         public const string FirstName = "firstname";
         public const string LastName = "lastname";
         public const string EmailAddress = "emailaddress";
+        public const string StudentId = "studentid";
     }
 }

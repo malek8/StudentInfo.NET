@@ -1,0 +1,25 @@
+﻿@model IList<StudentInfo.Dto.Payment>
+
+@{
+    ViewBag.Title = "Payment Inquiry";
+}
+
+<h2>Payment Inquiry</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Term</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Term.ToString(), "PaymentDetails", null, new { @class = "btn btn-link"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
