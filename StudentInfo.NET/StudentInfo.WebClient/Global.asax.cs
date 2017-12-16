@@ -136,6 +136,17 @@ namespace StudentInfo.WebClient
             }
         }
 
+        protected void Application_PostAcquireRequestState(object sender, EventArgs e)
+        {
+            if (!Request.Path.Contains("Account/Login"))
+            {
+                if (User != null && User.Identity.IsAuthenticated && Session["emailAddress"] == null)
+                {
+                    Response.Redirect("/Account/Login");
+                }
+            }
+        }
+
         private void CreateTeachers(List<Dto.Course> courses, Guid classroomId)
         {
             var db = new Data.StudentInfoContext();
