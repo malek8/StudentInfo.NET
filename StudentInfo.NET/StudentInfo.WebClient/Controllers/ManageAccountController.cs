@@ -240,6 +240,19 @@ namespace StudentInfo.WebClient.Controllers
 
                 if (result)
                 {
+                    if (HttpContext.Session["owingBalance"] != null)
+                    {
+                        if (model.AmountToPay == model.Balance)
+                        {
+                            HttpContext.Session.Remove("owingBalance");
+                            HttpContext.Session.Remove("hasBalance");
+                        }
+                        else if (model.AmountToPay < model.Balance)
+                        {
+                            HttpContext.Session["owingBalance"] = model.Balance - model.AmountToPay;
+                            HttpContext.Session.Add("hasBalance", true);
+                        }
+                    }
                     if (model.AmountToPay > model.Balance)
                     {
                         messages.Add($"You have been credited ${model.AmountToPay - model.Balance}");
