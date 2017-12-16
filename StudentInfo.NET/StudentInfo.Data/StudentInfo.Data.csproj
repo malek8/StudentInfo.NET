@@ -82,6 +82,14 @@
     <Compile Include="Migrations\201712161953013_SemesterCourseState.Designer.cs">
       <DependentUpon>201712161953013_SemesterCourseState.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712162005290_CourseClassroom.cs" />
+    <Compile Include="Migrations\201712162005290_CourseClassroom.Designer.cs">
+      <DependentUpon>201712162005290_CourseClassroom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712162007275_ClassroomCourseTimeSlot.cs" />
+    <Compile Include="Migrations\201712162007275_ClassroomCourseTimeSlot.Designer.cs">
+      <DependentUpon>201712162007275_ClassroomCourseTimeSlot.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -125,6 +133,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712161953013_SemesterCourseState.resx">
       <DependentUpon>201712161953013_SemesterCourseState.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712162005290_CourseClassroom.resx">
+      <DependentUpon>201712162005290_CourseClassroom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712162007275_ClassroomCourseTimeSlot.resx">
+      <DependentUpon>201712162007275_ClassroomCourseTimeSlot.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

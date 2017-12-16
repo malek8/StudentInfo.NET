@@ -170,7 +170,7 @@ namespace StudentInfo.WebClient
                     var courseService = new CourseService();
                     foreach (var c in courses)
                     {
-                        courseService.AssignSemester(c.Id, classroomId, userId, 350, Term.Fall, DateTime.Now);
+                        courseService.AssignSemester(c.Id, classroomId, userId, true, Term.Fall, DateTime.Now);
                     }
                 }
             }

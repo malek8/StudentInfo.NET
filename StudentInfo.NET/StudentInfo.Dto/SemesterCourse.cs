@@ -14,7 +14,7 @@ namespace StudentInfo.Dto
         public Term Term { get; set; }
         public bool Open { get; set; }
         public virtual Course Course { get; set; }
-        public virtual Classroom Classroom { get; set; }
+        public virtual ClassroomCourse ClassroomCourse { get; set; }
         public virtual Teacher Teacher { get; set; }
     }
 }

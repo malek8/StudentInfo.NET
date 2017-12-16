@@ -156,11 +156,11 @@ namespace StudentInfo.WebClient.Controllers
 
         [HttpPost]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
-        public JsonResult AssignSemesterCourse(Guid courseId, Guid classroomId, Guid teacherId, decimal cost, Term term, DateTime date)
+        public JsonResult AssignSemesterCourse(Guid courseId, Guid classroomId, Guid teacherId, bool isOpen, Term term, DateTime date)
         {
             if (User.Identity.IsAuthenticated)
             {
-                var result = _courseService.AssignSemester(courseId, classroomId, teacherId, cost, term, date);
+                var result = _courseService.AssignSemester(courseId, classroomId, teacherId, isOpen, term, date);
                 if (result)
                 {
                     return Json(new { success = true });

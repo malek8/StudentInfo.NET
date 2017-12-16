@@ -100,9 +100,9 @@ namespace StudentInfo.CourseManager
             return _db.Courses.FirstOrDefault(x => x.Code == code);
         }
 
-        public bool AssignSemester(Guid courseId, Guid classroomId, Guid userId, decimal cost, Term term, DateTime courseDate)
+        public bool AssignSemester(Guid courseId, Guid classroomId, Guid userId, bool isOpen, Term term, DateTime courseDate)
         {
-            if (ValidateSemesterCourseInput(cost, term, courseDate))
+            if (ValidateSemesterCourseInput(term, courseDate))
             {
                 var course = FindById(courseId);
                 var teacher = _db.Teachers.FirstOrDefault(x => x.ApplicationUserId == userId);
@@ -115,7 +115,6 @@ namespace StudentInfo.CourseManager
                         _db.SemesterCourses.Add(new SemesterCourse
                         {
                             Id = Guid.NewGuid(),
-                            Classroom = classroom,
                             Course = course,
                             Term = term,
                             CourseDate = courseDate,
@@ -170,10 +169,9 @@ namespace StudentInfo.CourseManager
             return _db.Courses.Any(x => x.Code == code);
         }
 
-        private bool ValidateSemesterCourseInput(decimal cost, Term term, DateTime date)
+        private bool ValidateSemesterCourseInput(Term term, DateTime date)
         {
-            if (cost <= 0 ||
-                (int)term == 0 ||
+            if ((int)term == 0 ||
                 date < DateTime.Now.AddDays(-1))
                 return false;
             return true;
