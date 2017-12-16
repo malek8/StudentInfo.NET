@@ -180,23 +180,23 @@ namespace StudentInfo.WebClient.Controllers
                 var student = _studentService.FindByUserId(user.Id);
                 if (student != null)
                 {
-                    identity.AddClaim(new Claim(CustomClaims.StudentId, student.Id.ToString()));
+                    HttpContext.Session.Add("studentId", student.Id);
 
                     if (_studentPaymentService.HasBalance(student.Id))
                     {
-                        identity.AddClaim(new Claim(CustomClaims.HasBalance, true.ToString()));
-                        identity.AddClaim(new Claim(CustomClaims.OwingBalance, _studentPaymentService.GetBalance(student.Id).ToString()));
+                        HttpContext.Session.Add("student", student);
+                        HttpContext.Session.Add("hasBalance", true);
+                        HttpContext.Session.Add("owingBalance", _studentPaymentService.GetBalance(student.Id));
                     }
                     else
                     {
-                        identity.AddClaim(new Claim(CustomClaims.HasBalance, false.ToString()));
+                        HttpContext.Session.Add("hasBalance", false);
                     }
 
                 }
 
-                identity.AddClaim(new Claim(CustomClaims.FirstName, user.FirstName));
-                identity.AddClaim(new Claim(CustomClaims.LastName, user.LastName));
-                identity.AddClaim(new Claim(CustomClaims.EmailAddress, user.Email));
+                HttpContext.Session.Add("firstName", user.FirstName);
+                HttpContext.Session.Add("emailAddress", user.Email);
 
                 AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                 AuthenticationManager.SignIn(identity);

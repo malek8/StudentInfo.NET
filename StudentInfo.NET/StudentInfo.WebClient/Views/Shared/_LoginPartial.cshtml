@@ -9,7 +9,10 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + ((ClaimsIdentity)User.Identity).FindFirstValue(StudentInfo.Enums.CustomClaims.FirstName) + "!", "Index", "ManageAccount", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @{ 
+                    var firstName = HttpContext.Current.Session["firstName"] ?? string.Empty;
+                }
+                @Html.ActionLink("Hello " + firstName + "!", "Index", "ManageAccount", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

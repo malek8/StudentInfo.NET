@@ -54,7 +54,7 @@ namespace StudentInfo.WebClient.Controllers
             ViewBag.Title = "Account Manager";
             if (User.Identity.IsAuthenticated)
             {
-                var emailAddress = ((ClaimsIdentity)User.Identity).FindFirstValue(CustomClaims.EmailAddress);
+                var emailAddress = HttpContext.Session["emailAddress"].ToString();
 
                 if (!string.IsNullOrEmpty(emailAddress))
                 {
@@ -93,7 +93,7 @@ namespace StudentInfo.WebClient.Controllers
         {
             if (ValidateEmail(model.Email))
             {
-                var oldEmailAddress = ((ClaimsIdentity)User.Identity).FindFirstValue(CustomClaims.EmailAddress);
+                var oldEmailAddress = HttpContext.Session["emailAddress"].ToString();
                 if (!string.IsNullOrEmpty(oldEmailAddress))
                 {
                     var user = await UserManager.FindByEmailAsync(oldEmailAddress);
@@ -139,7 +139,7 @@ namespace StudentInfo.WebClient.Controllers
 
             if (errors.Count == 0)
             {
-                var emailAddress = ((ClaimsIdentity)User.Identity).FindFirstValue(CustomClaims.EmailAddress);
+                var emailAddress = HttpContext.Session["emailAddress"].ToString();
                 if (!string.IsNullOrEmpty(emailAddress))
                 {
                     var user = await UserManager.FindByEmailAsync(emailAddress);
@@ -262,7 +262,7 @@ namespace StudentInfo.WebClient.Controllers
         {
             if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
             {
-                var studentIdAsStr = Helper.GetClaimValue(User.Identity, CustomClaims.StudentId);
+                var studentIdAsStr = HttpContext.Session["studentId"].ToString();
                 if (!string.IsNullOrEmpty(studentIdAsStr))
                 {
                     var studentId = Guid.Parse(studentIdAsStr);

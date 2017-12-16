@@ -64,7 +64,7 @@
         <div id="emailChangeModalBody" class="modal-content">
             @Html.Partial("_ChangeEmail", new StudentInfo.WebClient.Models.ChangeEmailModel
        {
-           Email = ((ClaimsIdentity)User.Identity).FindFirstValue(StudentInfo.Enums.CustomClaims.EmailAddress)
+           Email = HttpContext.Current.Session["emailAddress"].ToString()
        })
         </div>
     </div>

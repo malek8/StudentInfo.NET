@@ -1,7 +1,6 @@
 ﻿@using StudentInfo.WebClient.Helpers
 @using StudentInfo.Enums
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -125,7 +124,7 @@
 </body>
 </html>
 
-@if (Helper.GetClaimValue(User.Identity, CustomClaims.HasBalance) == true.ToString())
+@if (HttpContext.Current.Session["hasBalance"] != null && (bool)HttpContext.Current.Session["hasBalance"] == true)
 {
     <script type="text/javascript">
         $(function () {
@@ -141,7 +140,14 @@
             $(".studentLink").attr("href", "#");
 
             // Show permanent alert
-            $("#permanentPaymentAlert").html("You have an oustanding balance of $" + @Helper.GetClaimValue(User.Identity, CustomClaims.OwingBalance));
+            @{ 
+                decimal owinBalance = 0;
+                if (HttpContext.Current.Session["owingBalance"] != null)
+                {
+                    owinBalance = (decimal)HttpContext.Current.Session["owingBalance"];
+                }
+            }
+            $("#permanentPaymentAlert").html("You have an oustanding balance of $" + @owinBalance);
             $("#permanentPaymentAlert").show();
 
         });
