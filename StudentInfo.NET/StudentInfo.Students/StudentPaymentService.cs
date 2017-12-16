@@ -70,7 +70,8 @@ namespace StudentInfo.Students
                         Student = student,
                         Term = currentTerm,
                         Items = charges,
-                        Date = DateTime.Now
+                        Date = DateTime.Now,
+                        ModifiedDate = DateTime.Now
                     };
 
                     _db.Payments.Add(payment);
@@ -117,20 +118,27 @@ namespace StudentInfo.Students
 
         public decimal GetBalance(Guid studentId)
         {
-            var student = _db.Students.Find(studentId);
-            var currentTerm = CourseHelper.CurrentTerm();
-            if (student != null && student.Payments != null)
+            //var student = _db.Students.Find(studentId);
+            //var currentTerm = CourseHelper.CurrentTerm();
+            //if (student != null && student.Payments != null)
+            //{
+            //    var currentPayment = student.Payments.FirstOrDefault(x => x.Term == currentTerm);
+            //    var toPay = currentPayment.Items.Sum(x => x.Amount);
+
+            //    if (currentPayment.Transactions == null)
+            //    {
+            //        return toPay;
+            //    }
+
+            //    var paid = currentPayment.Transactions.Sum(x => x.Amount);
+            //    return toPay - paid;
+            //}
+            //return 0;
+            var payments = GetPayments(studentId);
+
+            if (payments != null)
             {
-                var currentPayment = student.Payments.FirstOrDefault(x => x.Term == currentTerm);
-                var toPay = currentPayment.Items.Sum(x => x.Amount);
-
-                if (currentPayment.Transactions == null)
-                {
-                    return toPay;
-                }
-
-                var paid = currentPayment.Transactions.Sum(x => x.Amount);
-                return toPay - paid;
+                return payments.Sum(x => x.Balance);
             }
             return 0;
         }
@@ -140,6 +148,19 @@ namespace StudentInfo.Students
             var student = _db.Students.Find(studentId);
             if (student != null)
             {
+                if (student.Payments.Sum(x => x.Balance) > 0)
+                {
+                    if (StudentHelper.IsPaymentDue())
+                    {
+                        foreach(var p in student.Payments)
+                        {
+                            if (p.Balance > 0)
+                            {
+                                AddInterest(p);
+                            }
+                        }
+                    }
+                }
                 return student.Payments;
             }
 
@@ -148,7 +169,17 @@ namespace StudentInfo.Students
 
         public Payment GetPayment(Guid id)
         {
-            return _db.Payments.Find(id);
+            var payment = _db.Payments.Find(id);
+            if (payment != null)
+            {
+                if (payment.Balance > 0)
+                {
+                    AddInterest(payment);
+                }
+
+                return payment;
+            }
+            return new Payment();
         }
 
         private IList<PaymentItem> GetProgramCharges(Guid programId)
@@ -166,14 +197,16 @@ namespace StudentInfo.Students
             {
                 Id = Guid.NewGuid(),
                 Title = "Compulsory Fees",
-                Amount = 582.92M
+                Amount = 582.92M,
+                Order = 2
             });
 
             charges.Add(new PaymentItem
             {
                 Id = Guid.NewGuid(),
                 Title = "Tuition",
-                Amount = termCharges
+                Amount = termCharges,
+                Order = 1
             });
 
             return charges;
@@ -188,6 +221,49 @@ namespace StudentInfo.Students
                 model.Method.Length < 3)
                 return false;
             return true;
+        }
+
+        private void AddInterest(Payment payment)
+        {
+            var numOfDay = DateTime.Now.Subtract(payment.DueDate).Days;
+            if (numOfDay > 0)
+            {
+                var interestPaymentItem = payment.Items.FirstOrDefault(x => x.Title.Contains("interest"));
+                if (interestPaymentItem != null)
+                {
+                    if (DateTime.Now.Subtract(payment.ModifiedDate).Days == 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        interestPaymentItem.Amount = payment.Balance * 0.03M * numOfDay;
+                        interestPaymentItem.Title = $" %3 interest charges for {numOfDay} days";
+                    }
+                }
+                else
+                {
+                    interestPaymentItem = new PaymentItem
+                    {
+                        Id = Guid.NewGuid(),
+                        Amount = payment.Balance * 0.03M * numOfDay,
+                        Title = $" %3 interest charges for {numOfDay} days",
+                        Order = 50
+                    };
+
+                    payment.Items.Add(interestPaymentItem);
+                }
+
+                try
+                {
+                    payment.ModifiedDate = DateTime.Now;
+                    _db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
         }
     }
 }

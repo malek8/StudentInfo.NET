@@ -11,6 +11,8 @@ namespace StudentInfo.Dto
         public Guid Id { get; set; }
         public Enums.Term Term { get; set; }
         public DateTime Date { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
         
         public virtual IList<PaymentItem> Items { get; set; }
 
@@ -30,6 +32,7 @@ namespace StudentInfo.Dto
         public Guid Id { get; set; }
         public string Title { get; set; }
         public decimal Amount { get; set; }
+        public int Order { get; set; }
         public virtual Payment Payment { get; set; }
     }
 }

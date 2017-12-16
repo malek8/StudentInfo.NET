@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model.Items)
+        @foreach(var item in Model.Items.OrderBy(x => x.Order))
         {
             <tr>
                 <td>@item.Title</td>
@@ -64,7 +64,7 @@ else
 }
 
 <div>
-    <p class="text-warning">Please note that an interest of 3% is applied to owing balance if not paid before the due date.</p>
+    <p class="text-warning">Please note that an interest of 3% is applied on owing balance for everyday if not paid before the due date.</p>
 </div>
 
 <!-- Pay Balance Modal -->
