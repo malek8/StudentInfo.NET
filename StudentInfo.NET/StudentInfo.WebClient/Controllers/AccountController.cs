@@ -181,6 +181,17 @@ namespace StudentInfo.WebClient.Controllers
                 if (student != null)
                 {
                     identity.AddClaim(new Claim(CustomClaims.StudentId, student.Id.ToString()));
+
+                    if (_studentPaymentService.HasBalance(student.Id))
+                    {
+                        identity.AddClaim(new Claim(CustomClaims.HasBalance, true.ToString()));
+                        identity.AddClaim(new Claim(CustomClaims.OwingBalance, _studentPaymentService.GetBalance(student.Id).ToString()));
+                    }
+                    else
+                    {
+                        identity.AddClaim(new Claim(CustomClaims.HasBalance, false.ToString()));
+                    }
+
                 }
 
                 identity.AddClaim(new Claim(CustomClaims.FirstName, user.FirstName));

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using StudentInfo.WebClient.Helpers
+@using StudentInfo.Enums
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -70,9 +74,10 @@
                                 <!-- Student -->
                                 @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
                                 {
-                                    <li>@Html.ActionLink("Enroll", "Search", "Course")</li>
-                                    <li>@Html.ActionLink("My Courses", "StudentCourses", "Course")</li>
-                                    <li>@Html.ActionLink("Grades", "Grades", "Student")</li>
+                                    
+                                    <li>@Html.ActionLink("Enroll", "Search", "Course", new { @class = "studentLink" })</li>
+                                    <li>@Html.ActionLink("My Courses", "StudentCourses", "Course", new { @class = "studentLink" })</li>
+                                    <li>@Html.ActionLink("Grades", "Grades", "Student", new { @class = "studentLink" })</li>
                                 }
 
                                 <!-- FacultyMember -->
@@ -105,6 +110,8 @@
             </div>
         </div>
     </div>
+    <div id="permanentPaymentAlert" class="alert alert-danger" style="display: none"></div>
+    <div id="paymentAlertContainer"></div>
     <div id="alertsContainer"></div>
     <div class="container body-content">
         @RenderBody()
@@ -117,3 +124,26 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+@if (Helper.GetClaimValue(User.Identity, CustomClaims.HasBalance) == true.ToString())
+{
+    <script type="text/javascript">
+        $(function () {
+            $(".studentLink").click(function () {
+                $("#paymentAlertContainer").remove("p");
+                $("#paymentAlertContainer").addClass("alert alert-danger");
+                $("#paymentAlertContainer").html("<p>Please pay owing balance to continue using the system.</p>");
+                $("#paymentAlertContainer").delay(3000).fadeOut();
+                $("#paymentAlertContainer").show();
+            })
+
+            // Remove student links
+            $(".studentLink").attr("href", "#");
+
+            // Show permanent alert
+            $("#permanentPaymentAlert").html("You have an oustanding balance of $" + @Helper.GetClaimValue(User.Identity, CustomClaims.OwingBalance));
+            $("#permanentPaymentAlert").show();
+
+        });
+    </script>
+}

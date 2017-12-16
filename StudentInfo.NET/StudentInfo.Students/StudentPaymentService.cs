@@ -99,14 +99,11 @@ namespace StudentInfo.Students
             var student = _db.Students.Find(studentId);
             if (student != null)
             {
-                var payments = _db.Payments.Where(x => x.Student.Id == student.Id);
+                var payments = _db.Payments.Where(x => x.Student.Id == student.Id).ToList();
 
                 foreach(var p in payments)
                 {
-                    var toPay = p.Items.Sum(x => x.Amount);
-                    var paid = p.Transactions.Sum(x => x.Amount);
-
-                    if (toPay > paid)
+                    if (p.TotalToPay > p.TotalPaid)
                     {
                         return true;
                     }
@@ -115,7 +112,7 @@ namespace StudentInfo.Students
                 return false;
             }
 
-            return true;
+            return false;
         }
 
         public decimal GetBalance(Guid studentId)
