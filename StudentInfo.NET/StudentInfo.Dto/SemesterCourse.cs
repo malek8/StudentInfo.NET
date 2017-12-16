@@ -12,7 +12,7 @@ namespace StudentInfo.Dto
         public Guid Id { get; set; }
         public DateTime CourseDate { get; set; }
         public Term Term { get; set; }
-        public decimal Cost { get; set; }
+        public bool Open { get; set; }
         public virtual Course Course { get; set; }
         public virtual Classroom Classroom { get; set; }
         public virtual Teacher Teacher { get; set; }

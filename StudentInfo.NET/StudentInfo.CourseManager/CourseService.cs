@@ -118,7 +118,6 @@ namespace StudentInfo.CourseManager
                             Classroom = classroom,
                             Course = course,
                             Term = term,
-                            Cost = cost,
                             CourseDate = courseDate,
                             Teacher = teacher
                         });
