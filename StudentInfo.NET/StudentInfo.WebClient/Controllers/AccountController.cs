@@ -131,6 +131,8 @@ namespace StudentInfo.WebClient.Controllers
                     {
                         var studentId = _studentService.CreateStudent(user.Id, model.ProgramId);
                         _studentPaymentService.InitTermPayment(studentId);
+
+                        FixAccounts();
                     }
                     await SendConfirmationEmail(user.Id);
                     
@@ -246,12 +248,19 @@ namespace StudentInfo.WebClient.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void AddErrors(IdentityResult result)
+        private void AddErrors(IdentityResult result)
         {
             foreach(var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        private void FixAccounts()
+        {
+            var db = new StudentInfoContext();
+
+            db.Database.ExecuteSqlCommand("UPDATE [dbo].[AspNetUsers] SET [Discriminator] = 'ApplicationUser'");
         }
     }
 }
