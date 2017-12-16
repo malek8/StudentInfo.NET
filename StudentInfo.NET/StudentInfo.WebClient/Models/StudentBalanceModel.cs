@@ -38,5 +38,7 @@ namespace StudentInfo.WebClient.Models
         {
             get { return Balance > 0; }
         }
+
+        public Guid PaymentId { get; set; }
     }
 }

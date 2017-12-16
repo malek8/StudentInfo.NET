@@ -39,15 +39,6 @@
         </div>
     </div>
     <br />
-
-    <div class="row">
-        <div class="col-md-4">
-            <button class="btn btn-primary" onclick='loadPayBalanceModal()'>
-                <span class="glyphicon glyphicon-usd"></span> Pay Balance
-            </button>
-        </div>
-    </div>
-    <br />
 }
 
 <div class="row">
@@ -84,14 +75,6 @@
     <div class="modal-dialog">
         <div id="passwordChangeModalBody" class="modal-content">
             @Html.Partial("_ChangePassword", new StudentInfo.WebClient.Models.ChangePasswordModel())
-        </div>
-    </div>
-</div>
-
-<!-- Pay Balance Modal -->
-<div id="payBalanceModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div id="payBalanceModalBody" class="modal-content">
         </div>
     </div>
 </div>

@@ -273,17 +273,17 @@ function loadPasswordChangeModal() {
     $("#passwordChangeModal").modal("show");
 }
 
-//function loadPayBalanceModal() {
-//    $.get("/ManageAccount/GetStudentBalance/", function (data) {
-//        $("#payBalanceModalBody").html(data);
-//        $("#payBalanceModal").modal("show");
-//    })
-//}
-
 function loadPayBalanceModal(paymentId) {
     $.get("/ManageAccount/BalanceToPay?paymentId=" + paymentId, function (data) {
         $("#payBalanceModalBody").html(data);
         $("#payBalanceModal").modal("show");
+    });
+}
+
+function loadTransactionsModal(paymentId) {
+    $.get("/ManageAccount/GetTransactions?paymentId=" + paymentId, function (data) {
+        $("#transactionsModalBody").html(data);
+        $("#transactionsModal").modal("show");
     });
 }
 

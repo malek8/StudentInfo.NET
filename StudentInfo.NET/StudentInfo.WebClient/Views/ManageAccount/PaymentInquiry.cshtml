@@ -10,7 +10,8 @@
     <thead>
         <tr>
             <th>Term</th>
-            <th>Balance</th>
+            <th>Charges</th>
+            <th>Owing</th>
             <th></th>
         </tr>
     </thead>
@@ -23,6 +24,9 @@
                    new { paymentId = item.Id}, new { @class = "btn btn-link"})
                 </td>
                 <td>
+                    $@item.TotalToPay
+                </td>
+                <td>
                     $@item.Balance
                 </td>
                 <td>
@@ -33,11 +37,6 @@
                 </td>
             </tr>
         }
-
-        <tr>
-            <td><strong>Total</strong></td>
-            <td><strong>$@Model.Sum(x => x.Balance)</strong></td>
-        </tr>
     </tbody>
 </table>
 

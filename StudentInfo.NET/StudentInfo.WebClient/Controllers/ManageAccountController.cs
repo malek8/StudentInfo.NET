@@ -15,6 +15,7 @@ using StudentInfo.Data;
 using StudentInfo.WebClient.Helpers;
 using StudentInfo.Students;
 using StudentInfo.Dto;
+using StudentInfo.Students.Models;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -202,7 +203,8 @@ namespace StudentInfo.WebClient.Controllers
                 {
                     var model = new StudentBalanceModel
                     {
-                        Balance = payment.Balance
+                        Balance = payment.Balance,
+                        PaymentId = paymentId
                     };
 
                     return View("_PayBalance", model);
@@ -226,20 +228,21 @@ namespace StudentInfo.WebClient.Controllers
             }
             else
             {
-                var userId = Guid.Parse(User.Identity.GetUserId());
-                var db = new StudentInfoContext();
-
-                var student = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
-                if (student != null)
+                var payModel = new MakePaymentModel
                 {
-                    var previousBalance = student.Balance;
-                    student.Balance -= model.AmountToPay;
+                    Amount = model.AmountToPay,
+                    Method = model.CreditProvider,
+                    CardNumber = model.CreditCardNumber.Substring(11, 4),
+                    PaymentId = model.PaymentId
+                };
 
-                    db.SaveChanges();
+                var result = _studentPaymentService.MakePayment(payModel);
 
-                    if (model.AmountToPay > previousBalance)
+                if (result)
+                {
+                    if (model.AmountToPay > model.Balance)
                     {
-                        messages.Add($"You have been credited ${model.AmountToPay - previousBalance}");
+                        messages.Add($"You have been credited ${model.AmountToPay - model.Balance}");
                     }
                     else
                     {
@@ -247,10 +250,6 @@ namespace StudentInfo.WebClient.Controllers
                     }
 
                     return Json(new { success = true, messages = messages });
-                }
-                else
-                {
-                    messages.Add("There is no outstanding balance");
                 }
             }
 
@@ -292,6 +291,22 @@ namespace StudentInfo.WebClient.Controllers
                 }
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Student)]
+        public ActionResult GetTransactions(Guid paymentId)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
+            {
+                var payment = _studentPaymentService.GetPayment(paymentId);
+                if (payment != null && payment.Transactions != null)
+                {
+                    return View("_Transactions", payment);
+                }
+            }
+
+            return HttpNotFound();
         }
 
         private bool ValidateEmail(string email)

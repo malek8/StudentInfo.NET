@@ -20,6 +20,8 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+                    @Html.HiddenFor(x => x.PaymentId)
+
                     <div class="form-group">
                         @Html.LabelFor(x => x.CreditProvider, new { @class = "col-md-3 control-label" })
                         <div class="col-md-9">
