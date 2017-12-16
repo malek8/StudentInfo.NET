@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Models\MakePaymentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StudentHelper.cs" />
     <Compile Include="StudentPaymentService.cs" />
     <Compile Include="StudentService.cs" />
   </ItemGroup>

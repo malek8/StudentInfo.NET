@@ -35,6 +35,9 @@
     </tbody>
 </table>
 
+<div>
+    <p class="small">due date: @StudentInfo.Students.StudentHelper.PaymentDueDate(Model.Term)</p>
+</div>
 @if(Model.Balance > 0)
 {
     <p class="bg-warning"><strong>Balance owing $@Model.Balance</strong></p>
@@ -59,6 +62,10 @@ else
     </div>
     <br />
 }
+
+<div>
+    <p class="text-warning">Please note that an interest of 3% is applied to owing balance if not paid before the due date.</p>
+</div>
 
 <!-- Pay Balance Modal -->
 <div id="payBalanceModal" class="modal fade" role="dialog">

@@ -22,6 +22,7 @@
                 <td>
                     @Html.ActionLink($"{item.Term} - {item.Date.Year}", "PaymentItemDetails", 
                    new { paymentId = item.Id}, new { @class = "btn btn-link"})
+                    <div class="small">due date: @StudentInfo.Students.StudentHelper.PaymentDueDate(item.Term)</div>
                 </td>
                 <td>
                     $@item.TotalToPay
@@ -39,6 +40,10 @@
         }
     </tbody>
 </table>
+
+<div>
+    <p class="text-warning">Please note that an interest of 3% is applied to owing balance if not paid before the due date.</p>
+</div>
 
 <!-- Pay Balance Modal -->
 <div id="payBalanceModal" class="modal fade" role="dialog">
