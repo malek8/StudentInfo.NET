@@ -111,6 +111,31 @@ namespace StudentInfo.WebClient
             }
         }
 
+        protected void Application_PostAuthorizeRequest(object sender, EventArgs e)
+        {
+            var securedRoutes = new List<string>
+            {
+                "Course",
+                "Faculty",
+                "ManageAccount",
+                "Registration",
+                "Student",
+                "User"
+            };
+
+            if (securedRoutes.Any(x => Request.Path.Contains(x)))
+            {
+                if (HttpContext.Current.User == null)
+                {
+                    Response.Redirect("/Home");
+                }
+                else if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    Response.Redirect("/Account/Login");
+                }
+            }
+        }
+
         private void CreateTeachers(List<Dto.Course> courses, Guid classroomId)
         {
             var db = new Data.StudentInfoContext();
