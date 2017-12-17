@@ -57,7 +57,8 @@
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="BaseClass.cs" />
     <Compile Include="Classroom.cs" />
-    <Compile Include="ClassroomCourse.cs" />
+    <Compile Include="ClassroomSchedule.cs" />
+    <Compile Include="ClassroomScheduleItem.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Faculty.cs" />

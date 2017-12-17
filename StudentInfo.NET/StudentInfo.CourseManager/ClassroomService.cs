@@ -54,55 +54,76 @@ namespace StudentInfo.CourseManager
             return _db.Classrooms.FirstOrDefault(x => x.Number == number && x.Campus == campus);
         }
 
-        public bool IsClassroomAvailable(Guid classroomId, DateTime startTime, DateTime endTime)
+        public bool IsClassroomAvailable(Guid classroomId, DateTime startTime, DateTime endTime, List<DateTime> dates)
         {
             var classroom = _db.Classrooms.Find(classroomId);
             if (classroom != null)
             {
-                if (classroom.ClassroomCourses.Any(x => endTime.Subtract(x.TimeSlotTo).Hours < 3))
+                foreach (var d in dates)
                 {
-                    return false;
+                    var matchClassroom = _db.ClassroomSchedules.Where(x => x.Classroom.Id == classroomId);
+                    if (matchClassroom.Any())
+                    {
+                        var matchDates = matchClassroom.SelectMany(x => x.ScheduleItems.Where(z => z.Date.Subtract(d).Days == 0));
+                        if (matchDates.Any(x => endTime.Subtract(x.EndTime).Hours < 3))
+                        {
+                            return false;
+                        }
+                    }
                 }
-                else
-                {
-                    return true;
-                }
+
+                return true;
             }
 
             return false;
         }
 
-        public bool ReserveClassroom(Guid classroomId, DateTime startTime, DateTime endTime, out Guid classroomCourseId)
+        public bool ReserveClassroom(Guid classroomId, DateTime startTime, DateTime endTime, List<DateTime> dates, out Guid scheduleId)
         {
-            if (IsClassroomAvailable(classroomId, startTime, endTime))
+            if (IsClassroomAvailable(classroomId, startTime, endTime, dates))
             {
                 var classroom = _db.Classrooms.Find(classroomId);
                 if (classroom != null)
                 {
-                    var classroomCourse = new ClassroomCourse
+                    var scheduleItems = new List<ClassroomScheduleItem>();
+
+                    foreach(var d in dates)
                     {
-                        Id = Guid.NewGuid(),
-                        Classroom = classroom,
-                        TimeSlotFrom = startTime,
-                        TimeSlotTo = endTime
-                    };
-
-                    classroom.ClassroomCourses.Add(classroomCourse);
-
-                    try
-                    {
-                        _db.SaveChanges();
-
-                        classroomCourseId = classroomCourse.Id;
-                        return true;
+                        scheduleItems.Add(new ClassroomScheduleItem
+                        {
+                            Id = Guid.NewGuid(),
+                            Date = d,
+                            StartTime = startTime,
+                            EndTime = endTime
+                        });
                     }
-                    catch(Exception ex)
+
+                    if (scheduleItems.Count > 0)
                     {
-                        Console.WriteLine(ex.Message);
+                        var schedule = new ClassroomSchedule
+                        {
+                            Id = Guid.NewGuid(),
+                            Classroom = classroom,
+                            ScheduleItems = scheduleItems
+                        };
+
+                        _db.ClassroomSchedules.Add(schedule);
+
+                        try
+                        {
+                            _db.SaveChanges();
+
+                            scheduleId = schedule.Id;
+                            return true;
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     }
                 }
             }
-            classroomCourseId = new Guid();
+            scheduleId = new Guid();
             return false;
         }
 

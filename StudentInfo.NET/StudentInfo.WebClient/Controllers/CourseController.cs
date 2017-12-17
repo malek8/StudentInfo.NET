@@ -585,10 +585,10 @@ namespace StudentInfo.WebClient.Controllers
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
         public JsonResult CheckClassroom(Guid classroomId, DateTime startTime, DateTime endTime)
         {
-            if (_classroomService.IsClassroomAvailable(classroomId, startTime, endTime))
-            {
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-            }
+            //if (_classroomService.IsClassroomAvailable(classroomId, startTime, endTime))
+            //{
+            //    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            //}
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 

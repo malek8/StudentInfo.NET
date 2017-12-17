@@ -94,6 +94,14 @@
     <Compile Include="Migrations\201712162358222_ClassroomClassroomCourses.Designer.cs">
       <DependentUpon>201712162358222_ClassroomClassroomCourses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712171913172_ClassroomSchedules.cs" />
+    <Compile Include="Migrations\201712171913172_ClassroomSchedules.Designer.cs">
+      <DependentUpon>201712171913172_ClassroomSchedules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712171935247_ClassroomSchedulesRelationship.cs" />
+    <Compile Include="Migrations\201712171935247_ClassroomSchedulesRelationship.Designer.cs">
+      <DependentUpon>201712171935247_ClassroomSchedulesRelationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -146,6 +154,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712162358222_ClassroomClassroomCourses.resx">
       <DependentUpon>201712162358222_ClassroomClassroomCourses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171913172_ClassroomSchedules.resx">
+      <DependentUpon>201712171913172_ClassroomSchedules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171935247_ClassroomSchedulesRelationship.resx">
+      <DependentUpon>201712171935247_ClassroomSchedulesRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
