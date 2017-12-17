@@ -72,6 +72,10 @@
 
                     @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator) || User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
                     {
+                        <button class="btn btn-primary" onclick='location.href = "/Course/CreateSchedule";'>
+                            <span class="glyphicon glyphicon-calendar"></span> Schedule
+                        </button>
+
                         <button class="btn btn-primary" onclick='loadAssignSemesterModal("@item.Id")'>
                             <span class="glyphicon glyphicon-calendar"></span> Semester
                         </button>

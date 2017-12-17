@@ -9,6 +9,7 @@ namespace StudentInfo.Dto
     public class ClassroomSchedule
     {
         public Guid Id { get; set; }
+        public string Title { get; set; }
         public virtual Classroom Classroom { get; set; }
         public virtual IList<ClassroomScheduleItem> ScheduleItems { get; set; }
     }

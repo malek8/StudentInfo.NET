@@ -65,7 +65,7 @@ namespace StudentInfo.WebClient.Helpers
 
             classroomsSelection.AddRange(classrooms.Select(x => new SelectListItem()
             {
-                Text = $"{x.Number} / {x.Campus}",
+                Text = $"{x.Number} / {x.Campus} ({x.Capacity}) seats",
                 Value = x.Id.ToString()
             }));
 

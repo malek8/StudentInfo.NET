@@ -592,6 +592,13 @@ namespace StudentInfo.WebClient.Controllers
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public ActionResult CreateSchedule()
+        {
+            return View();
+        }
+
         private IEnumerable<StudentCourse> GetStudentCourses()
         {
             return new List<StudentCourse>();

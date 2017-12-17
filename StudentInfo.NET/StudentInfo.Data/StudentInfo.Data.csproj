@@ -102,6 +102,10 @@
     <Compile Include="Migrations\201712171935247_ClassroomSchedulesRelationship.Designer.cs">
       <DependentUpon>201712171935247_ClassroomSchedulesRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712172108503_ScheduleTitle.cs" />
+    <Compile Include="Migrations\201712172108503_ScheduleTitle.Designer.cs">
+      <DependentUpon>201712172108503_ScheduleTitle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -160,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712171935247_ClassroomSchedulesRelationship.resx">
       <DependentUpon>201712171935247_ClassroomSchedulesRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712172108503_ScheduleTitle.resx">
+      <DependentUpon>201712172108503_ScheduleTitle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
