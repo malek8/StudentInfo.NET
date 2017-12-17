@@ -38,7 +38,8 @@
                             }
                         }
                         <td>@teacherName</td>
-                        <td>@item.Classroom.Campus / @item.Classroom.Number</td>
+                        @*<td>@item.Classroom.Campus / @item.Classroom.Number</td>*@
+                        <td></td>
                     </tr>
                     }
                 </table>
@@ -46,6 +47,9 @@
     </div>
     <div class="form-horizontal">
         <div class="form-group">
+            @Html.HiddenFor(x => x.ClassIsAvailable, new { id = "classIsAvailableField"})
+            @Html.HiddenFor(x => x.SelectedClassId, new { id = "selectedClassIdField"})
+
             @Html.LabelFor(x => x.Term, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
                 @Html.EnumDropDownListFor(x => x.Term, new { id = "assignCourseTermInput", @class = "form-control" })
@@ -58,21 +62,37 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(x => x.CourseDate, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(x => x.StartTime, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
-                @Html.TextBoxFor(x => x.CourseDate, "{0:yyyy-MM-dd}", new { id = "assignCourseDateInput", @class = "dateInput form-control", value = DateTime.Now })
+                <div class="input-group timePicker">
+                    @Html.TextBoxFor(x => x.StartTime, 
+                   new { id = "startTimeInput", Value = DateTime.Now.ToString("H:mm"), @class = "form-control" })
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(x => x.ClassroomId, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(x => x.EndTime, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
-                @Html.DropDownListFor(x => x.ClassroomId, FieldInputHelpers.GetClassrooms(), new { id = "assignCourseClassroomInput", @class = "form-control" })
+                <div class="input-group timePicker">
+                    @Html.TextBoxFor(x => x.EndTime, 
+                   new { id = "endTimeInput", Value = DateTime.Now.AddHours(3).ToString("H:mm"), @class = "form-control" })
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(x => x.Cost, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(x => x.ClassroomCourseId, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
-                @Html.TextBoxFor(x => x.Cost, new { id = "assignCourseCostInput", @class = "form-control" })
+                <div class="input-group">
+                    @Html.DropDownListFor(x => x.ClassroomCourseId, FieldInputHelpers.GetClassrooms(),
+                    new { id = "assignCourseClassroomInput", @class = "form-control input-group" })
+                    <span id="classAvailableSpan" class="input-group-addon" style="display: none"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span id="classNotAvailableSpan" class="input-group-addon" style="display: none"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-primary" onclick="checkClassroomAvailability()">Check Availability</button>
+                </div>
             </div>
         </div>
     </div>
@@ -81,3 +101,13 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(function () {
+        // Time only picker.
+        $('.timePicker').datetimepicker({
+            format: 'HH:mm'
+        });
+    });
+</script>

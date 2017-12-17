@@ -13,18 +13,21 @@ namespace StudentInfo.WebClient.Models
         public Course Course { get; set; }
         public IList<SemesterCourse> SemesterCourse { get; set; }
 
-        [Display(Name = "Date")]
-        public DateTime CourseDate { get; set; }
+        [Display(Name = "Start Time")]
+        public DateTime StartTime { get; set; }
+
+        [Display(Name = "End Time")]
+        public DateTime EndTime { get; set; }
+
         public Term Term { get; set; }
 
         [Display(Name = "Classroom")]
-        public Guid ClassroomId { get; set; }
-
-        [Display(Name = "Cost")]
-        [DataType(DataType.Currency)]
-        public decimal Cost { get; set; }
+        public Guid ClassroomCourseId { get; set; }
 
         [Display(Name = "Instructor")]
         public Guid InstructorId { get; set; }
+
+        public bool ClassIsAvailable { get; set; }
+        public Guid SelectedClassId { get; set; }
     }
 }

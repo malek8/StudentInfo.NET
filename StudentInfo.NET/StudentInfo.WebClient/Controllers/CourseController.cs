@@ -20,10 +20,12 @@ namespace StudentInfo.WebClient.Controllers
     public class CourseController : Controller
     {
         private CourseService _courseService;
+        private ClassroomService _classroomService;
 
         public CourseController()
         {
             _courseService = new CourseService();
+            _classroomService = new ClassroomService();
         }
 
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
@@ -577,6 +579,17 @@ namespace StudentInfo.WebClient.Controllers
                 }
             }
             return Json(new { success = false });
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public JsonResult CheckClassroom(Guid classroomId, DateTime startTime, DateTime endTime)
+        {
+            if (_classroomService.IsClassroomAvailable(classroomId, startTime, endTime))
+            {
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
         private IEnumerable<StudentCourse> GetStudentCourses()

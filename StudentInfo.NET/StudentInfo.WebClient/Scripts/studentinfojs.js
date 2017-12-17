@@ -349,3 +349,30 @@ function assignStudentsGrades() {
     }
     $("#courseGradesModal").modal("hide");
 }
+
+function checkClassroom(classroomId, startTime, endTime) {
+    $.get("/Course/CheckClassroom?classroomId=" + classroomId + "&startTime=" + startTime + "&endTime=" + endTime, function (data) {
+        if (data.success === true) {
+            $("#classAvailableSpan").show();
+            $("#classNotAvailableSpan").hide();
+
+            $("#classIsAvailableField").val(true);
+            $("#selectedClassIdField").val(classroomId);
+        }
+        else {
+            $("#classAvailableSpan").hide();
+            $("#classNotAvailableSpan").show();
+        }
+    })
+}
+
+function checkClassroomAvailability() {
+    var classroomId = $("#assignCourseClassroomInput").val();
+    var startTime = $("#startTimeInput").val();
+    var endTime = $("#endTimeInput").val();
+
+    $("#classAvailableSpan").hide();
+    $("#classNotAvailableSpan").hide();
+
+    checkClassroom(classroomId, startTime, endTime);
+}
