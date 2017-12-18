@@ -12,6 +12,10 @@ using StudentInfo.WebClient.Models;
 using StudentInfo.Dto;
 using StudentInfo.Helpers;
 using StudentInfo.CourseManager;
+using Newtonsoft;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -583,13 +587,30 @@ namespace StudentInfo.WebClient.Controllers
 
         [HttpGet]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
-        public JsonResult CheckClassroom(Guid classroomId, DateTime startTime, DateTime endTime)
+        public JsonResult CheckClassroom(Guid classroomId, DateTime startTime, DateTime endTime, string dates)
         {
-            //if (_classroomService.IsClassroomAvailable(classroomId, startTime, endTime))
-            //{
-            //    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-            //}
-            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            var message = string.Empty;
+            var result = false;
+            var validDates = ParseDates(dates);
+
+            if (classroomId == Guid.Empty)
+            {
+                message = "Please select a classroom";
+            }
+            else if (validDates == null || validDates.Count == 0)
+            {
+                message = "Please select class dates";
+            }
+            else if (_classroomService.IsClassroomAvailable(classroomId, startTime, endTime, validDates))
+            {
+                message = "Selected classroom is available";
+                result = true;
+            }
+            else
+            {
+                message = "Selected classroom is not available";
+            }
+            return Json(new { success = result, message = message }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -597,6 +618,28 @@ namespace StudentInfo.WebClient.Controllers
         public ActionResult CreateSchedule()
         {
             return View();
+        }
+
+        private List<DateTime> ParseDates(string jsonParam)
+        {
+            var dates = new List<DateTime>();
+            if (!string.IsNullOrEmpty(jsonParam))
+            {
+                var jArray = JArray.Parse(jsonParam);
+
+                foreach(JObject item in jArray)
+                {
+                    var day = item.GetValue("day").Value<int>();
+                    var month = item.GetValue("month").Value<int>();
+                    var year = item.GetValue("year").Value<int>();
+
+                    if (day > 0 && month > 0 && year > 0)
+                    {
+                        dates.Add(new DateTime(year, month, day));
+                    }
+                }
+            }
+            return dates;
         }
 
         private IEnumerable<StudentCourse> GetStudentCourses()

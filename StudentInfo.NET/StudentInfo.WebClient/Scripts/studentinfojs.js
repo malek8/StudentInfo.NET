@@ -367,12 +367,70 @@ function checkClassroom(classroomId, startTime, endTime) {
 }
 
 function checkClassroomAvailability() {
-    var classroomId = $("#assignCourseClassroomInput").val();
     var startTime = $("#startTimeInput").val();
     var endTime = $("#endTimeInput").val();
+    var classroomId = $("#assignCourseClassroomInput").val();
+    var dates = $("#multiDatesInput").multiDatesPicker('getDates');
 
-    $("#classAvailableSpan").hide();
-    $("#classNotAvailableSpan").hide();
+    var dateObjects = [];
 
-    checkClassroom(classroomId, startTime, endTime);
+    for (var i = 0; i <= dates.length; i++) {
+        var d = new Date(dates[i]);
+
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+
+        if (isNaN(year) === false) {
+            var d = { day: day, month: month, year: year };
+            dateObjects.push(d);
+        }
+    }
+
+    var dateObjectsJSON = JSON.stringify(dateObjects);
+
+    $.ajax({
+        type: "GET",
+        url: "/Course/CheckClassroom",
+        data: {
+            classroomId: classroomId,
+            startTime: startTime,
+            endTime: endTime,
+            dates: dateObjectsJSON
+        },
+        success: function (data) {
+            if (data.success === true) {
+                $("#saveScheduleButton").removeAttr("disabled");
+
+                var alertContainer = document.createElement("div");
+                alertContainer.setAttribute("class", "alert alert-success");
+
+                var alertText = document.createTextNode(data.message);
+
+                alertContainer.appendChild(alertText);
+
+                $("#createScheduleButtonsPanel").empty();
+                $("#createScheduleButtonsPanel").append(alertContainer);
+                $("#createScheduleButtonsPanel").show();
+
+                $("#createScheduleButtonsPanel").fadeOut(3000);
+            }
+            else {
+                $("#saveScheduleButton").prop("disabled", "true");
+
+                var alertContainer = document.createElement("div");
+                alertContainer.setAttribute("class", "alert alert-danger");
+
+                var alertText = document.createTextNode(data.message);
+
+                alertContainer.appendChild(alertText);
+
+                $("#createScheduleButtonsPanel").empty();
+                $("#createScheduleButtonsPanel").append(alertContainer);
+                $("#createScheduleButtonsPanel").show();
+
+                $("#createScheduleButtonsPanel").fadeOut(3000);
+            }
+        }
+    })
 }
