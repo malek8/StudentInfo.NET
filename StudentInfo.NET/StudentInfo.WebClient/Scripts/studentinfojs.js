@@ -508,5 +508,61 @@ function createSchedule() {
 }
 
 function assignSemesterCourse() {
-    var scheduleId = $("#scheduleId").val();
+    var scheduleId = $("#scheduleIdField").val();
+    var instructorId = $("#instructorInput").val();
+    var term = $("#assignCourseTermInput").val();
+    var courseId = $("#CourseIdField").val();
+    var isOpen = false;
+    if ($("#isOpenCheckbox").is(":checked")) {
+        isOpen = true;
+    }
+
+    if (scheduleId !== undefined && scheduleId != null &&
+        instructorId !== undefined && instructorId != null &&
+        term !== undefined && term != null &&
+        courseId != undefined && courseId != null) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Course/AssignSemesterCourse",
+            data: {
+                courseId: courseId,
+                scheduleId: scheduleId,
+                teacherId: instructorId,
+                isOpen: isOpen,
+                term: term
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    var alertContainer = document.createElement("div");
+                    alertContainer.setAttribute("class", "alert alert-success");
+
+                    var alertText = document.createTextNode("Changes were saved successfully");
+
+                    alertContainer.appendChild(alertText);
+
+                    $("#assignSchedulePanelHeading").empty();
+                    $("#assignSchedulePanelHeading").append(alertContainer);
+                    $("#assignSchedulePanelHeading").show();
+                    $("#assignSchedulePanelHeading").fadeOut(5000);
+                }
+                else {
+                    var alertContainer = document.createElement("div");
+                    alertContainer.setAttribute("class", "alert alert-danger");
+
+                    var alertText = document.createTextNode("Failed to save changes");
+
+                    alertContainer.appendChild(alertText);
+
+                    $("#assignSchedulePanelHeading").empty();
+                    $("#assignSchedulePanelHeading").append(alertContainer);
+                    $("#assignSchedulePanelHeading").show();
+                    $("#assignSchedulePanelHeading").fadeOut(5000);
+                }
+            }
+        })
+    }
+    else {
+        alert("Invalid input");
+    }
 }

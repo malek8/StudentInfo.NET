@@ -162,11 +162,11 @@ namespace StudentInfo.WebClient.Controllers
 
         [HttpPost]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
-        public JsonResult AssignSemesterCourse(Guid courseId, Guid classroomId, Guid teacherId, bool isOpen, Term term, DateTime date)
+        public JsonResult AssignSemesterCourse(Guid courseId, Guid scheduleId, Guid teacherId, bool isOpen, Term term)
         {
             if (User.Identity.IsAuthenticated)
             {
-                var result = _courseService.AssignSemester(courseId, classroomId, teacherId, isOpen, term, date);
+                var result = _courseService.CreateCourseSemester(courseId, scheduleId, teacherId, isOpen, term);
                 if (result)
                 {
                     return Json(new { success = true });
@@ -643,6 +643,27 @@ namespace StudentInfo.WebClient.Controllers
             }
 
             return Json(new { success = result, message = message, scheduleId = scheduleId }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult CourseSemester(Guid courseId, string scheduleId = "")
+        {
+            if (courseId != Guid.Empty)
+            {
+                ViewBag.Courseid = courseId;
+                var schedules = new List<ClassroomSchedule>();
+                var id = Guid.Empty;
+                if (Guid.TryParse(scheduleId, out id))
+                {
+                    schedules.Add(_classroomService.GetSchedule(id));
+                }
+                else
+                {
+                    schedules = _classroomService.GetUnassignedSchedules();
+                }
+                return View(schedules);
+            }
+            return HttpNotFound();
         }
 
         private List<DateTime> ParseDates(string jsonParam)

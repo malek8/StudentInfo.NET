@@ -136,6 +136,43 @@ namespace StudentInfo.CourseManager
             return false;
         }
 
+        public bool CreateCourseSemester(Guid courseId, Guid scheduleId, Guid teacherId, bool isOpen, Term term)
+        {
+            var course = FindById(courseId);
+            var teacher = _db.Teachers.FirstOrDefault(x => x.ApplicationUserId == teacherId);
+            var schedule = _db.ClassroomSchedules.Find(scheduleId);
+
+            if (course != null && teacher != null && schedule != null)
+            {
+                if (!_db.SemesterCourses.Any(x => x.Schedule.Id == schedule.Id))
+                {
+                    var courseSemester = new SemesterCourse
+                    {
+                        Id = Guid.NewGuid(),
+                        Term = term,
+                        Open = isOpen,
+                        CourseDate = DateTime.Now,
+                        Course = course,
+                        Schedule = schedule,
+                        Teacher = teacher
+                    };
+
+                    _db.SemesterCourses.Add(courseSemester);
+
+                    try
+                    {
+                        _db.SaveChanges();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool AssignStudentGrade(Guid studentCourseId, string grade)
         {
             if (!string.IsNullOrEmpty(grade))

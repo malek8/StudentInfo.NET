@@ -460,6 +460,7 @@
     <Content Include="Views\ManageAccount\PaymentItemDetails.cshtml" />
     <Content Include="Views\ManageAccount\_Transactions.cshtml" />
     <Content Include="Views\Course\CreateSchedule.cshtml" />
+    <Content Include="Views\Course\CourseSemester.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

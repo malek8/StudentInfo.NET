@@ -153,5 +153,32 @@ namespace StudentInfo.WebClient.Helpers
                 Value = x.Id.ToString()
             });            
         }
+
+        public static IEnumerable<SelectListItem> GetTerms()
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem
+                       {
+                           Text = "Fall",
+                           Value = ((int)Term.Fall).ToString()
+                       },
+                       new SelectListItem
+                       {
+                           Text = "Winter",
+                           Value = ((int)Term.Winter).ToString()
+                       },
+                       new SelectListItem
+                       {
+                           Text = "Summer 1",
+                           Value = ((int)Term.Summer1).ToString()
+                       },
+                       new SelectListItem
+                       {
+                           Text = "Summer 2",
+                           Value = ((int)Term.Summer2).ToString()
+                       }
+            };
+        }
     }
 }

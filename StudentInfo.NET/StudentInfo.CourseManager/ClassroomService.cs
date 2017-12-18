@@ -128,6 +128,17 @@ namespace StudentInfo.CourseManager
             return false;
         }
 
+        public ClassroomSchedule GetSchedule(Guid scheduleId)
+        {
+            return _db.ClassroomSchedules.Find(scheduleId);
+        }
+
+        public List<ClassroomSchedule> GetUnassignedSchedules()
+        {
+            var assignedSchedules = _db.SemesterCourses.Select(x => x.Schedule.Id);
+            return _db.ClassroomSchedules.Where(x => !assignedSchedules.Contains(x.Id)).ToList();
+        }
+
         private bool ClassroomExists(string number, string campus)
         {
             return _db.Classrooms.Any(x => x.Campus == campus && x.Number == number);
