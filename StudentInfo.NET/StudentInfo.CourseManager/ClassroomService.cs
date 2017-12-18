@@ -61,10 +61,10 @@ namespace StudentInfo.CourseManager
             {
                 foreach (var d in dates)
                 {
-                    var matchClassroom = _db.ClassroomSchedules.Where(x => x.Classroom.Id == classroomId);
-                    if (matchClassroom.Any())
+                    var matchClassroom = _db.ClassroomSchedules.Where(x => x.Classroom.Id == classroomId).ToList();
+                    if (matchClassroom.Count > 0)
                     {
-                        var matchDates = matchClassroom.SelectMany(x => x.ScheduleItems.Where(z => z.Date.Subtract(d).Days == 0));
+                        var matchDates = matchClassroom.SelectMany(x => x.ScheduleItems.Where(z => z.Date.Subtract(d).Days == 0)).ToList();
                         if (matchDates.Any(x => endTime.Subtract(x.EndTime).Hours < 3))
                         {
                             return false;

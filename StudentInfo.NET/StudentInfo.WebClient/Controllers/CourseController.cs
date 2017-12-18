@@ -615,8 +615,11 @@ namespace StudentInfo.WebClient.Controllers
 
         [HttpGet]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
-        public ActionResult CreateSchedule()
+        public ActionResult CreateSchedule(Guid courseId)
         {
+            if (courseId == Guid.Empty) return HttpNotFound();
+
+            ViewBag.CourseId = courseId;
             return View();
         }
 
