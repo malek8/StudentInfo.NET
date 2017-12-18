@@ -301,7 +301,7 @@ function loadAssignSemesterModal(courseId) {
     })
 }
 
-function assignSemesterCourse(courseId) {
+function assignSemesterCourse_(courseId) {
     var date = $("#assignCourseDateInput").val();
     var term = $("#assignCourseTermInput").val();
     var classroomId = $("#assignCourseClassroomInput").val();
@@ -388,6 +388,7 @@ function checkClassroomAvailability() {
     }
 
     var dateObjectsJSON = JSON.stringify(dateObjects);
+    $("#scheduleId").val(null);
 
     $.ajax({
         type: "GET",
@@ -400,6 +401,8 @@ function checkClassroomAvailability() {
         },
         success: function (data) {
             if (data.success === true) {
+                $("#selectedClassroomId").val(classroomId);
+                $("#classroomIsAvailable").val(true);
                 $("#saveScheduleButton").removeAttr("disabled");
 
                 var alertContainer = document.createElement("div");
@@ -413,10 +416,12 @@ function checkClassroomAvailability() {
                 $("#createScheduleButtonsPanel").append(alertContainer);
                 $("#createScheduleButtonsPanel").show();
 
-                $("#createScheduleButtonsPanel").fadeOut(3000);
+                $("#createScheduleButtonsPanel").fadeOut(5000);
             }
             else {
-                $("#saveScheduleButton").prop("disabled", "true");
+                $("#selectedClassroomId").val(null);
+                $("#classroomIsAvailable").val(false);
+                $("#saveScheduleButton").prop("disabled", true);
 
                 var alertContainer = document.createElement("div");
                 alertContainer.setAttribute("class", "alert alert-danger");
@@ -429,8 +434,79 @@ function checkClassroomAvailability() {
                 $("#createScheduleButtonsPanel").append(alertContainer);
                 $("#createScheduleButtonsPanel").show();
 
-                $("#createScheduleButtonsPanel").fadeOut(3000);
+                $("#createScheduleButtonsPanel").fadeOut(5000);
             }
         }
     })
+}
+
+function createSchedule() {
+    var isAvailable = $("#classroomIsAvailable").val();
+
+    if (isAvailable == "true") {
+        var startTime = $("#startTimeInput").val();
+        var endTime = $("#endTimeInput").val();
+        var title = $("#scheduleTitle").val();
+        var classroomId = $("#assignCourseClassroomInput").val();
+        var dates = $("#multiDatesInput").multiDatesPicker('getDates');
+
+        var dateObjects = [];
+
+        for (var i = 0; i <= dates.length; i++) {
+            var d = new Date(dates[i]);
+
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+
+            if (isNaN(year) === false) {
+                var d = { day: day, month: month, year: year };
+                dateObjects.push(d);
+            }
+        }
+
+        var dateObjectsJSON = JSON.stringify(dateObjects);
+
+        $.ajax({
+            type: "POST",
+            url: "/Course/CreateSchedule",
+            data: {
+                classroomId: classroomId,
+                title: title,
+                startTime: startTime,
+                endTime: endTime,
+                dates: dateObjectsJSON
+            },
+            success: function (data) {
+                if (data.success === true) {
+                    $("#scheduleId").val(data.scheduleId);
+                    $("#continueScheduleButton").removeAttr("disabled");
+                    $("#continueScheduleButton").show();
+
+                    var alertContainer = document.createElement("div");
+                    alertContainer.setAttribute("class", "alert alert-success");
+
+                    var alertText = document.createTextNode(data.message);
+
+                    alertContainer.appendChild(alertText);
+
+                    $("#createScheduleButtonsPanel").empty();
+                    $("#createScheduleButtonsPanel").append(alertContainer);
+                    $("#createScheduleButtonsPanel").show();
+                    $("#createScheduleButtonsPanel").fadeOut(5000);
+
+                    var success
+                }
+                else {
+                    $("#scheduleId").val(null);
+                    $("#continueScheduleButton").prop("disabled", true);
+                    $("#continueScheduleButton").hide();
+                }
+            }
+        })
+    }
+}
+
+function assignSemesterCourse() {
+    var scheduleId = $("#scheduleId").val();
 }

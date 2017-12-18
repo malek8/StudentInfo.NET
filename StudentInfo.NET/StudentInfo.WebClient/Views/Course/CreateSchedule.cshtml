@@ -1,5 +1,4 @@
-﻿@model StudentInfo.Dto.ClassroomSchedule
-@using StudentInfo.WebClient.Helpers
+﻿@using StudentInfo.WebClient.Helpers
 
 @{
     ViewBag.Title = "Create Schedule";
@@ -8,6 +7,10 @@
 <h2>Create Schedule</h2>
 
 <div class="form-horizontal">
+    @Html.Hidden("selectedClassroomId")
+    @Html.Hidden("classroomIsAvailable")
+    @Html.Hidden("scheduleId")
+
     <div class="panel-group">
         <!-- Classroom Dropdown -->
         <div class="panel panel-default">
@@ -73,7 +76,11 @@
             <div class="panel panel-body">
                 <div class="col-lg-12">
                     <button type="button" class="btn btn-primary" onclick="checkClassroomAvailability()">Check Availability</button>
-                    <button id="saveScheduleButton" type="button" class="btn btn-success" disabled>Create</button>
+                    <button id="saveScheduleButton" type="button" class="btn btn-success" onclick="createSchedule()" disabled>Create</button>
+                </div>
+                <div>
+                    <button id="continueScheduleButton" type="button" class="btn btn-default" onclick="assignSemesterCourse()" disabled style="display: none">
+                    Continue to assign course schedule</button>
                 </div>
             </div>
         </div>

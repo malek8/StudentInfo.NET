@@ -78,7 +78,7 @@ namespace StudentInfo.CourseManager
             return false;
         }
 
-        public bool ReserveClassroom(Guid classroomId, DateTime startTime, DateTime endTime, List<DateTime> dates, out Guid scheduleId)
+        public bool ReserveClassroom(Guid classroomId, string title, DateTime startTime, DateTime endTime, List<DateTime> dates, out Guid scheduleId)
         {
             if (IsClassroomAvailable(classroomId, startTime, endTime, dates))
             {
@@ -104,6 +104,7 @@ namespace StudentInfo.CourseManager
                         {
                             Id = Guid.NewGuid(),
                             Classroom = classroom,
+                            Title = title,
                             ScheduleItems = scheduleItems
                         };
 

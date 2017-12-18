@@ -620,6 +620,31 @@ namespace StudentInfo.WebClient.Controllers
             return View();
         }
 
+        [HttpPost]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember)]
+        public JsonResult CreateSchedule(Guid classroomId, string title, DateTime startTime, DateTime endTime, string dates)
+        {
+            var message = string.Empty;
+            var result = false;
+            var scheduleId = Guid.Empty;
+            var validDates = ParseDates(dates);
+
+            if (classroomId != Guid.Empty && validDates != null && validDates.Count > 0)
+            {
+                if (_classroomService.IsClassroomAvailable(classroomId, startTime, endTime, validDates))
+                {
+                    result = _classroomService.ReserveClassroom(classroomId, title, startTime, endTime, validDates, out scheduleId);
+                    message = "Schedule has been created successfully";
+                }
+            }
+            else
+            {
+                message = "Invalid inputs";
+            }
+
+            return Json(new { success = result, message = message, scheduleId = scheduleId }, JsonRequestBehavior.AllowGet);
+        }
+
         private List<DateTime> ParseDates(string jsonParam)
         {
             var dates = new List<DateTime>();
