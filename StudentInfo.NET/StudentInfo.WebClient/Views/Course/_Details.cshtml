@@ -16,9 +16,9 @@
     }
     <p>Instructor: @instructorName</p>
     <p>Course Period: @Model.CourseDate.Year - @Model.Term</p>
-    <p>Location: @Model.Classroom.Campus - @Model.Classroom.Number</p>
+    <p>Location: @Model.Schedule.Classroom.Campus - @Model.Schedule.Classroom.Number</p>
     @{ 
-        var classCapacity = $"{Helper.CountRegisterdStudents(Model.Id)} / {Model.Classroom.Capacity}";
+        var classCapacity = $"{Helper.CountRegisterdStudents(Model.Id)} / {Model.Schedule.Classroom.Capacity}";
     }
     <p>Capacity: @classCapacity</p>
 </div>
