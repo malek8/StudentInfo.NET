@@ -502,14 +502,6 @@ namespace StudentInfo.WebClient.Controllers
             return View("_Grades", model);
         }
 
-        [HttpPost]
-        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember, SystemRoles.Instructor)]
-        public ActionResult SubmitGrades(Guid semesterCourseId)
-        {
-
-            return Helper.CreateResponse(true, "Saved");
-        }
-
         [HttpGet]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
         public ActionResult StudentCourse(Guid studentCourseId)

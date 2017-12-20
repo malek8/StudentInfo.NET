@@ -186,6 +186,7 @@ namespace StudentInfo.CourseManager
                 if (studentCourse != null)
                 {
                     studentCourse.Grade = grade;
+                    studentCourse.CourseState = CourseRegistrationState.Pass;
 
                     try
                     {
