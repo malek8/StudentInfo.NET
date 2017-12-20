@@ -16,9 +16,21 @@
     }
     <p>Instructor: @instructorName</p>
     <p>Course Period: @Model.CourseDate.Year - @Model.Term</p>
-    <p>Location: @Model.Schedule.Classroom.Campus - @Model.Schedule.Classroom.Number</p>
     @{ 
-        var classCapacity = $"{Helper.CountRegisterdStudents(Model.Id)} / {Model.Schedule.Classroom.Capacity}";
+        var classroomInfo = string.Empty;
+        if (Model.Schedule != null)
+        {
+            classroomInfo = $"{Model.Schedule.Classroom.Campus} - {Model.Schedule.Classroom.Number}";
+        }
+    }
+    <p>Location: @classroomInfo</p>
+    @{ 
+        var capacity = 0;
+        if (Model.Schedule != null)
+        {
+            capacity = Model.Schedule.Classroom.Capacity;
+        }
+        var classCapacity = $"{Helper.CountRegisterdStudents(Model.Id)} / {capacity}";
     }
     <p>Capacity: @classCapacity</p>
 </div>

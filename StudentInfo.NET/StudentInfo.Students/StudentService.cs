@@ -102,7 +102,7 @@ namespace StudentInfo.Students
             return Guid.Empty;
         }
 
-        public bool Enroll(Guid studentId, Guid courseSemesterId)
+        public bool Enroll(Guid studentId, Guid courseSemesterId, out string message)
         {
             var student = _db.Students.Find(studentId);
             var courseSemester = _db.SemesterCourses.Find(courseSemesterId);
@@ -110,30 +110,43 @@ namespace StudentInfo.Students
             {
                 if (IsCourseAvailable(courseSemester) && CanAddCourses(student, courseSemester))
                 {
-                    var studentCourse = new StudentCourse
+                    if (!IsConflict(courseSemester, student))
                     {
-                        Student = student,
-                        SemesterCourse = courseSemester,
-                        CreateDate = DateTime.Now,
-                        LastUpdate = DateTime.Now,
-                        CourseState = Enums.CourseRegistrationState.Enrolled,
-                        Id = Guid.NewGuid()
-                    };
+                        var studentCourse = new StudentCourse
+                        {
+                            Student = student,
+                            SemesterCourse = courseSemester,
+                            CreateDate = DateTime.Now,
+                            LastUpdate = DateTime.Now,
+                            CourseState = Enums.CourseRegistrationState.Enrolled,
+                            Id = Guid.NewGuid()
+                        };
 
-                    _db.StudentCourses.Add(studentCourse);
+                        _db.StudentCourses.Add(studentCourse);
 
-                    try
-                    {
-                        _db.SaveChanges();
+                        try
+                        {
+                            _db.SaveChanges();
 
-                        return true;
+                            message = $"{courseSemester.Course.Name} was added successfully";
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     }
-                    catch(Exception ex)
+                    else
                     {
-                        Console.WriteLine(ex.Message);
+                        message = "This course conflicts with an existing course";
                     }
                 }
+                else
+                {
+                    message = "Sorry, you cannot add this course";
+                }
             }
+            message = "Sorry, something went worng";
             return false;
         }
 
@@ -198,6 +211,23 @@ namespace StudentInfo.Students
             if (!allowDifferentProgram && semesterCourse.Course.Department.Id != student.Program.Department.Id)
             {
                 return false;
+            }
+
+            return true;
+        }
+
+        private bool IsConflict(SemesterCourse semesterCourse, Student student)
+        {
+            var studentCourses = _db.StudentCourses.Where(x => x.StudentId == student.Id 
+            && x.SemesterCourse.Term == semesterCourse.Term).ToList();
+
+            if (studentCourses != null)
+            {
+                
+                foreach (var course in studentCourses)
+                {
+                    
+                }
             }
 
             return true;

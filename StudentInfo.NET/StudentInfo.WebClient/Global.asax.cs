@@ -81,11 +81,11 @@ namespace StudentInfo.WebClient
 
                 if (department5 != null)
                 {
-                    var program6 = programService.CreateProgram(department2, "Master in Computer Science (MCompSc)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.ThesisBased);
-                    var program7 = programService.CreateProgram(department2, "Master in Applied Science, Software Engineering (MASc)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.ThesisBased);
-                    var program8 = programService.CreateProgram(department2, "Master of Engineering, Software Engineering (MEng)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.CourseBased);
-                    var program9 = programService.CreateProgram(department2, "Master in Applied Computer Science (MApCompSc)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.CourseBased);
-                    var program10 = programService.CreateProgram(department2, "Graduate diploma in Computer Science (GrDip)", ProgramLevel.Graduate, DegreeType.GraduateDiploma, ProgramStudyType.CourseBased);
+                    var program6 = programService.CreateProgram(department5, "Master in Computer Science (MCompSc)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.ThesisBased);
+                    var program7 = programService.CreateProgram(department5, "Master in Applied Science, Software Engineering (MASc)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.ThesisBased);
+                    var program8 = programService.CreateProgram(department5, "Master of Engineering, Software Engineering (MEng)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.CourseBased);
+                    var program9 = programService.CreateProgram(department5, "Master in Applied Computer Science (MApCompSc)", ProgramLevel.Graduate, DegreeType.Master, ProgramStudyType.CourseBased);
+                    var program10 = programService.CreateProgram(department5, "Graduate diploma in Computer Science (GrDip)", ProgramLevel.Graduate, DegreeType.GraduateDiploma, ProgramStudyType.CourseBased);
 
                     var course1 = courseService.CreateCourse("COMP 691", "TOPICS/COMPUTER SCIENCE", "", 4, ProgramLevel.Graduate, department5);
                     var course2 = courseService.CreateCourse("COMP 5261", "COMPUTER ARCHITECTURE", "", 4, ProgramLevel.Graduate, department5);

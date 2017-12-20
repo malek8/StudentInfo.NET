@@ -77,7 +77,11 @@
             </td>
             <td>
                 @{ 
-                    var classroomInfo = $"{item.Schedule.Classroom.Campus} / {item.Schedule.Classroom.Number}";
+                    var classroomInfo = string.Empty;
+                    if (item.Schedule != null)
+                    {
+                        classroomInfo = $"{item.Schedule.Classroom.Campus} / {item.Schedule.Classroom.Number}";
+                    }
                 }
                 @Html.DisplayFor(x => @classroomInfo)
             </td>

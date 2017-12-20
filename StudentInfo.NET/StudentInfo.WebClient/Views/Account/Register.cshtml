@@ -28,7 +28,7 @@
     <div id="programDiv" class="form-group" style="display: none">
         @Html.LabelFor(m => m.ProgramId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.ProgramId, StudentInfo.WebClient.Helpers.FieldInputHelpers.GetRoles(), 
+            @Html.DropDownListFor(m => m.ProgramId, new List<SelectListItem>(), 
            new { id = "programDropdown", @class = "form-control" })
         </div>
     </div>
@@ -112,6 +112,8 @@
             url: "/Course/GetPrograms",
             data: { departmentId: departmentId },
             success: function (data) {
+                console.log("changed");
+                console.log(departmentId);
                 for (var i = 0; i < data.length; i++) {
                     $("#programDropdown").append('<option value = "' + data[i].value + '">' + data[i].text + '</option>');
                 }

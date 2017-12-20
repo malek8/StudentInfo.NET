@@ -227,49 +227,18 @@ namespace StudentInfo.WebClient.Controllers
                 {
                     var parsedStudentId = Guid.Parse(studentId.ToString());
 
-                    var result = _studentService.Enroll(parsedStudentId, semesterCourseId);
+                    var message = string.Empty;
+                    var result = _studentService.Enroll(parsedStudentId, semesterCourseId, out message);
 
                     if (result)
                     {
-                        return Helper.CreateResponse(true, "Selected course was added successfully!");
+                        return Helper.CreateResponse(true, message);
+                    }
+                    else
+                    {
+                        return Helper.CreateResponse(false, message);
                     }
                 }
-                
-                //var context = new StudentInfoContext();
-
-                //var userId = Guid.Parse(User.Identity.GetUserId());
-                //var student = context.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
-                //if (student == null)
-                //{
-                //    var externalStudentId = Helper.GenerateExternalStudentId();
-                //    student = new Student
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        ApplicationUserId = userId,
-                //        ExternalStudentId = externalStudentId
-                //    };
-
-                //    context.Students.Add(student);
-                //    context.SaveChanges();
-                //}
-                //if (!context.StudentCourses.Any(x => x.StudentId == student.Id && x.SemesterCourse.Id == semesterCourseId))
-                //{
-                //    var semesterCourse = context.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
-
-                //    context.StudentCourses.Add(new StudentCourse
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        StudentId = student.Id,
-                //        SemesterCourse = semesterCourse,
-                //        CourseState = CourseRegistrationState.Added,
-                //        CreateDate = DateTime.Now,
-                //        LastUpdate = DateTime.Now
-                //    });
-
-                //    context.SaveChanges();
-
-                //    return Helper.CreateResponse(true, $"{semesterCourse.Course.Name} was added successfully!");
-                //}
             }
             return Helper.CreateResponse(false, "Sorry, you cannot add this course");
         }
@@ -337,7 +306,7 @@ namespace StudentInfo.WebClient.Controllers
 
             var db = new StudentInfoContext();
 
-            var courses = db.SemesterCourses.AsQueryable();
+            var courses = db.SemesterCourses.Where(x => x.Schedule != null).AsQueryable();
 
             if (User.IsInRole(SystemRoles.Instructor))
             {
