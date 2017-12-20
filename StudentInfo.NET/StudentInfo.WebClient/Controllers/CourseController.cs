@@ -712,7 +712,6 @@ namespace StudentInfo.WebClient.Controllers
             var db = new StudentInfoContext();
             var userId = Guid.Parse(User.Identity.GetUserId());
 
-            //var courses = db.TeacherCourses.Where(x => x.Teacher.ApplicationUserId == userId).Select(x => x.SemesterCourse.Id);
             var courses = db.SemesterCourses.Where(x => x.Teacher.ApplicationUserId == userId).Select(x => x.Id);
 
             return courses;
