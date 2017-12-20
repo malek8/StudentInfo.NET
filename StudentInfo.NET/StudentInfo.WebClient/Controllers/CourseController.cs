@@ -16,6 +16,7 @@ using Newtonsoft;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using StudentInfo.Students;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -25,11 +26,13 @@ namespace StudentInfo.WebClient.Controllers
     {
         private CourseService _courseService;
         private ClassroomService _classroomService;
+        private StudentService _studentService;
 
         public CourseController()
         {
             _courseService = new CourseService();
             _classroomService = new ClassroomService();
+            _studentService = new StudentService();
         }
 
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
@@ -213,50 +216,62 @@ namespace StudentInfo.WebClient.Controllers
             return View(new CourseSearchModel());
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
         public ActionResult Enroll(Guid semesterCourseId)
         {
             if (User.IsInRole(SystemRoles.Student))
             {
-                var context = new StudentInfoContext();
-
-                var userId = Guid.Parse(User.Identity.GetUserId());
-                var student = context.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
-                if (student == null)
+                var studentId = HttpContext.Session["studentId"];
+                if (studentId != null)
                 {
-                    var externalStudentId = Helper.GenerateExternalStudentId();
-                    student = new Student
+                    var parsedStudentId = Guid.Parse(studentId.ToString());
+
+                    var result = _studentService.Enroll(parsedStudentId, semesterCourseId);
+
+                    if (result)
                     {
-                        Id = Guid.NewGuid(),
-                        ApplicationUserId = userId,
-                        ExternalStudentId = externalStudentId
-                    };
-
-                    context.Students.Add(student);
-                    context.SaveChanges();
+                        return Helper.CreateResponse(true, "Selected course was added successfully!");
+                    }
                 }
-                if (!context.StudentCourses.Any(x => x.StudentId == student.Id && x.SemesterCourse.Id == semesterCourseId))
-                {
-                    var semesterCourse = context.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
+                
+                //var context = new StudentInfoContext();
 
-                    context.StudentCourses.Add(new StudentCourse
-                    {
-                        Id = Guid.NewGuid(),
-                        StudentId = student.Id,
-                        SemesterCourse = semesterCourse,
-                        CourseState = CourseRegistrationState.Added,
-                        CreateDate = DateTime.Now,
-                        LastUpdate = DateTime.Now
-                    });
+                //var userId = Guid.Parse(User.Identity.GetUserId());
+                //var student = context.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+                //if (student == null)
+                //{
+                //    var externalStudentId = Helper.GenerateExternalStudentId();
+                //    student = new Student
+                //    {
+                //        Id = Guid.NewGuid(),
+                //        ApplicationUserId = userId,
+                //        ExternalStudentId = externalStudentId
+                //    };
 
-                    context.SaveChanges();
+                //    context.Students.Add(student);
+                //    context.SaveChanges();
+                //}
+                //if (!context.StudentCourses.Any(x => x.StudentId == student.Id && x.SemesterCourse.Id == semesterCourseId))
+                //{
+                //    var semesterCourse = context.SemesterCourses.FirstOrDefault(x => x.Id == semesterCourseId);
 
-                    return Helper.CreateResponse(true, $"{semesterCourse.Course.Name} was added successfully!");
-                }
+                //    context.StudentCourses.Add(new StudentCourse
+                //    {
+                //        Id = Guid.NewGuid(),
+                //        StudentId = student.Id,
+                //        SemesterCourse = semesterCourse,
+                //        CourseState = CourseRegistrationState.Added,
+                //        CreateDate = DateTime.Now,
+                //        LastUpdate = DateTime.Now
+                //    });
+
+                //    context.SaveChanges();
+
+                //    return Helper.CreateResponse(true, $"{semesterCourse.Course.Name} was added successfully!");
+                //}
             }
-            return Helper.CreateResponse(false, "Failed to add selected course");
+            return Helper.CreateResponse(false, "Sorry, you cannot add this course");
         }
 
         [HttpPost]

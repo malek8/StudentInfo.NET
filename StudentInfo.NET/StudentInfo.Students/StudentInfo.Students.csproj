@@ -60,6 +60,10 @@
     <Compile Include="StudentService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudentInfo.CourseManager\StudentInfo.CourseManager.csproj">
+      <Project>{5b089a07-b044-4164-8a74-f12308fd918f}</Project>
+      <Name>StudentInfo.CourseManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StudentInfo.Data\StudentInfo.Data.csproj">
       <Project>{39a85bca-6bf0-4796-8c9d-004316095f6f}</Project>
       <Name>StudentInfo.Data</Name>

@@ -17,7 +17,7 @@
     <p>State: @((StudentInfo.Enums.CourseState)Model.CourseState)</p>
     <p>Grade: @(@Model.Grade ?? string.Empty)</p>
     <p>Course Period: @Model.SemesterCourse.CourseDate.Year - @Model.SemesterCourse.Term</p>
-    <p>Location: @Model.SemesterCourse.Classroom.Campus - @Model.SemesterCourse.Classroom.Number</p>
+    <p>Location: @Model.SemesterCourse.Schedule.Classroom.Campus - @Model.SemesterCourse.Schedule.Classroom.Number</p>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

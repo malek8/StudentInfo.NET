@@ -275,10 +275,10 @@ namespace StudentInfo.WebClient.Controllers
         {
             if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
             {
-                var studentIdAsStr = HttpContext.Session["studentId"].ToString();
-                if (!string.IsNullOrEmpty(studentIdAsStr))
+                var studentIdAsStr = HttpContext.Session["studentId"];
+                if (studentIdAsStr != null && !string.IsNullOrEmpty(studentIdAsStr.ToString()))
                 {
-                    var studentId = Guid.Parse(studentIdAsStr);
+                    var studentId = Guid.Parse(studentIdAsStr.ToString());
                     var payments = _studentPaymentService.GetPayments(studentId);
 
                     return View(payments);

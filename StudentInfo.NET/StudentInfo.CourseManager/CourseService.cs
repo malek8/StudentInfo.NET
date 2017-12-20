@@ -100,6 +100,11 @@ namespace StudentInfo.CourseManager
             return _db.Courses.FirstOrDefault(x => x.Code == code);
         }
 
+        public SemesterCourse FindSemesterCourseById(Guid id)
+        {
+            return _db.SemesterCourses.Find(id);
+        }
+
         public bool AssignSemester(Guid courseId, Guid classroomId, Guid userId, bool isOpen, Term term, DateTime courseDate)
         {
             if (ValidateSemesterCourseInput(term, courseDate))
