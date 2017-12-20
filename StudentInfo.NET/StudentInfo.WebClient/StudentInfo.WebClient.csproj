@@ -392,6 +392,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery-ui.multidatespicker.js" />
+    <Content Include="Scripts\jquery.calendar-widget.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -461,6 +462,7 @@
     <Content Include="Views\ManageAccount\_Transactions.cshtml" />
     <Content Include="Views\Course\CreateSchedule.cshtml" />
     <Content Include="Views\Course\CourseSemester.cshtml" />
+    <Content Include="Views\Course\_CourseSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

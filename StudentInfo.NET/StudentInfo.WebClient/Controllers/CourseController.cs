@@ -669,6 +669,12 @@ namespace StudentInfo.WebClient.Controllers
             return HttpNotFound();
         }
 
+        [HttpGet]
+        public ActionResult GetCourseSchedule(Guid courseId)
+        {
+            return View("_CourseSchedule");
+        }
+
         private List<DateTime> ParseDates(string jsonParam)
         {
             var dates = new List<DateTime>();

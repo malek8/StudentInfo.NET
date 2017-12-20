@@ -566,3 +566,10 @@ function assignSemesterCourse() {
         alert("Invalid input");
     }
 }
+
+function loadCourseScheduleModal(courseId) {
+    $.get("/Course/GetCourseSchedule?courseId=" + courseId, function (data) {
+        $("#courseScheduleModalBody").html(data);
+        $("#courseScheduleModal").modal("show");
+    });
+}
