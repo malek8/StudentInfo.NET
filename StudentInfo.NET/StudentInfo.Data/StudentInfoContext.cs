@@ -15,7 +15,7 @@ namespace StudentInfo.Data
         public StudentInfoContext()
             : base()
         {
-            this.Configuration.AutoDetectChangesEnabled = false;
+            //this.Configuration.AutoDetectChangesEnabled = false;
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

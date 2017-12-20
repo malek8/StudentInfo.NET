@@ -71,7 +71,8 @@ namespace StudentInfo.Students
                         Term = currentTerm,
                         Items = charges,
                         Date = DateTime.Now,
-                        ModifiedDate = DateTime.Now
+                        ModifiedDate = DateTime.Now,
+                        DueDate = StudentHelper.DueDate()
                     };
 
                     _db.Payments.Add(payment);
@@ -118,22 +119,6 @@ namespace StudentInfo.Students
 
         public decimal GetBalance(Guid studentId)
         {
-            //var student = _db.Students.Find(studentId);
-            //var currentTerm = CourseHelper.CurrentTerm();
-            //if (student != null && student.Payments != null)
-            //{
-            //    var currentPayment = student.Payments.FirstOrDefault(x => x.Term == currentTerm);
-            //    var toPay = currentPayment.Items.Sum(x => x.Amount);
-
-            //    if (currentPayment.Transactions == null)
-            //    {
-            //        return toPay;
-            //    }
-
-            //    var paid = currentPayment.Transactions.Sum(x => x.Amount);
-            //    return toPay - paid;
-            //}
-            //return 0;
             var payments = GetPayments(studentId);
 
             if (payments != null)
@@ -238,7 +223,7 @@ namespace StudentInfo.Students
                     else
                     {
                         interestPaymentItem.Amount = payment.Balance * 0.03M * numOfDay;
-                        interestPaymentItem.Title = $" %3 interest charges for {numOfDay} days";
+                        interestPaymentItem.Title = $" 3% interest charges for {numOfDay} days";
                     }
                 }
                 else
@@ -247,7 +232,7 @@ namespace StudentInfo.Students
                     {
                         Id = Guid.NewGuid(),
                         Amount = payment.Balance * 0.03M * numOfDay,
-                        Title = $" %3 interest charges for {numOfDay} days",
+                        Title = $" 3% interest charges for {numOfDay} days",
                         Order = 50
                     };
 

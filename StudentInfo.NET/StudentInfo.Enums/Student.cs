@@ -48,7 +48,8 @@ namespace StudentInfo.Enums
         Waiting = 3,
         Dropped = 4,
         Pass = 5,
-        Fail = 6
+        Fail = 6,
+        Discontinue = 7
     }
 
     public enum CourseState

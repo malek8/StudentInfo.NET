@@ -104,6 +104,7 @@ namespace StudentInfo.Students
 
         public bool Enroll(Guid studentId, Guid courseSemesterId, out string message)
         {
+            message = string.Empty;
             var student = _db.Students.Find(studentId);
             var courseSemester = _db.SemesterCourses.Find(courseSemesterId);
             if (student != null && courseSemester != null && courseSemester.Open)
@@ -146,7 +147,52 @@ namespace StudentInfo.Students
                     message = "Sorry, you cannot add this course";
                 }
             }
-            message = "Sorry, something went worng";
+            else
+            {
+                message = "Sorry, something went worng";
+            }
+            return false;
+        }
+
+        public bool Drop(Guid studentId, Guid studentCourseId, out string message)
+        {
+            message = string.Empty;
+            var student = _db.Students.Find(studentId);
+            var studentCourse = _db.StudentCourses.Find(studentCourseId);
+
+            if (studentCourse != null && student != null)
+            {
+                var thirdClass = studentCourse.SemesterCourse.Schedule.ScheduleItems.
+                    OrderBy(x => x.Date).Skip(2).FirstOrDefault();
+
+                if (thirdClass != null)
+                {
+                    if (DateTime.Now >= thirdClass.Date)
+                    {
+                        message = "Sorry, you cannot drop this course";
+                        return false;
+                    }
+                }
+
+                studentCourse.CourseState = Enums.CourseRegistrationState.Discontinue;
+
+                try
+                {
+                    _db.SaveChanges();
+
+                    message = $"{studentCourse.SemesterCourse.Course.Name} was dropped successfully";
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                message = "Sorry, something went wrong";
+            }
+
             return false;
         }
 
@@ -223,14 +269,29 @@ namespace StudentInfo.Students
 
             if (studentCourses != null)
             {
-                
                 foreach (var course in studentCourses)
                 {
-                    
+                    var scheduleItems = course.SemesterCourse.Schedule.ScheduleItems;
+
+                    foreach(var item in scheduleItems)
+                    {
+                        var sameDay = semesterCourse.Schedule.ScheduleItems.Where(x => x.Date == item.Date);
+
+                        if (sameDay != null)
+                        {
+                            foreach(var d in sameDay)
+                            {
+                                if (Math.Abs(d.EndTime.Subtract(item.EndTime).Hours) < 3)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            return true;
+            return false;
         }
     }
 }

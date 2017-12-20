@@ -1,4 +1,5 @@
 ﻿using StudentInfo.Enums;
+using StudentInfo.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,34 @@ namespace StudentInfo.Students
                 default:
                     return string.Empty;
             }
+        }
+
+        public static DateTime DueDate()
+        {
+            var currentTerm = CourseHelper.CurrentTerm();
+            var currentYear = DateTime.Now.Year;
+            var date = DateTime.Now;
+
+            switch(currentTerm)
+            {
+                case Term.Fall:
+                    date = new DateTime(currentYear, 9, 30);
+                    if (DateTime.Now.Month > 9) date.AddYears(1);
+                    return date;
+                case Term.Winter:
+                    date = new DateTime(currentYear, 1, 31);
+                    if (DateTime.Now.Month > 1) date.AddYears(1);
+                    return date;
+                case Term.Summer1:
+                    date = new DateTime(currentYear, 5, 31);
+                    if (DateTime.Now.Month > 5) date.AddYears(1);
+                    return date;
+                case Term.Summer2:
+                    date = new DateTime(currentYear, 7, 31);
+                    if (DateTime.Now.Month > 7) date.AddYears(1);
+                    return date;
+            }
+            return date;
         }
     }
 }

@@ -65,7 +65,7 @@ namespace StudentInfo.CourseManager
                     if (matchClassroom.Count > 0)
                     {
                         var matchDates = matchClassroom.SelectMany(x => x.ScheduleItems.Where(z => z.Date.Subtract(d).Days == 0)).ToList();
-                        if (matchDates.Any(x => endTime.Subtract(x.EndTime).Hours < 3))
+                        if (matchDates.Any(x => Math.Abs(endTime.Subtract(x.EndTime).Hours) < 3))
                         {
                             return false;
                         }

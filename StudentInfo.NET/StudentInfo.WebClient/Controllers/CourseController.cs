@@ -247,29 +247,22 @@ namespace StudentInfo.WebClient.Controllers
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.Student)]
         public ActionResult Drop(Guid studentCourseId)
         {
+            var message = "Sorry, something went wrong";
+            var result = false;
             if (User.IsInRole(SystemRoles.Student))
             {
-                var context = new StudentInfoContext();
-
-                var studentCourse = context.StudentCourses.FirstOrDefault(x => x.Id == studentCourseId);
-
-                if (studentCourse != null)
+                var studentId = HttpContext.Session["studentId"];
+                if (studentId != null)
                 {
-                    context.StudentCourses.Remove(studentCourse);
-                    context.SaveChanges();
+                    var parsedStudentId = Guid.Parse(studentId.ToString());
 
-                    return Json(new
-                    {
-                        success = true,
-                        message = "Course was dropped successfully!"
-                    });
+                    result = _studentService.Drop(parsedStudentId, studentCourseId, out message);
                 }
-
             }
             return Json(new
             {
-                success = false,
-                message = "Failed to drop selected course"
+                success = result,
+                message = message
             });
         }
 
@@ -382,7 +375,7 @@ namespace StudentInfo.WebClient.Controllers
             return View("CoursesSeach", model);
         }
 
-        public ActionResult StudentCourses(CourseSearchModel model, int? page)
+        public ActionResult StudentCourses(CourseSearchModel model, int? page, bool includeAll = false)
         {
             if (model == null) model = new CourseSearchModel();
 
@@ -395,6 +388,11 @@ namespace StudentInfo.WebClient.Controllers
             if (student != null)
             {
                 studentCourses = db.StudentCourses.AsQueryable().Where(x => x.StudentId == student.Id);
+
+                if (!includeAll)
+                {
+                    studentCourses = studentCourses.Where(x => x.CourseState == CourseRegistrationState.Enrolled);
+                }
 
                 if (model.Semester.HasValue)
                 {
@@ -679,11 +677,6 @@ namespace StudentInfo.WebClient.Controllers
                 }
             }
             return dates;
-        }
-
-        private IEnumerable<StudentCourse> GetStudentCourses()
-        {
-            return new List<StudentCourse>();
         }
 
         private IEnumerable<TeacherCourse> GetTeacherCourses()
