@@ -8,6 +8,7 @@ using StudentInfo.Data;
 using StudentInfo.Dto;
 using StudentInfo.Helpers;
 using StudentInfo.CourseManager;
+using StudentInfo.Enums;
 
 namespace StudentInfo.Students
 {
@@ -15,11 +16,13 @@ namespace StudentInfo.Students
     {
         private StudentInfoContext _db;
         private CourseService _courseService;
+        private StudentPaymentService _studentPaymentService;
 
         public StudentService()
         {
             _db = new StudentInfoContext();
             _courseService = new CourseService();
+            _studentPaymentService = new StudentPaymentService();
         }
 
         public Student FindByUserId(string userId)
@@ -119,7 +122,7 @@ namespace StudentInfo.Students
                             SemesterCourse = courseSemester,
                             CreateDate = DateTime.Now,
                             LastUpdate = DateTime.Now,
-                            CourseState = Enums.CourseRegistrationState.Enrolled,
+                            CourseState = CourseRegistrationState.Enrolled,
                             Id = Guid.NewGuid()
                         };
 
@@ -128,6 +131,18 @@ namespace StudentInfo.Students
                         try
                         {
                             _db.SaveChanges();
+
+                            var year = DateTime.Now.Year;
+                            var scheduleItem = courseSemester.Schedule.ScheduleItems.FirstOrDefault();
+                            if (scheduleItem != null)
+                            {
+                                year = scheduleItem.Date.Year;
+                            }
+
+                            if (!HasTermPayment(student, year, courseSemester.Term))
+                            {
+                                _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term);
+                            }
 
                             message = $"{courseSemester.Course.Name} was added successfully";
                             return true;
@@ -245,7 +260,7 @@ namespace StudentInfo.Students
         private bool CanAddCourses(Student student, SemesterCourse semesterCourse, bool allowDifferentProgram = false)
         {
             var studentCourses = _db.StudentCourses.Where(x => x.StudentId == student.Id &&
-            x.SemesterCourse.Term == semesterCourse.Term).ToList();
+            x.SemesterCourse.Term == semesterCourse.Term && x.CourseState == CourseRegistrationState.Enrolled).ToList();
 
             if (studentCourses != null)
             {
@@ -265,7 +280,7 @@ namespace StudentInfo.Students
         private bool IsConflict(SemesterCourse semesterCourse, Student student)
         {
             var studentCourses = _db.StudentCourses.Where(x => x.StudentId == student.Id 
-            && x.SemesterCourse.Term == semesterCourse.Term).ToList();
+            && x.SemesterCourse.Term == semesterCourse.Term && x.CourseState == CourseRegistrationState.Enrolled).ToList();
 
             if (studentCourses != null)
             {
@@ -291,6 +306,15 @@ namespace StudentInfo.Students
                 }
             }
 
+            return false;
+        }
+
+        private bool HasTermPayment(Student student, int year, Term term)
+        {
+            if (_db.Payments.Any(x => x.Student.Id == student.Id && term == term && x.DueDate.Year == year))
+            {
+                return true;
+            }
             return false;
         }
     }

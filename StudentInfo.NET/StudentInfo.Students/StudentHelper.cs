@@ -50,29 +50,28 @@ namespace StudentInfo.Students
             }
         }
 
-        public static DateTime DueDate()
+        public static DateTime DueDate(Term term)
         {
-            var currentTerm = CourseHelper.CurrentTerm();
             var currentYear = DateTime.Now.Year;
             var date = DateTime.Now;
 
-            switch(currentTerm)
+            switch(term)
             {
                 case Term.Fall:
                     date = new DateTime(currentYear, 9, 30);
-                    if (DateTime.Now.Month > 9) date.AddYears(1);
+                    if (DateTime.Now.Month > 9) date = date.AddYears(1);
                     return date;
                 case Term.Winter:
                     date = new DateTime(currentYear, 1, 31);
-                    if (DateTime.Now.Month > 1) date.AddYears(1);
+                    if (DateTime.Now.Month > 1) date = date.AddYears(1);
                     return date;
                 case Term.Summer1:
                     date = new DateTime(currentYear, 5, 31);
-                    if (DateTime.Now.Month > 5) date.AddYears(1);
+                    if (DateTime.Now.Month > 5) date = date.AddYears(1);
                     return date;
                 case Term.Summer2:
                     date = new DateTime(currentYear, 7, 31);
-                    if (DateTime.Now.Month > 7) date.AddYears(1);
+                    if (DateTime.Now.Month > 7) date = date.AddYears(1);
                     return date;
             }
             return date;

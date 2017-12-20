@@ -16,13 +16,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.ActionLink($"{item.Term} - {item.Date.Year}", "PaymentItemDetails", 
-                   new { paymentId = item.Id}, new { @class = "btn btn-link"})
-                    <div class="small">due date: @StudentInfo.Students.StudentHelper.PaymentDueDate(item.Term)</div>
+                    @Html.ActionLink($"{item.Term} - {item.Date.Year}", "PaymentItemDetails",
+             new { paymentId = item.Id }, new { @class = "btn btn-link" })
+                    <div class="small">due date: @item.DueDate.ToString("MMM dd, yyyy")</div>
                 </td>
                 <td>
                     $@item.TotalToPay
@@ -41,9 +41,12 @@
     </tbody>
 </table>
 
-<div>
-    <p class="text-warning">Please note that an interest of 3% is applied on owing balance for everyday if not paid before the due date.</p>
-</div>
+@if (Model != null && Model.Count > 0)
+{
+    <div>
+        <p class="text-warning">Please note that an interest of 3% is applied on owing balance for everyday if not paid before the due date.</p>
+    </div>
+}
 
 <!-- Pay Balance Modal -->
 <div id="payBalanceModal" class="modal fade" role="dialog">

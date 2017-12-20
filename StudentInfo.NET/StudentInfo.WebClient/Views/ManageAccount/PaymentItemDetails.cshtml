@@ -36,7 +36,7 @@
 </table>
 
 <div>
-    <p class="small">due date: @StudentInfo.Students.StudentHelper.PaymentDueDate(Model.Term)</p>
+    <p class="small">due date: @Model.DueDate.ToString("MMM dd, yyyy")</p>
 </div>
 @if(Model.Balance > 0)
 {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using StudentInfo.Students.Models;
 using StudentInfo.Dto;
 using StudentInfo.Helpers;
+using StudentInfo.Enums;
 
 namespace StudentInfo.Students
 {
@@ -52,11 +53,9 @@ namespace StudentInfo.Students
             return false;
         }
 
-        public bool InitTermPayment(Guid studentId)
+        public bool InitTermPayment(Guid studentId, Term term)
         {
-            var currentTerm = CourseHelper.CurrentTerm();
-
-            if (!_db.Payments.Any(x => x.Term == currentTerm && x.Student.Id == studentId))
+            if (!_db.Payments.Any(x => x.Term == term && x.Student.Id == studentId))
             {
                 var student = _db.Students.Find(studentId);
 
@@ -68,11 +67,11 @@ namespace StudentInfo.Students
                     {
                         Id = Guid.NewGuid(),
                         Student = student,
-                        Term = currentTerm,
+                        Term = term,
                         Items = charges,
                         Date = DateTime.Now,
                         ModifiedDate = DateTime.Now,
-                        DueDate = StudentHelper.DueDate()
+                        DueDate = StudentHelper.DueDate(term)
                     };
 
                     _db.Payments.Add(payment);
@@ -82,7 +81,7 @@ namespace StudentInfo.Students
                         _db.SaveChanges();
                         return true;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
@@ -96,12 +95,20 @@ namespace StudentInfo.Students
             return false;
         }
 
+        public bool InitTermPayment(Guid studentId)
+        {
+            var currentTerm = CourseHelper.CurrentTerm();
+
+            return InitTermPayment(studentId, currentTerm);
+        }
+
         public bool HasBalance(Guid studentId)
         {
             var student = _db.Students.Find(studentId);
             if (student != null)
             {
-                var payments = _db.Payments.Where(x => x.Student.Id == student.Id).ToList();
+                var currentDate = DateTime.Now;
+                var payments = _db.Payments.Where(x => x.Student.Id == student.Id && x.DueDate <= currentDate).ToList();
 
                 foreach(var p in payments)
                 {
@@ -127,7 +134,7 @@ namespace StudentInfo.Students
             }
             return 0;
         }
-
+        
         public IList<Payment> GetPayments(Guid studentId)
         {
             var student = _db.Students.Find(studentId);
