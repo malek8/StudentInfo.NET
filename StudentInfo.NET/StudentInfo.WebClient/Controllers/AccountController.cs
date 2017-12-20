@@ -131,9 +131,13 @@ namespace StudentInfo.WebClient.Controllers
                     {
                         var studentId = _studentService.CreateStudent(user.Id, model.ProgramId);
                         _studentPaymentService.InitTermPayment(studentId);
-
-                        FixAccounts();
                     }
+                    else if (model.Role == SystemRoles.Instructor)
+                    {
+                        AddTeacher(Guid.Parse(user.Id));
+                    }
+
+                    FixAccounts();
                     await SendConfirmationEmail(user.Id);
                     
                     return RedirectToAction("Index", "Home");
@@ -261,6 +265,22 @@ namespace StudentInfo.WebClient.Controllers
             var db = new StudentInfoContext();
 
             db.Database.ExecuteSqlCommand("UPDATE [dbo].[AspNetUsers] SET [Discriminator] = 'ApplicationUser'");
+        }
+
+        private void AddTeacher(Guid userId)
+        {
+            var db = new StudentInfoContext();
+
+            if (!db.Teachers.Any(x => x.ApplicationUserId == userId))
+            {
+                db.Teachers.Add(new Teacher()
+                {
+                    Id = Guid.NewGuid(),
+                    ApplicationUserId = userId
+                });
+
+                db.SaveChanges();
+            }
         }
     }
 }

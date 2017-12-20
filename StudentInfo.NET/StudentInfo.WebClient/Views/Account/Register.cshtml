@@ -112,8 +112,6 @@
             url: "/Course/GetPrograms",
             data: { departmentId: departmentId },
             success: function (data) {
-                console.log("changed");
-                console.log(departmentId);
                 for (var i = 0; i < data.length; i++) {
                     $("#programDropdown").append('<option value = "' + data[i].value + '">' + data[i].text + '</option>');
                 }

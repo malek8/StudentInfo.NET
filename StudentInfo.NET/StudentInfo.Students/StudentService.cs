@@ -189,6 +189,11 @@ namespace StudentInfo.Students
                     }
                 }
 
+                if (!string.IsNullOrEmpty(studentCourse.Grade))
+                {
+                    return false;
+                }
+
                 studentCourse.CourseState = Enums.CourseRegistrationState.Discontinue;
 
                 try
