@@ -114,7 +114,8 @@ namespace StudentInfo.Students
             {
                 if (!EnrolledInCourse(student, courseSemester))
                 {
-                    if (IsCourseAvailable(courseSemester) && CanAddCourses(student, courseSemester))
+                    if (IsCourseAvailable(courseSemester) && CanAddCourses(student, courseSemester) &&
+                        HasSameStudyLevel(student, courseSemester))
                     {
                         if (!IsConflict(courseSemester, student))
                         {
@@ -334,6 +335,11 @@ namespace StudentInfo.Students
         {
             return _db.StudentCourses.Any(x => x.StudentId == student.Id
             && x.SemesterCourse.Course.Id == semesterCourse.Course.Id);
+        }
+
+        private bool HasSameStudyLevel(Student student, SemesterCourse semesterCourse)
+        {
+            return (student.Program.Level == semesterCourse.Course.Level);
         }
     }
 }
