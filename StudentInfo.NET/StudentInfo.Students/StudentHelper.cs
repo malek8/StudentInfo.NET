@@ -71,5 +71,24 @@ namespace StudentInfo.Students
             }
             return date;
         }
+
+        public static List<Term> AvailableTerms()
+        {
+            var currentMonth = DateTime.Now.Month;
+            List<Term> terms = new List<Term>();
+
+            if (currentMonth > 3 && currentMonth  <= 6)
+            {
+                terms.Add(Term.Summer1);
+                terms.Add(Term.Summer2);
+            }
+            else if (currentMonth > 6)
+            {
+                terms.Add(Term.Fall);
+                terms.Add(Term.Winter);
+            }
+
+            return terms;
+        }
     }
 }

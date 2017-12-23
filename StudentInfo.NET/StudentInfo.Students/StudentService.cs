@@ -110,7 +110,7 @@ namespace StudentInfo.Students
         public bool Enroll(Guid studentId, Guid courseSemesterId, out string message)
         {
             message = string.Empty;
-            var student = _db.Students.Find(studentId);
+            var student = _db.Students.Include(x => x.Program.Department).FirstOrDefault(x => x.Id == studentId);
             var courseSemester = _db.SemesterCourses.Find(courseSemesterId);
             if (student != null && courseSemester != null && courseSemester.Open)
             {
@@ -250,10 +250,7 @@ namespace StudentInfo.Students
 
         private bool IsCourseAvailable(SemesterCourse semesterCourse)
         {
-            var currentTerm = CourseHelper.CurrentTerm();
-            var nextTerm = CourseHelper.NextTerm();
-
-            if (semesterCourse.Term == currentTerm || semesterCourse.Term == nextTerm)
+            if (StudentHelper.AvailableTerms().Contains(semesterCourse.Term))
             {
                 var schedule = semesterCourse.Schedule;
                 if (schedule != null)
