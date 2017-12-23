@@ -129,7 +129,7 @@ namespace StudentInfo.WebClient.Controllers
                     UserManager.AddToRole(user.Id, model.Role);
                     if (model.Role == SystemRoles.Student)
                     {
-                        var studentId = _studentService.CreateStudent(user.Id, model.ProgramId);
+                        var studentId = _studentService.CreateStudent(user.Id, model.ProgramId, model.Term, model.Year);
                         _studentPaymentService.InitTermPayment(studentId);
                     }
                     else if (model.Role == SystemRoles.Instructor)

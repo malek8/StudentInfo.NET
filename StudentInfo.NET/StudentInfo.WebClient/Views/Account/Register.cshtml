@@ -32,6 +32,18 @@
            new { id = "programDropdown", @class = "form-control" })
         </div>
     </div>
+    <div id="startingTerm" class="form-group" style="display: none">
+        @Html.LabelFor(x => x.Term, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(x => x.Term, new { @class = "form-control" })
+        </div>
+    </div>
+    <div id="startingYear" class="form-group" style="display: none">
+        @Html.LabelFor(x => x.Year, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(x => x.Year, new { id = "startingYearInput", @class = "form-control" })
+        </div>
+    </div>
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
@@ -80,17 +92,21 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(checkHiddenLists());
 
     function displayStudentLists(show) {
         if (show) {
             $("#departmentDiv").show();
             $("#programDiv").show();
+            $("#startingTerm").show();
+            $("#startingYear").show();
         }
         else {
             $("#departmentDiv").hide();
             $("#programDiv").hide();
+            $("#startingTerm").hide();
+            $("#startingYear").hide();
         }
     }
 
@@ -118,4 +134,4 @@
             }
         });
     }
-</script>
+    </script>

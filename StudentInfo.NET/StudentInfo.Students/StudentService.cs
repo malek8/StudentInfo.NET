@@ -68,11 +68,11 @@ namespace StudentInfo.Students
             return GetCurrentCourses(student);
         }
 
-        public Guid CreateStudent(string userId, Guid programId)
+        public Guid CreateStudent(string userId, Guid programId, Term startTerm, int startYear)
         {
             var applicationUserId = Guid.Parse(userId);
 
-            if (!StudentExists(applicationUserId))
+            if (!StudentExists(applicationUserId) && startYear >= DateTime.Now.Year)
             {
                 var program = _db.Programs.FirstOrDefault(x => x.Id == programId);
 
@@ -84,6 +84,8 @@ namespace StudentInfo.Students
                         Id = Guid.NewGuid(),
                         ApplicationUserId = applicationUserId,
                         Balance = 0,
+                        StartTerm = startTerm,
+                        StartYear = startYear,
                         Program = program,
                         ExternalStudentId = externalStudentId
                     };

@@ -350,7 +350,7 @@ namespace StudentInfo.WebClient.Controllers
             {
                 var db = new StudentInfoContext();
 
-                courses = db.Courses.AsQueryable();
+                courses = db.Courses.ToList();
 
                 if (!string.IsNullOrEmpty(model.Keyword))
                 {

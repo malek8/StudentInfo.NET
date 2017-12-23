@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201712220412049_ProgramCredits.Designer.cs">
       <DependentUpon>201712220412049_ProgramCredits.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712230759246_StudentStartInfo.cs" />
+    <Compile Include="Migrations\201712230759246_StudentStartInfo.Designer.cs">
+      <DependentUpon>201712230759246_StudentStartInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712220412049_ProgramCredits.resx">
       <DependentUpon>201712220412049_ProgramCredits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712230759246_StudentStartInfo.resx">
+      <DependentUpon>201712230759246_StudentStartInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

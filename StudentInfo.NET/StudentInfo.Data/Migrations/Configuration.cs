@@ -55,16 +55,6 @@ namespace StudentInfo.Data.Migrations
               },
               new ApplicationUser
               {
-                  Email = "bruce.wayne@batman.com",
-                  UserName = "bruce.wayne@batman.com",
-                  FirstName = "Bruce",
-                  LastName = "Wayne",
-                  PasswordHash = hashedPassword,
-                  SecurityStamp = Guid.NewGuid().ToString(),
-                  EmailConfirmed = true
-              },
-              new ApplicationUser
-              {
                   Email = "mr.garrison@southpark.com",
                   UserName = "mr.garrison@southpark.com",
                   FirstName = "Mr.Garrison",

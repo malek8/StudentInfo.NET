@@ -136,7 +136,7 @@ namespace StudentInfo.CourseManager
         public List<ClassroomSchedule> GetUnassignedSchedules()
         {
             var assignedSchedules = _db.SemesterCourses.Select(x => x.Schedule.Id);
-            return _db.ClassroomSchedules.Where(x => !assignedSchedules.Contains(x.Id)).ToList();
+            return _db.ClassroomSchedules.Where(x => !assignedSchedules.Contains(x.Id)).OrderBy(x => x.Title).ToList();
         }
 
         private bool ClassroomExists(string number, string campus)

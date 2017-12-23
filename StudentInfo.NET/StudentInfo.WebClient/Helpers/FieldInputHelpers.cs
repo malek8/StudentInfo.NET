@@ -102,7 +102,7 @@ namespace StudentInfo.WebClient.Helpers
                 Value = x.Id.ToString()
             }));
 
-            return selections;
+            return selections.OrderBy(x => x.Text);
         }
 
         public static IEnumerable<SelectListItem> GetRoles()

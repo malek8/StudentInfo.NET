@@ -35,7 +35,6 @@ namespace StudentInfo.WebClient
             var userService = new UsersManagerService();
 
             userService.AssignRole("malek.atwiz@hotmail.com", SystemRoles.Administrator);
-            userService.AssignRole("bruce.wayne@batman.com", SystemRoles.Student);
             userService.AssignRole("mr.garrison@southpark.com", SystemRoles.Instructor);
             userService.AssignRole("donald.duck@disney.com", SystemRoles.FacultyMember);
         }
