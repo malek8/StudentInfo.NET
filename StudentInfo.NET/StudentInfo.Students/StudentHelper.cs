@@ -50,28 +50,23 @@ namespace StudentInfo.Students
             }
         }
 
-        public static DateTime DueDate(Term term)
+        public static DateTime DueDate(Term term, int year)
         {
-            var currentYear = DateTime.Now.Year;
             var date = DateTime.Now;
 
             switch(term)
             {
                 case Term.Fall:
-                    date = new DateTime(currentYear, 9, 30);
-                    if (DateTime.Now.Month > 9) date = date.AddYears(1);
+                    date = new DateTime(year, 9, 30);
                     return date;
                 case Term.Winter:
-                    date = new DateTime(currentYear, 1, 31);
-                    if (DateTime.Now.Month > 1) date = date.AddYears(1);
+                    date = new DateTime(year, 1, 31);
                     return date;
                 case Term.Summer1:
-                    date = new DateTime(currentYear, 5, 31);
-                    if (DateTime.Now.Month > 5) date = date.AddYears(1);
+                    date = new DateTime(year, 5, 31);
                     return date;
                 case Term.Summer2:
-                    date = new DateTime(currentYear, 7, 31);
-                    if (DateTime.Now.Month > 7) date = date.AddYears(1);
+                    date = new DateTime(year, 7, 31);
                     return date;
             }
             return date;

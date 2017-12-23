@@ -53,15 +53,16 @@ namespace StudentInfo.Students
             return false;
         }
 
-        public bool InitTermPayment(Guid studentId, Term term)
+        public bool InitTermPayment(Guid studentId, Term term, int year)
         {
-            if (!_db.Payments.Any(x => x.Term == term && x.Student.Id == studentId))
+            if (!_db.Payments.Any(x => x.Term == term && x.Date.Year == year && x.Student.Id == studentId))
             {
                 var student = _db.Students.Find(studentId);
 
                 if (student != null)
                 {
                     var charges = GetProgramCharges(student.Program.Id);
+                    var paymentDate = new DateTime(year, DateTime.Now.Month, DateTime.Now.Day);
 
                     var payment = new Payment
                     {
@@ -69,9 +70,9 @@ namespace StudentInfo.Students
                         Student = student,
                         Term = term,
                         Items = charges,
-                        Date = DateTime.Now,
+                        Date = paymentDate,
                         ModifiedDate = DateTime.Now,
-                        DueDate = StudentHelper.DueDate(term)
+                        DueDate = StudentHelper.DueDate(term, year)
                     };
 
                     _db.Payments.Add(payment);
@@ -95,11 +96,11 @@ namespace StudentInfo.Students
             return false;
         }
 
-        public bool InitTermPayment(Guid studentId)
+        public bool InitFirstPayment(Guid studentId)
         {
-            var currentTerm = CourseHelper.CurrentTerm();
-
-            return InitTermPayment(studentId, currentTerm);
+            var student = _db.Students.Find(studentId);
+            
+            return InitTermPayment(studentId, student.StartTerm, student.StartYear);
         }
 
         public bool HasBalance(Guid studentId)

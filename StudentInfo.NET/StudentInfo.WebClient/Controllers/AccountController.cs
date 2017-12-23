@@ -130,7 +130,7 @@ namespace StudentInfo.WebClient.Controllers
                     if (model.Role == SystemRoles.Student)
                     {
                         var studentId = _studentService.CreateStudent(user.Id, model.ProgramId, model.Term, model.Year);
-                        _studentPaymentService.InitTermPayment(studentId);
+                        _studentPaymentService.InitFirstPayment(studentId);
                     }
                     else if (model.Role == SystemRoles.Instructor)
                     {

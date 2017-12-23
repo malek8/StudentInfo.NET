@@ -146,7 +146,7 @@ namespace StudentInfo.Students
 
                                 if (!HasTermPayment(student, year, courseSemester.Term))
                                 {
-                                    _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term);
+                                    _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term, year);
                                 }
 
                                 message = $"{courseSemester.Course.Name} was added successfully";
