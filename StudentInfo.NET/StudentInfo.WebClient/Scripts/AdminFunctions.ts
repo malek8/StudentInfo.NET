@@ -19,8 +19,8 @@ function publishData(dataType: string): void {
         case "classrooms":
             publishClassrooms("PublishClassrooms");
             break;
-        case "courses":
-            publishClassrooms("PublishCourses");
+        case "faculties":
+            publishClassrooms("PublishFaculties");
             break;
     }
 }

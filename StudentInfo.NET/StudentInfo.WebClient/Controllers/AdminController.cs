@@ -27,11 +27,11 @@ namespace StudentInfo.WebClient.Controllers
         }
 
         [HttpGet]
-        public ActionResult PublishCourses()
+        public ActionResult PublishFaculties()
         {
-            AdminPublishCommands.PublishCourses();
+            AdminPublishCommands.PublishFaculties();
 
-            return Json(new { message = "Finished creating courses" }, JsonRequestBehavior.AllowGet);
+            return Json(new { message = "Finished creating faculties" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

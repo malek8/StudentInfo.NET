@@ -27,7 +27,7 @@ namespace StudentInfo.WebClient
         private void CustomSeed()
         {
             AssignUserRoles();
-            CreateCourses();
+            //CreateCourses();
         }
 
         private void AssignUserRoles()
