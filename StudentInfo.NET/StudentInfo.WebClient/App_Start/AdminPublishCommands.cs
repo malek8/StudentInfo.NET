@@ -975,6 +975,26 @@ namespace StudentInfo.WebClient.App_Start
 
                 if (d2 != null)
                 {
+
+                    #region Programs
+                    if (!db.Programs.Any(x => x.Name == "Electrical & Computer Engineering (MEng)"))
+                    {
+                        db.Programs.Add(new Program
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = "Electrical & Computer Engineering (MEng)",
+                            DegreeType = DegreeType.Master,
+                            Level = ProgramLevel.Graduate,
+                            StudyType = ProgramStudyType.CourseBased,
+                            TermCost = 450,
+                            TotalCredits = 45,
+                            Department = d2
+                        });
+
+                        db.SaveChanges();
+                    }
+                    #endregion
+
                     #region Courses
                     if (!db.Courses.Any(x => x.Code == "COEN 6321"))
                     {

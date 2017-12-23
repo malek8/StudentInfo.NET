@@ -308,12 +308,13 @@ namespace StudentInfo.WebClient.Controllers
             }
             if (!string.IsNullOrEmpty(model.Keyword))
             {
-                courses = courses.Where(x => x.Course.Name.Contains(model.Keyword) ||
-                x.Course.Description.Contains(model.Keyword));
+                courses = courses.Where(x => x.Course.Name.ToLower().Contains(model.Keyword.ToLower()) ||
+                x.Course.Code.ToLower().Contains(model.Keyword.ToLower()) ||
+                x.Course.Description.ToLower().Contains(model.Keyword.ToLower()));
             }
             if (!string.IsNullOrEmpty(model.Code))
             {
-                courses = courses.Where(x => x.Course.Code.Contains(model.Code));
+                courses = courses.Where(x => x.Course.Code.ToLower().Contains(model.Code.ToLower()));
             }
             if (model.DepartmentId.HasValue)
             {
@@ -353,12 +354,13 @@ namespace StudentInfo.WebClient.Controllers
 
                 if (!string.IsNullOrEmpty(model.Keyword))
                 {
-                    courses = courses.Where(x => x.Name.Contains(model.Keyword) ||
-                    x.Description.Contains(model.Keyword));
+                    courses = courses.Where(x => x.Name.ToLower().Contains(model.Keyword.ToLower()) ||
+                    x.Code.ToLower().Contains(model.Keyword.ToLower()) ||
+                    x.Description.ToLower().Contains(model.Keyword.ToLower()));
                 }
                 if (!string.IsNullOrEmpty(model.Code))
                 {
-                    courses = courses.Where(x => x.Code.Contains(model.Code));
+                    courses = courses.Where(x => x.Code.ToLower().Contains(model.Code.ToLower()));
                 }
                 if (model.DepartmentId.HasValue)
                 {
