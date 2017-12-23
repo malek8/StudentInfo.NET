@@ -116,55 +116,68 @@ namespace StudentInfo.Students
             {
                 if (!EnrolledInCourse(student, courseSemester))
                 {
-                    if (IsCourseAvailable(courseSemester) && CanAddCourses(student, courseSemester) &&
-                        HasSameStudyLevel(student, courseSemester))
+                    if (IsCourseAvailable(courseSemester))
                     {
-                        if (!IsConflict(courseSemester, student))
+                        if (CanAddCourses(student, courseSemester))
                         {
-                            var studentCourse = new StudentCourse
+                            if (HasSameStudyLevel(student, courseSemester))
                             {
-                                Student = student,
-                                SemesterCourse = courseSemester,
-                                CreateDate = DateTime.Now,
-                                LastUpdate = DateTime.Now,
-                                CourseState = CourseRegistrationState.Enrolled,
-                                Id = Guid.NewGuid()
-                            };
-
-                            _db.StudentCourses.Add(studentCourse);
-
-                            try
-                            {
-                                _db.SaveChanges();
-
-                                var year = DateTime.Now.Year;
-                                var scheduleItem = courseSemester.Schedule.ScheduleItems.FirstOrDefault();
-                                if (scheduleItem != null)
+                                if (!IsConflict(courseSemester, student))
                                 {
-                                    year = scheduleItem.Date.Year;
-                                }
+                                    var studentCourse = new StudentCourse
+                                    {
+                                        Student = student,
+                                        SemesterCourse = courseSemester,
+                                        CreateDate = DateTime.Now,
+                                        LastUpdate = DateTime.Now,
+                                        CourseState = CourseRegistrationState.Enrolled,
+                                        Id = Guid.NewGuid()
+                                    };
 
-                                if (!HasTermPayment(student, year, courseSemester.Term))
+                                    _db.StudentCourses.Add(studentCourse);
+
+                                    try
+                                    {
+                                        _db.SaveChanges();
+
+                                        var year = DateTime.Now.Year;
+                                        var scheduleItem = courseSemester.Schedule.ScheduleItems.FirstOrDefault();
+                                        if (scheduleItem != null)
+                                        {
+                                            year = scheduleItem.Date.Year;
+                                        }
+
+                                        if (!HasTermPayment(student, year, courseSemester.Term))
+                                        {
+                                            _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term, year);
+                                        }
+
+                                        message = $"{courseSemester.Course.Name} was added successfully";
+                                        return true;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex.Message);
+                                    }
+                                }
+                                else
                                 {
-                                    _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term, year);
+                                    message = "This course conflicts with an existing course";
                                 }
-
-                                message = $"{courseSemester.Course.Name} was added successfully";
-                                return true;
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                Console.WriteLine(ex.Message);
+                                message = "Sorry, you cannot add this course";
                             }
                         }
                         else
                         {
-                            message = "This course conflicts with an existing course";
+                            message = "Sorry, you cannot take this course, contact program advisor";
                         }
                     }
                     else
                     {
-                        message = "Sorry, you cannot add this course";
+                        message = "Sorry, course is not available for registration now";
                     }
                 }
                 else
@@ -174,7 +187,7 @@ namespace StudentInfo.Students
             }
             else
             {
-                message = "Sorry, something went worng";
+                message = "Sorry, something went worng or course is not available";
             }
             return false;
         }
@@ -199,7 +212,8 @@ namespace StudentInfo.Students
                     }
                 }
 
-                if (!string.IsNullOrEmpty(studentCourse.Grade))
+                if (!string.IsNullOrEmpty(studentCourse.Grade) || 
+                    studentCourse.CourseState == CourseRegistrationState.Pass)
                 {
                     return false;
                 }
