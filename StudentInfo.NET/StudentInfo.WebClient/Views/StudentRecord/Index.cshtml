@@ -1,0 +1,88 @@
+﻿@model StudentInfo.WebClient.Models.StudentRecordModel
+@using StudentInfo.Enums
+@{
+    ViewBag.Title = "Student Record";
+}
+
+<div class="container">
+    <h2>Student Record</h2>
+    <div class="panel-group">
+        <!-- Personal Info-->
+        <div class="panel-default">
+            <div class="panel-heading">Student Info</div>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <p><strong>Full Name: </strong> @Model.User.FullName</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Student ID:</strong> @Model.Student.ExternalStudentId</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Info-->
+        <div class="panel-default">
+            <div class="panel-heading">Academic Info</div>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <p><strong>Program: </strong>@Enum.GetName(typeof(DegreeType), Model.Student.Program.DegreeType) - @Model.Student.Program.Name</p>
+                    <p><strong>Active in Program since: </strong> @Model.Student.StartTerm @Model.Student.StartYear</p>
+                    <p><strong>Cumulative GPA: </strong>3.18</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Program Credits: </strong>@Model.Student.Program.TotalCredits</p>
+                    <p><strong>Total Earned Credits: </strong>20</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Info-->
+        <div class="panel-default">
+            <div class="panel-heading">Courses Info</div>
+            <div class="panel-body">
+                @if (Model.GroupedStudentCourses.Count > 0)
+                {
+                    foreach(var yearItem in Model.GroupedStudentCourses)
+                    {
+                        <!-- Year -->
+                        <strong>@yearItem.Key</strong>
+
+                        foreach(var termItem in yearItem.Value)
+                        {
+                            <strong>@termItem.Key</strong>
+
+                            <table class="table">
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Attempted Grade</th>
+                                    <th>GPA</th>
+                                    <th>Credits Earned</th>
+                                </tr>
+
+                                @foreach(var course in termItem)
+                                {
+                                <tr>
+                                    <td>@course.SemesterCourse.Course.Code</td>
+                                    <td>@course.SemesterCourse.Course.Name</td>
+                                    <td>@course.SemesterCourse.Course.Description</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                }
+                            </table>
+
+                            <strong>Term GPA: </strong>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No courses were completed</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -242,7 +242,8 @@ namespace StudentInfo.Students
 
         private Student FindStudent(Guid userId)
         {
-            var student = _db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+            var student = _db.Students.Include(x => x.StudentCourses)
+                .FirstOrDefault(x => x.ApplicationUserId == userId);
 
             return student;
         }

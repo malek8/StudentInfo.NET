@@ -212,6 +212,7 @@
     <Compile Include="Controllers\ManageAccountController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentRecordController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -232,6 +233,7 @@
     <Compile Include="Models\EditCourseModel.cs" />
     <Compile Include="Models\StudentBalanceModel.cs" />
     <Compile Include="Models\StudentCourseModel.cs" />
+    <Compile Include="Models\StudentRecordModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
@@ -469,6 +471,7 @@
     <Content Include="Views\Course\CourseSemester.cshtml" />
     <Content Include="Views\Course\_CourseSchedule.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\StudentRecord\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

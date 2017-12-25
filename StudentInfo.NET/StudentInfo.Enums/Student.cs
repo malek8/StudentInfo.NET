@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,16 @@ namespace StudentInfo.Enums
 
     public enum DegreeType
     {
+        [Display(Name = "Major")]
         Major = 1,
+
+        [Display(Name = "Master")]
         Master = 2,
+
+        [Display(Name = "Doctorate")]
         Doctorate = 3,
+
+        [Display(Name = "Graduate Diploma")]
         GraduateDiploma = 4,
     }
 

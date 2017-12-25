@@ -16,7 +16,7 @@ namespace StudentInfo.Dto
         public virtual Term StartTerm { get; set; }
         public virtual int StartYear { get; set; }
         public virtual Program Program { get; set; }
-        public virtual IEnumerable<StudentCourse> StudentCourses { get; set; }
+        public virtual IList<StudentCourse> StudentCourses { get; set; }
         public virtual IList<Payment> Payments { get; set; }
     }
 }
