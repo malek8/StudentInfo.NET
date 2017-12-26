@@ -1,5 +1,6 @@
 ﻿@model StudentInfo.WebClient.Models.StudentRecordModel
 @using StudentInfo.Enums
+@using StudentInfo.Students
 @{
     ViewBag.Title = "Student Record";
 }
@@ -56,25 +57,47 @@
                                     <th>Code</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Attempted Grade</th>
+                                    <th>Attempted</th>
+                                    <th>Grade</th>
                                     <th>GPA</th>
                                     <th>Credits Earned</th>
                                 </tr>
-
+                                @{ 
+                                    var termGPA = StudentHelper.TermGPA(termItem.ToList());
+                                }
                                 @foreach(var course in termItem)
                                 {
                                 <tr>
                                     <td>@course.SemesterCourse.Course.Code</td>
                                     <td>@course.SemesterCourse.Course.Name</td>
                                     <td>@course.SemesterCourse.Course.Description</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>@course.SemesterCourse.Course.NumberOfCredits</td>
+                                    @{ 
+                                        var grade = string.Empty;
+                                        var gpa = string.Empty;
+                                        if (!string.IsNullOrEmpty(course.Grade))
+                                        {
+                                            grade = course.Grade;
+                                            gpa = Grade.GetAverage(grade).ToString();
+                                        }
+                                    }
+                                    <td>@grade</td>
+                                    <td>@gpa</td>
+                                    <td>@{
+                                        var earnedCredits = 0;
+                                        if (!string.IsNullOrEmpty(course.Grade) &&
+                                            !course.Grade.Equals("F", StringComparison.InvariantCultureIgnoreCase))
+                                        {
+                                            earnedCredits = course.SemesterCourse.Course.NumberOfCredits;
+                                        }
+                                    }
+                                    @earnedCredits
+                                    </td>
                                 </tr>
                                 }
                             </table>
 
-                            <strong>Term GPA: </strong>
+                            <strong>Term GPA: @termGPA</strong>
                         }
                     }
                 }

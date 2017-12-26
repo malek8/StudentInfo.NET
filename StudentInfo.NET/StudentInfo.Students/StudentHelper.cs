@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StudentInfo.Dto;
 
 namespace StudentInfo.Students
 {
@@ -89,6 +90,30 @@ namespace StudentInfo.Students
             }
 
             return terms;
+        }
+
+        public static decimal TermGPA(List<StudentCourse> studentCourses)
+        {
+            var cummulativeGrades = 0.00m;
+            var totalCredits = 0;
+
+            foreach (var item in studentCourses)
+            {
+                var grade = 0.00m;
+                if (!string.IsNullOrEmpty(item.Grade))
+                {
+                    grade = Grade.GetAverage(item.Grade);
+                }
+
+                cummulativeGrades += item.SemesterCourse.Course.NumberOfCredits * grade;
+                totalCredits += item.SemesterCourse.Course.NumberOfCredits;
+            }
+
+            if (cummulativeGrades > 0)
+            {
+                return cummulativeGrades / totalCredits;
+            }
+            return 0;
         }
     }
 }
