@@ -33,6 +33,7 @@ namespace StudentInfo.Dto
         public string Title { get; set; }
         public decimal Amount { get; set; }
         public int Order { get; set; }
+        public int? NumberOfDays { get; set; }
         public virtual Payment Payment { get; set; }
     }
 }

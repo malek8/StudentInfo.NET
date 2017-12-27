@@ -224,13 +224,12 @@ namespace StudentInfo.Students
                 var interestPaymentItem = payment.Items.FirstOrDefault(x => x.Title.Contains("interest"));
                 if (interestPaymentItem != null)
                 {
-                    if (DateTime.Now.Subtract(payment.ModifiedDate).Days == 0)
+                    if (interestPaymentItem.NumberOfDays.HasValue && 
+                        interestPaymentItem.NumberOfDays.Value < numOfDay)
                     {
-                        return;
-                    }
-                    else
-                    {
-                        interestPaymentItem.Amount = payment.Balance * 0.03M * numOfDay;
+                        interestPaymentItem.NumberOfDays = numOfDay;
+                        var newInerestAmount = (payment.Balance * 0.03M) * (numOfDay - interestPaymentItem.NumberOfDays);
+                        interestPaymentItem.Amount += newInerestAmount.Value;
                         interestPaymentItem.Title = $" 3% interest charges for {numOfDay} days";
                     }
                 }
@@ -239,8 +238,9 @@ namespace StudentInfo.Students
                     interestPaymentItem = new PaymentItem
                     {
                         Id = Guid.NewGuid(),
-                        Amount = payment.Balance * 0.03M * numOfDay,
+                        Amount = (payment.Balance * 0.03M) * numOfDay,
                         Title = $" 3% interest charges for {numOfDay} days",
+                        NumberOfDays = numOfDay,
                         Order = 50
                     };
 
