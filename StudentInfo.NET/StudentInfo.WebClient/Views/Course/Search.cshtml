@@ -30,10 +30,13 @@
                       @Html.LabelFor(x => x.Semester)
                       @Html.EnumDropDownListFor(x => x.Semester, new { @class = "form-control" })
                   </div>
-                  <div class="col-md-4">
-                      @Html.LabelFor(x => x.FacultyId)
-                      @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(), new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
-                  </div>
+                  @if (!User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
+                  {
+                      <div class="col-md-4">
+                          @Html.LabelFor(x => x.FacultyId)
+                          @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(), new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
+                      </div>
+                  }
                   <div class="col-md-4">
                       @Html.LabelFor(x => x.DepartmentId)
                       @Html.DropDownListFor(x => x.DepartmentId, new List<SelectListItem>(), new { id = "departmentSelector", @class = "form-control" })
