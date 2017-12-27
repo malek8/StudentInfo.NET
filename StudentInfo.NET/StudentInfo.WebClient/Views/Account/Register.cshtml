@@ -1,5 +1,5 @@
 ﻿@model StudentInfo.WebClient.Models.RegisterViewModel
-    @using StudentInfo.Enums
+@using StudentInfo.Enums
 @{
     ViewBag.Title = "Register";
 }
@@ -15,21 +15,28 @@
         @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.Role, StudentInfo.WebClient.Helpers.FieldInputHelpers.GetRoles(),
-           new { id = "roleDropdown", @class = "form-control", onchange = "checkHiddenLists()" })
+                new { id = "roleDropdown", @class = "form-control", onchange = "checkHiddenLists()" })
+        </div>
+    </div>
+    <div id="facultiesDiv" class="form-group" style="display: none">
+        @Html.Label("Faculties", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.FacultyId, StudentInfo.WebClient.Helpers.FieldInputHelpers.GetSchoolFaculties(),
+                new { id = "facultiesDropdown", @class = "form-control" })
         </div>
     </div>
     <div id="departmentDiv" class="form-group" style="display: none">
         @Html.Label("Department", new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownList("Departments", StudentInfo.WebClient.Helpers.FieldInputHelpers.GetSchoolDepartments(), 
-           new { id = "departmentDropdown", @class = "form-control", onchange = "updatePrograms()" })
+            @Html.DropDownList("Departments", StudentInfo.WebClient.Helpers.FieldInputHelpers.GetSchoolDepartments(),
+                new { id = "departmentDropdown", @class = "form-control", onchange = "updatePrograms()" })
         </div>
     </div>
     <div id="programDiv" class="form-group" style="display: none">
         @Html.LabelFor(m => m.ProgramId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.ProgramId, new List<SelectListItem>(), 
-           new { id = "programDropdown", @class = "form-control" })
+            @Html.DropDownListFor(m => m.ProgramId, new List<SelectListItem>(),
+                new { id = "programDropdown", @class = "form-control" })
         </div>
     </div>
     <div id="startingTerm" class="form-group" style="display: none">
@@ -92,7 +99,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-    <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(checkHiddenLists());
 
     function displayStudentLists(show) {
@@ -110,12 +117,27 @@
         }
     }
 
+    function displayFacultiesList(show) {
+        if (show) {
+            $("#facultiesDiv").show();
+        }
+        else {
+            $("#facultiesDiv").hide();
+        }
+    }
+
+
     function checkHiddenLists() {
         if ($("#roleDropdown").find(":selected").val() === "Student") {
             displayStudentLists(true);
         }
+        else if ($("#roleDropdown").find(":selected").val() === "Advisor") {
+            displayStudentLists(false);
+            displayFacultiesList(true);
+        }
         else {
             displayStudentLists(false);
+            displayFacultiesList(false);
         }
     }
 
@@ -134,4 +156,4 @@
             }
         });
     }
-    </script>
+</script>

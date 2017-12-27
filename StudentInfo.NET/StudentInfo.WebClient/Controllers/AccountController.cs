@@ -127,17 +127,24 @@ namespace StudentInfo.WebClient.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, model.Role);
+                    FixAccounts();
+
                     if (model.Role == SystemRoles.Student)
                     {
-                        var studentId = _studentService.CreateStudent(user.Id, model.ProgramId, model.Term, model.Year);
-                        _studentPaymentService.InitFirstPayment(studentId);
+                        if (model.ProgramId.HasValue && model.Term.HasValue && model.Year.HasValue)
+                        {
+                            var studentId = _studentService.CreateStudent(user.Id, model.ProgramId.Value, model.Term.Value, model.Year.Value);
+                            _studentPaymentService.InitFirstPayment(studentId);
+                        }
                     }
                     else if (model.Role == SystemRoles.Instructor)
                     {
                         AddTeacher(Guid.Parse(user.Id));
                     }
-
-                    FixAccounts();
+                    else if (model.Role == SystemRoles.Advisor && model.FacultyId.HasValue)
+                    {
+                        AddAdvisor(user.Id, model.FacultyId.Value);
+                    }
                     await SendConfirmationEmail(user.Id);
                     
                     return RedirectToAction("Index", "Home");
@@ -280,6 +287,29 @@ namespace StudentInfo.WebClient.Controllers
                 });
 
                 db.SaveChanges();
+            }
+        }
+
+        private void AddAdvisor(string userId, Guid facultyId)
+        {
+            var db = new StudentInfoContext();
+
+            if (!db.FacultyAdvisors.Any(x => x.User.Id == userId))
+            {
+                var user = db.ApplicationUsers.FirstOrDefault(x => x.Id == userId);
+                var faculty = db.Faculties.Find(facultyId);
+
+                if (user != null && faculty != null)
+                {
+                    db.FacultyAdvisors.Add(new FacultyAdvisor
+                    {
+                        Id = Guid.NewGuid(),
+                        User = user,
+                        Faculty = faculty
+                    });
+
+                    db.SaveChanges();
+                }
             }
         }
     }

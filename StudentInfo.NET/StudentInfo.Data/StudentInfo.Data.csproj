@@ -118,9 +118,9 @@
     <Compile Include="Migrations\201712271933521_PaymentItemDays.Designer.cs">
       <DependentUpon>201712271933521_PaymentItemDays.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712272204551_FacultyAdvisor.cs" />
-    <Compile Include="Migrations\201712272204551_FacultyAdvisor.Designer.cs">
-      <DependentUpon>201712272204551_FacultyAdvisor.cs</DependentUpon>
+    <Compile Include="Migrations\201712272240384_FacultyAdvisor2.cs" />
+    <Compile Include="Migrations\201712272240384_FacultyAdvisor2.Designer.cs">
+      <DependentUpon>201712272240384_FacultyAdvisor2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -193,8 +193,8 @@
     <EmbeddedResource Include="Migrations\201712271933521_PaymentItemDays.resx">
       <DependentUpon>201712271933521_PaymentItemDays.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712272204551_FacultyAdvisor.resx">
-      <DependentUpon>201712272204551_FacultyAdvisor.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712272240384_FacultyAdvisor2.resx">
+      <DependentUpon>201712272240384_FacultyAdvisor2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

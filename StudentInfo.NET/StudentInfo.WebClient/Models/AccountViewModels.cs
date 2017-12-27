@@ -65,12 +65,15 @@ namespace StudentInfo.WebClient.Models
         public string LastName { get; set; }
 
         [Display(Name = "Program")]
-        public Guid ProgramId { get; set; }
+        public Guid? ProgramId { get; set; }
 
         [Display(Name = "Term")]
-        public Term Term { get; set; }
-
+        public Term? Term { get; set; }
+        
         [Display(Name = "Year")]
-        public int Year { get; set; } = DateTime.Now.Year;
+        public int? Year { get; set; } = DateTime.Now.Year;
+
+        [Display(Name = "Faculty")]
+        public Guid? FacultyId { get; set; }
     }
 }

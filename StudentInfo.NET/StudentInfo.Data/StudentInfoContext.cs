@@ -39,5 +39,7 @@ namespace StudentInfo.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<ClassroomSchedule> ClassroomSchedules { get; set; }
+
+        public DbSet<FacultyAdvisor> FacultyAdvisors { get; set; }
     }
 }
