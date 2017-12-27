@@ -151,12 +151,13 @@ namespace StudentInfo.CourseManager
             {
                 if (!_db.SemesterCourses.Any(x => x.Schedule.Id == schedule.Id))
                 {
+                    var courseDate = schedule.ScheduleItems.OrderBy(x => x.Date).FirstOrDefault().Date;
                     var courseSemester = new SemesterCourse
                     {
                         Id = Guid.NewGuid(),
                         Term = term,
                         Open = isOpen,
-                        CourseDate = DateTime.Now,
+                        CourseDate = courseDate,
                         Course = course,
                         Schedule = schedule,
                         Teacher = teacher

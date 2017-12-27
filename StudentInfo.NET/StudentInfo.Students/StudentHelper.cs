@@ -92,12 +92,12 @@ namespace StudentInfo.Students
             return terms;
         }
 
-        public static decimal TermGPA(List<StudentCourse> studentCourses)
+        public static decimal CummulativeGPA(List<StudentCourse> studentCourses)
         {
             var cummulativeGrades = 0.00m;
             var totalCredits = 0;
 
-            foreach (var item in studentCourses)
+            foreach (var item in studentCourses.Where(x => x.Grade != null))
             {
                 var grade = 0.00m;
                 if (!string.IsNullOrEmpty(item.Grade))
@@ -114,6 +114,21 @@ namespace StudentInfo.Students
                 return cummulativeGrades / totalCredits;
             }
             return 0;
+        }
+
+        public static int TotalEarnedCredits(List<StudentCourse> studentCourses)
+        {
+            var totalCredits = 0;
+
+            foreach(var item in studentCourses.Where(x => x.Grade != null))
+            {
+                if (!string.IsNullOrEmpty(item.Grade) && 
+                    !item.Grade.Equals("F", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    totalCredits += item.SemesterCourse.Course.NumberOfCredits;
+                }
+            }
+            return totalCredits;
         }
     }
 }

@@ -65,7 +65,11 @@ namespace StudentInfo.Students
         public List<StudentCourse> GetCurrentStudentCourses(string userId)
         {
             var student = FindByUserId(userId);
-            return GetCurrentCourses(student);
+            if (student != null)
+            {
+                return _db.StudentCourses.Where(x => x.StudentId == student.Id).ToList();
+            }
+            return null;
         }
 
         public Guid CreateStudent(string userId, Guid programId, Term startTerm, int startYear)

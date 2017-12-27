@@ -51,9 +51,6 @@ namespace StudentInfo.WebClient.Controllers
             {
                 var student = _studentService.FindByUserId(user.Id);
 
-                model.User = user;
-                model.Student = student;
-
                 var years = student.StudentCourses.Select(x => x.SemesterCourse.CourseDate.Year).Distinct();
 
                 var groupedYears = new Dictionary<int, IEnumerable<IGrouping<Term, StudentCourse>>>();
@@ -65,7 +62,11 @@ namespace StudentInfo.WebClient.Controllers
                     groupedYears.Add(year, group);
                 }
 
+                model.User = user;
+                model.Student = student;
                 model.GroupedStudentCourses = groupedYears;
+                model.CummulativeGPA = StudentHelper.CummulativeGPA(student.StudentCourses.ToList());
+                model.TotalEarnedCredits = StudentHelper.TotalEarnedCredits(student.StudentCourses.ToList());
             }
 
             return View(model);
