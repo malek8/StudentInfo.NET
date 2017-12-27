@@ -1,4 +1,4 @@
-﻿@model List<StudentInfo.Dto.StudentCourse>
+﻿@model IEnumerable<IGrouping<int, StudentInfo.Dto.StudentCourse>>
 
 @{
     ViewBag.Title = "Grades";
@@ -15,10 +15,12 @@
         <th>Grade</th>
     </tr>
 
-    @if (Model != null)
+    @if (Model != null && Model.Any())
     {
-        foreach(var item in Model)
+        foreach (var group in Model)
         {
+            foreach (var item in group.OrderBy(x => x.SemesterCourse.Term))
+            {
             <tr>
                 <td>@item.SemesterCourse.Course.Code</td>
                 <td>@item.SemesterCourse.Course.Name</td>
@@ -26,6 +28,7 @@
                 <td>@item.SemesterCourse.CourseDate.Year</td>
                 <td>@(item.Grade ?? "N/A")</td>
             </tr>
+            }
         }
     }
     else

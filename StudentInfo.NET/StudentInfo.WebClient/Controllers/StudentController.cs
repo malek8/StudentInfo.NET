@@ -33,8 +33,11 @@ namespace StudentInfo.WebClient.Controllers
                 var studentCourses = _studentService.GetCurrentStudentCourses(User.Identity.GetUserId());
                 if (studentCourses != null)
                 {
-                    return View(studentCourses.OrderBy(x => x.SemesterCourse.Term).
-                        ThenBy(x => x.SemesterCourse.CourseDate).ToList());
+                    //return View(studentCourses.OrderBy(x => x.SemesterCourse.Term).
+                    //    ThenBy(x => x.SemesterCourse.CourseDate).ToList());
+
+                    var grouped = studentCourses.GroupBy(x => x.SemesterCourse.CourseDate.Year);
+                    return View(grouped);
                 }
             }
             return HttpNotFound();
