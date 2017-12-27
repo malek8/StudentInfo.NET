@@ -119,7 +119,8 @@ namespace StudentInfo.WebClient
                 "ManageAccount",
                 "Registration",
                 "Student",
-                "User"
+                "User",
+                "StudentRecord"
             };
 
             if (securedRoutes.Any(x => Request.Path.Contains(x)))
