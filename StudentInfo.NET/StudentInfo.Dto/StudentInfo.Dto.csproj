@@ -62,6 +62,7 @@
     <Compile Include="Course.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Faculty.cs" />
+    <Compile Include="FacultyAdvisor.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

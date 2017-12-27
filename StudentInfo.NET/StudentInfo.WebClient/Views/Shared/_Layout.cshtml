@@ -109,6 +109,11 @@
                                     <li>@Html.ActionLink("Assigned Courses", "Search", "Course")</li>
                                     <li>@Html.ActionLink("Create", "Create", "Course")</li>
                                 }
+                                <!-- Advisor -->
+                                @if(User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
+                                {
+
+                                }
                             </ul>
                         </li>
                     }
