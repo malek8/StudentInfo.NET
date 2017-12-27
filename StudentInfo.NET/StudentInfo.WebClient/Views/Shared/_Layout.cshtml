@@ -112,7 +112,7 @@
                                 <!-- Advisor -->
                                 @if(User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
                                 {
-
+                                    <li>@Html.ActionLink("Search", "Search", "Course")</li>
                                 }
                             </ul>
                         </li>

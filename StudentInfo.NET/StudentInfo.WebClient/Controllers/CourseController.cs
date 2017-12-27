@@ -307,6 +307,15 @@ namespace StudentInfo.WebClient.Controllers
                 var instructorCourses = InstructorCourses().ToList();
                 courses = courses.Where(x => instructorCourses.Contains(x.Id));
             }
+            else if (User.IsInRole(SystemRoles.Advisor))
+            {
+                var userId = User.Identity.GetUserId();
+                var advisor = db.FacultyAdvisors.FirstOrDefault(x => x.User.Id == userId);
+                if (advisor != null)
+                {
+                    courses = courses.Where(x => x.Course.Department.Faculty.Id == advisor.Faculty.Id);
+                }
+            }
             if (!string.IsNullOrEmpty(model.Keyword))
             {
                 courses = courses.Where(x => x.Course.Name.ToLower().Contains(model.Keyword.ToLower()) ||
