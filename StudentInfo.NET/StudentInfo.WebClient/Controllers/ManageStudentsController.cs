@@ -10,11 +10,19 @@ using StudentInfo.WebClient.Models;
 using StudentInfo.Data;
 using PagedList;
 using Microsoft.AspNet.Identity;
+using StudentInfo.Students;
 
 namespace StudentInfo.WebClient.Controllers
 {
     public class ManageStudentsController : Controller
     {
+        private StudentService _studentService;
+
+        public ManageStudentsController()
+        {
+            _studentService = new StudentService();
+        }
+
         [Authorize]
         [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember, SystemRoles.Advisor)]
         public ActionResult Search(StudentSearchModel model, int? page)
@@ -73,6 +81,23 @@ namespace StudentInfo.WebClient.Controllers
             model.SemesterCourse = semesterCourse;
 
             return View("_QuickSearch", model);
+        }
+
+        [Authorize]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember, SystemRoles.Advisor)]
+        public ActionResult EnrollStudent(Guid studentId, Guid semesterCourseId)
+        {
+            var message = string.Empty;
+            var result = _studentService.Enroll(studentId, semesterCourseId, out message, true);
+
+            if (result)
+            {
+                return Helper.CreateResponse(true, message);
+            }
+            else
+            {
+                return Helper.CreateResponse(false, message);
+            }
         }
     }
 }

@@ -580,3 +580,22 @@ function loadEnrollStudentModal(semesterCourseId) {
         $("#enrollStudentModal").modal("show");
     });
 }
+
+function enrollStudentAsAdvisor(studentId, semesterCourseId) {
+    $.ajax({
+        type: "POST",
+        url: "/ManageStudents/EnrollStudent",
+        data: {
+            studentId: studentId,
+            semesterCourseId: semesterCourseId
+        },
+        success: function (data) {
+            if (data.success == true) {
+                displayAlert(data.message, true);
+            }
+            else {
+                displayAlert(data.message, false);
+            }
+        }
+    })
+}

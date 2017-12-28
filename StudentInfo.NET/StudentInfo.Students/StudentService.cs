@@ -104,7 +104,7 @@ namespace StudentInfo.Students
             return Guid.Empty;
         }
 
-        public bool Enroll(Guid studentId, Guid courseSemesterId, out string message)
+        public bool Enroll(Guid studentId, Guid courseSemesterId, out string message, bool allowDifferentDepartment = false)
         {
             message = string.Empty;
             var student = _db.Students.Include(x => x.Program.Department).FirstOrDefault(x => x.Id == studentId);
@@ -115,7 +115,7 @@ namespace StudentInfo.Students
                 {
                     if (IsCourseAvailable(courseSemester))
                     {
-                        if (CanAddCourses(student, courseSemester))
+                        if (CanAddCourses(student, courseSemester, allowDifferentDepartment))
                         {
                             if (HasSameStudyLevel(student, courseSemester))
                             {
@@ -365,9 +365,9 @@ namespace StudentInfo.Students
             var currentCount = _db.StudentCourses.Count(x => x.SemesterCourse.Id == semesterCourse.Id);
             if (semesterCourse.Schedule.Classroom.Capacity < currentCount)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }
