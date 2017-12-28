@@ -128,40 +128,47 @@ namespace StudentInfo.Students
                             {
                                 if (!IsConflict(courseSemester, student))
                                 {
-                                    var studentCourse = new StudentCourse
+                                    if (!IsClassFull(courseSemester))
                                     {
-                                        Student = student,
-                                        SemesterCourse = courseSemester,
-                                        CreateDate = DateTime.Now,
-                                        LastUpdate = DateTime.Now,
-                                        CourseState = CourseRegistrationState.Enrolled,
-                                        Id = Guid.NewGuid()
-                                    };
-
-                                    _db.StudentCourses.Add(studentCourse);
-
-                                    try
-                                    {
-                                        _db.SaveChanges();
-
-                                        var year = DateTime.Now.Year;
-                                        var scheduleItem = courseSemester.Schedule.ScheduleItems.FirstOrDefault();
-                                        if (scheduleItem != null)
+                                        var studentCourse = new StudentCourse
                                         {
-                                            year = scheduleItem.Date.Year;
-                                        }
+                                            Student = student,
+                                            SemesterCourse = courseSemester,
+                                            CreateDate = DateTime.Now,
+                                            LastUpdate = DateTime.Now,
+                                            CourseState = CourseRegistrationState.Enrolled,
+                                            Id = Guid.NewGuid()
+                                        };
 
-                                        if (!HasTermPayment(student, year, courseSemester.Term))
+                                        _db.StudentCourses.Add(studentCourse);
+
+                                        try
                                         {
-                                            _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term, year);
-                                        }
+                                            _db.SaveChanges();
 
-                                        message = $"{courseSemester.Course.Name} was added successfully";
-                                        return true;
+                                            var year = DateTime.Now.Year;
+                                            var scheduleItem = courseSemester.Schedule.ScheduleItems.FirstOrDefault();
+                                            if (scheduleItem != null)
+                                            {
+                                                year = scheduleItem.Date.Year;
+                                            }
+
+                                            if (!HasTermPayment(student, year, courseSemester.Term))
+                                            {
+                                                _studentPaymentService.InitTermPayment(student.Id, courseSemester.Term, year);
+                                            }
+
+                                            message = $"{courseSemester.Course.Name} was added successfully";
+                                            return true;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
                                     }
-                                    catch (Exception ex)
+                                    else
                                     {
-                                        Console.WriteLine(ex.Message);
+                                        message = "Sorry, the class is full.";
                                     }
                                 }
                                 else
@@ -358,6 +365,16 @@ namespace StudentInfo.Students
         private bool HasSameStudyLevel(Student student, SemesterCourse semesterCourse)
         {
             return (student.Program.Level == semesterCourse.Course.Level);
+        }
+
+        private bool IsClassFull(SemesterCourse semesterCourse)
+        {
+            var currentCount = _db.StudentCourses.Count(x => x.SemesterCourse.Id == semesterCourse.Id);
+            if (semesterCourse.Schedule.Classroom.Capacity < currentCount)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
