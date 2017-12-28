@@ -24,8 +24,11 @@
 
         <div class="form-group row">
             <div class="col-md-4">
+                @{ 
+                    Guid? facultyId = ViewBag.FacultyId != null ? ViewBag.FacultyId : null;
+                }
                 @Html.LabelFor(x => x.DepartmentId)
-                @Html.DropDownListFor(x => x.DepartmentId, FieldInputHelpers.GetSchoolDepartments(), new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.DepartmentId, FieldInputHelpers.GetSchoolDepartments(facultyId), new { @class = "form-control" })
             </div>
         </div>
         <div>
@@ -36,3 +39,32 @@
     }
 </div>
 
+<!-- Search Results -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Full Name</th>
+            <th>Program</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Result.Count > 0)
+        {
+            foreach(var item in Model.Result)
+            {
+                <tr>
+                    <td>@item.ExternalStudentId</td>
+                    <td>@item.User.FullName</td>
+                    <td>@item.Program.Name</td>
+                    <td></td>
+                </tr>
+            }
+        }
+        else
+        {
+            @Html.Label("", "No results")
+        }
+    </tbody>
+</table>

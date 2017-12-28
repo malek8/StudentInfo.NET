@@ -122,6 +122,10 @@
     <Compile Include="Migrations\201712272240384_FacultyAdvisor2.Designer.cs">
       <DependentUpon>201712272240384_FacultyAdvisor2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712280054211_StudentApplicationUser.cs" />
+    <Compile Include="Migrations\201712280054211_StudentApplicationUser.Designer.cs">
+      <DependentUpon>201712280054211_StudentApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudentInfoContext.cs" />
@@ -195,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712272240384_FacultyAdvisor2.resx">
       <DependentUpon>201712272240384_FacultyAdvisor2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712280054211_StudentApplicationUser.resx">
+      <DependentUpon>201712280054211_StudentApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

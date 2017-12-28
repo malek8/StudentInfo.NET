@@ -18,5 +18,6 @@ namespace StudentInfo.Dto
         public virtual Program Program { get; set; }
         public virtual IList<StudentCourse> StudentCourses { get; set; }
         public virtual IList<Payment> Payments { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

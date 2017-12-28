@@ -8,6 +8,8 @@ using StudentInfo.Dto;
 using StudentInfo.WebClient.Helpers;
 using StudentInfo.WebClient.Models;
 using StudentInfo.Data;
+using PagedList;
+using Microsoft.AspNet.Identity;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -20,15 +22,39 @@ namespace StudentInfo.WebClient.Controllers
             if (model == null) model = new StudentSearchModel();
 
             var db = new StudentInfoContext();
-
             var students = db.Students.ToList();
+
+            if (User.IsInRole(SystemRoles.Advisor))
+            {
+                var userId = User.Identity.GetUserId();
+                var user = db.FacultyAdvisors.FirstOrDefault(x => x.User.Id == userId);
+
+                if (user != null)
+                {
+                    ViewBag.FacultyId = user.Faculty.Id;
+                    students = students.Where(x => x.Program.Department.Faculty.Id == user.Faculty.Id).ToList();
+                }
+            }
 
             if (!string.IsNullOrEmpty(model.Name))
             {
-                
+                students = students.Where(x => x.User.FullName.ToLower().Contains(model.Name.ToLower())).ToList();
+            }
+            if (!string.IsNullOrEmpty(model.StudentId))
+            {
+                students = students.Where(x => x.ExternalStudentId.ToString().Contains(model.StudentId)).ToList();
+            }
+            if (model.DepartmentId.HasValue)
+            {
+                students = students.Where(x => x.Program.Department.Id == model.DepartmentId.Value).ToList();
             }
 
-            return View();
+            int pageNumber = (page ?? 1);
+
+            model.Result = students.OrderBy(x => x.ExternalStudentId).
+                ToPagedList(pageNumber, SearchConstants.PageSize);
+
+            return View(model);
         }
     }
 }
