@@ -74,19 +74,18 @@ namespace StudentInfo.Students
 
         public Guid CreateStudent(string userId, Guid programId, Term startTerm, int startYear)
         {
-            var applicationUserId = Guid.Parse(userId);
-
-            if (!StudentExists(applicationUserId) && startYear >= DateTime.Now.Year)
+            if (!StudentExists(userId) && startYear >= DateTime.Now.Year)
             {
                 var program = _db.Programs.FirstOrDefault(x => x.Id == programId);
+                var user = _db.ApplicationUsers.FirstOrDefault(x => x.Id == userId);
 
-                if (program != null)
+                if (program != null && user != null)
                 {
                     var externalStudentId = GenerateStudentId();
                     var student = new Student
                     {
                         Id = Guid.NewGuid(),
-                        ApplicationUserId = applicationUserId,
+                        User = user,
                         Balance = 0,
                         StartTerm = startTerm,
                         StartYear = startYear,
@@ -259,9 +258,9 @@ namespace StudentInfo.Students
             return student;
         }
 
-        private bool StudentExists(Guid userId)
+        private bool StudentExists(string userId)
         {
-            return _db.Students.Any(x => x.ApplicationUserId == userId);
+            return _db.Students.Any(x => x.User.Id == userId);
         }
 
         private long GenerateStudentId()
