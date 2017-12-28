@@ -1,0 +1,36 @@
+﻿@model StudentInfo.WebClient.Models.StudentQuickSearchModel
+@{ 
+    Layout = "";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@Model.SemesterCourse.Course.Code - @Model.SemesterCourse.Course.Name</h4>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <h4>Search Students</h4>
+        <p>Find by student ID or Name</p>
+        <input type="text" id="studentSearchInput" list="studentsList" class="form-control" />
+        <datalist id="studentsList">
+            @foreach(var student in Model.Students)
+            {
+                <option value="@student.Id">@student.ExternalStudentId - @student.User.FullName</option>
+            }
+        </datalist>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#studentSearchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#studentSearchInput li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

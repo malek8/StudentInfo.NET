@@ -234,6 +234,7 @@
     <Compile Include="Models\EditCourseModel.cs" />
     <Compile Include="Models\StudentBalanceModel.cs" />
     <Compile Include="Models\StudentCourseModel.cs" />
+    <Compile Include="Models\StudentQuickSearchModel.cs" />
     <Compile Include="Models\StudentRecordModel.cs" />
     <Compile Include="Models\StudentSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -475,6 +476,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\StudentRecord\Index.cshtml" />
     <Content Include="Views\ManageStudents\Search.cshtml" />
+    <Content Include="Views\ManageStudents\_QuickSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

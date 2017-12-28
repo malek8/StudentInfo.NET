@@ -10,9 +10,9 @@
 <!-- Course Search form -->
 <div class="well">
     <p><h4>Course Search</h4></p>
- 
-        @using (Html.BeginForm("Search", "Course", FormMethod.Get))
-        {
+
+    @using (Html.BeginForm("Search", "Course", FormMethod.Get))
+    {
         <div class="form-group row">
             <div class="col-md-2">
                 @Html.LabelFor(x => x.Code)
@@ -25,29 +25,29 @@
             </div>
         </div>
 
-              <div class="form-group row">
-                  <div class="col-md-4">
-                      @Html.LabelFor(x => x.Semester)
-                      @Html.EnumDropDownListFor(x => x.Semester, new { @class = "form-control" })
-                  </div>
-                  @if (!User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
-                  {
-                      <div class="col-md-4">
-                          @Html.LabelFor(x => x.FacultyId)
-                          @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(), new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
-                      </div>
-                  }
-                  <div class="col-md-4">
-                      @Html.LabelFor(x => x.DepartmentId)
-                      @Html.DropDownListFor(x => x.DepartmentId, new List<SelectListItem>(), new { id = "departmentSelector", @class = "form-control" })
-                  </div>
-              </div>
-          <div>
-              <button type="submit" class="btn btn-primary">
-                  <span class="glyphicon glyphicon-search"></span> Search
-              </button>
-          </div>
-        }
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.Semester)
+                @Html.EnumDropDownListFor(x => x.Semester, new { @class = "form-control" })
+            </div>
+            @if (!User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
+            {
+                <div class="col-md-4">
+                    @Html.LabelFor(x => x.FacultyId)
+                    @Html.DropDownListFor(x => x.FacultyId, FieldInputHelpers.GetSchoolFaculties(), new { id = "facultySelector", @class = "form-control", onchange = "updateDepartments()" })
+                </div>
+            }
+            <div class="col-md-4">
+                @Html.LabelFor(x => x.DepartmentId)
+                @Html.DropDownListFor(x => x.DepartmentId, new List<SelectListItem>(), new { id = "departmentSelector", @class = "form-control" })
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    }
 </div>
 
 <!-- Search Results table -->
@@ -65,57 +65,63 @@
     {
         foreach (var item in Model.Results)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(x => item.Course.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(x => item.Course.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(x => item.Term)
-            </td>
-            <td>
-                @Html.DisplayFor(x => item.CourseDate.Year)
-            </td>
-            <td>
-                @{ 
-                    var classroomInfo = string.Empty;
-                    if (item.Schedule != null)
-                    {
-                        classroomInfo = $"{item.Schedule.Classroom.Campus} / {item.Schedule.Classroom.Number}";
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.Course.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Course.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Term)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.CourseDate.Year)
+                </td>
+                <td>
+                    @{
+                        var classroomInfo = string.Empty;
+                        if (item.Schedule != null)
+                        {
+                            classroomInfo = $"{item.Schedule.Classroom.Campus} / {item.Schedule.Classroom.Number}";
+                        }
                     }
-                }
-                @Html.DisplayFor(x => @classroomInfo)
-            </td>
-            <td>
-                @{
-                  var instructorName = item.Teacher == null ? "TBD" : Helper.GetUserFullName(item.Teacher.ApplicationUserId);
-                }
-                @Html.DisplayFor(x => instructorName)
-            </td>
-            <td>
-                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
-                {
-                <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
-                    <span class="glyphicon glyphicon-plus"></span> Add
-                </button>
-                }
+                    @Html.DisplayFor(x => @classroomInfo)
+                </td>
+                <td>
+                    @{
+                        var instructorName = item.Teacher == null ? "TBD" : Helper.GetUserFullName(item.Teacher.ApplicationUserId);
+                    }
+                    @Html.DisplayFor(x => instructorName)
+                </td>
+                <td>
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Student))
+                    {
+                        <button class="btn btn-primary" onclick='enrollCourse("@item.Id")'>
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    }
 
-                @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
-                {
-                <button class="btn btn-primary" onclick='loadGradesModal("@item.Id")'>
-                    <span class="glyphicon glyphicon-list-alt"></span> Grades
-                </button>
-                }
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Instructor))
+                    {
+                        <button class="btn btn-primary" onclick='loadGradesModal("@item.Id")'>
+                            <span class="glyphicon glyphicon-list-alt"></span> Grades
+                        </button>
+                    }
+                    @if(User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
+                    {
+                        <button class="btn btn-primary" onclick='loadEnrollStudentModal("@item.Id")'>
+                            <span class="glyphicon glyphicon-plus"></span> Enroll Student
+                        </button>
+                    }
 
-                <button class="btn btn-primary" onclick='loadSemesterCourseDetails("@item.Course.Id")'>
-                    <span class="glyphicon glyphicon-file"></span> Details
-                </button>
-            </td>
-        </tr>
+                    <button class="btn btn-primary" onclick='loadSemesterCourseDetails("@item.Course.Id")'>
+                        <span class="glyphicon glyphicon-file"></span> Details
+                    </button>
+                </td>
+            </tr>
         }
-     }
+    }
 </table>
 
 @if (Model.Results != null)
@@ -136,6 +142,14 @@
 <div id="courseGradesModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseGradesModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Enroll Student Modal -->
+<div id="enrollStudentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="enrollStudentModalBody" class="modal-content">
         </div>
     </div>
 </div>

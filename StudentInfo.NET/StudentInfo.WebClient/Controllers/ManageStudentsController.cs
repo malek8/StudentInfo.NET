@@ -56,5 +56,23 @@ namespace StudentInfo.WebClient.Controllers
 
             return View(model);
         }
+
+        [Authorize]
+        [AuthorizeRoles(SystemRoles.Administrator, SystemRoles.FacultyMember, SystemRoles.Advisor)]
+        public ActionResult QuickSearch(Guid semesterCourseId)
+        {
+            var db = new StudentInfoContext();
+            var model = new StudentQuickSearchModel();
+
+            var semesterCourse = db.SemesterCourses.Find(semesterCourseId);
+
+            var students = db.Students.Where(x => !x.StudentCourses.Any() ||
+            (!x.StudentCourses.Any(z => z.SemesterCourse.Course.Id == semesterCourse.Course.Id)));
+
+            model.Students = students.OrderBy(x => x.ExternalStudentId).ToList();
+            model.SemesterCourse = semesterCourse;
+
+            return View("_QuickSearch", model);
+        }
     }
 }

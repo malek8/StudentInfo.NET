@@ -573,3 +573,10 @@ function loadCourseScheduleModal(courseId) {
         $("#courseScheduleModal").modal("show");
     });
 }
+
+function loadEnrollStudentModal(semesterCourseId) {
+    $.get("/ManageStudents/QuickSearch?semesterCourseId=" + semesterCourseId, function (data) {
+        $("#enrollStudentModalBody").html(data);
+        $("#enrollStudentModal").modal("show");
+    });
+}
