@@ -10,7 +10,6 @@ namespace StudentInfo.WebClient.Models
     public class StudentRecordModel
     {
         public Student Student { get; set; }
-        public ApplicationUser User { get; set; }
         public decimal CummulativeGPA { get; set; }
         public int TotalEarnedCredits { get; set; }
         public IList<StudentCourse> StudentCourses { get; set; }

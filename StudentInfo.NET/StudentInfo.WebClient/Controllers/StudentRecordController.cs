@@ -10,6 +10,7 @@ using StudentInfo.WebClient.App_Start;
 using StudentInfo.WebClient.Models;
 using StudentInfo.Enums;
 using StudentInfo.Dto;
+using StudentInfo.Data;
 
 namespace StudentInfo.WebClient.Controllers
 {
@@ -42,15 +43,28 @@ namespace StudentInfo.WebClient.Controllers
             {
                 return HttpNotFound();
             }
+            var studentId = HttpContext.Session["studentId"].ToString();
+            var parsedStudentId = Guid.Parse(studentId);
 
+            return View(BuildStudentRecordModel(parsedStudentId));
+        }
+
+        public ActionResult Show(Guid studentId)
+        {
+            var model = BuildStudentRecordModel(studentId);
+
+            return View("Index", model);
+        }
+
+        private StudentRecordModel BuildStudentRecordModel(Guid studentId)
+        {
             var model = new StudentRecordModel();
-            var emailAddress = HttpContext.Session["emailAddress"].ToString();
-            var user = UserManager.FindByEmail(emailAddress);
 
-            if (user != null)
+            var db = new StudentInfoContext();
+            var student = db.Students.Find(studentId);
+
+            if (student != null)
             {
-                var student = _studentService.FindByUserId(user.Id);
-
                 var years = student.StudentCourses.Select(x => x.SemesterCourse.CourseDate.Year).Distinct();
 
                 var groupedYears = new Dictionary<int, IEnumerable<IGrouping<Term, StudentCourse>>>();
@@ -62,14 +76,12 @@ namespace StudentInfo.WebClient.Controllers
                     groupedYears.Add(year, group);
                 }
 
-                model.User = user;
                 model.Student = student;
                 model.GroupedStudentCourses = groupedYears;
                 model.CummulativeGPA = StudentHelper.CummulativeGPA(student.StudentCourses.ToList());
                 model.TotalEarnedCredits = StudentHelper.TotalEarnedCredits(student.StudentCourses.ToList());
             }
-
-            return View(model);
+            return model;
         }
     }
 }
