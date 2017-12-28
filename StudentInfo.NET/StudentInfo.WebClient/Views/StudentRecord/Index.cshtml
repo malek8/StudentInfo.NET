@@ -43,7 +43,7 @@
             <div class="panel-body">
                 @if (Model.GroupedStudentCourses.Count > 0)
                 {
-                    foreach (var yearItem in Model.GroupedStudentCourses)
+                    foreach (var yearItem in Model.GroupedStudentCourses.OrderBy(x => x.Key))
                     {
                         <table class="table">
                             <tr>
@@ -55,7 +55,7 @@
                                 <td><strong>@yearItem.Key</strong></td>
                                 <!-- Term Info-->
                                 <td>
-                                    @foreach (var termItem in yearItem.Value)
+                                    @foreach (var termItem in yearItem.Value.OrderBy(x => x.Key))
                                     {
                                         <!-- Term Name -->
                                         <strong>@termItem.Key</strong>
