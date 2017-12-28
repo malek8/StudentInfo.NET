@@ -393,8 +393,8 @@ namespace StudentInfo.WebClient.Controllers
 
             var db = new StudentInfoContext();
 
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var student = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+            var userId = User.Identity.GetUserId();
+            var student = db.Students.FirstOrDefault(x => x.User.Id == userId);
             var studentCourses = new List<StudentCourse>().AsQueryable();
 
             if (student != null)

@@ -177,12 +177,10 @@ namespace StudentInfo.WebClient.Controllers
             var model = new StudentBalanceModel();
             if (User.Identity.IsAuthenticated && User.IsInRole(SystemRoles.Student))
             {
-                
-
                 var db = new StudentInfoContext();
-                var userId = Guid.Parse(User.Identity.GetUserId());
+                var userId = User.Identity.GetUserId();
 
-                var student = db.Students.FirstOrDefault(x => x.ApplicationUserId == userId);
+                var student = db.Students.FirstOrDefault(x => x.User.Id == userId);
 
                 if (student != null && student.Balance > 0)
                 {

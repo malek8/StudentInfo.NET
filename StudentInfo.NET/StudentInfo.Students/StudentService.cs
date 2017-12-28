@@ -27,12 +27,6 @@ namespace StudentInfo.Students
 
         public Student FindByUserId(string userId)
         {
-            var studentId = Guid.Parse(userId);
-            return FindStudent(studentId);
-        }
-
-        public Student FindByUserId(Guid userId)
-        {
             return FindStudent(userId);
         }
 
@@ -250,10 +244,10 @@ namespace StudentInfo.Students
             return false;
         }
 
-        private Student FindStudent(Guid userId)
+        private Student FindStudent(string userId)
         {
             var student = _db.Students.Include(x => x.StudentCourses)
-                .FirstOrDefault(x => x.ApplicationUserId == userId);
+                .FirstOrDefault(x => x.User.Id == userId);
 
             return student;
         }
