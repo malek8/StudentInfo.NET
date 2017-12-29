@@ -108,7 +108,7 @@
                             <span class="glyphicon glyphicon-list-alt"></span> Grades
                         </button>
                     }
-                    @if(User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
+                    @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Advisor))
                     {
                         <button class="btn btn-primary" onclick='loadEnrollStudentModal("@item.Id")'>
                             <span class="glyphicon glyphicon-plus"></span> Enroll Student
@@ -117,6 +117,10 @@
 
                     <button class="btn btn-primary" onclick='loadSemesterCourseDetails("@item.Course.Id")'>
                         <span class="glyphicon glyphicon-file"></span> Details
+                    </button>
+
+                    <button class="btn btn-primary" onclick='loadCourseScheduleModal("@item.Id")'>
+                            <span class="glyphicon glyphicon-calendar"></span> Schedule
                     </button>
                 </td>
             </tr>
@@ -150,6 +154,14 @@
 <div id="enrollStudentModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="enrollStudentModalBody" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Course Schedule Modal -->
+<div id="courseScheduleModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="courseScheduleModalBody" class="modal-content">
         </div>
     </div>
 </div>

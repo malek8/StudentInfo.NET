@@ -568,9 +568,51 @@ function assignSemesterCourse() {
 }
 
 function loadCourseScheduleModal(courseId) {
-    $.get("/Course/GetCourseSchedule?courseId=" + courseId, function (data) {
+    $.get("/Course/GetCourseSchedule", function (data) {
         $("#courseScheduleModalBody").html(data);
-        $("#courseScheduleModal").modal("show");
+
+        $.get("/Course/GetSchedule?semesterCourseId=" + courseId, function (calendarItems) {
+            var jsonItems = JSON.parse(calendarItems);
+            var jsonArrayItem = jsonItems[0];
+            var jsonResultItem = jsonArrayItem.result;
+            var options = {
+                events_source: jsonResultItem,
+                tmpl_path: "/tmpls/",
+                view: "month",
+                tmpl_cache: false,
+                onAfterViewLoad: function (view) {
+                    $("#monthTitle").text(this.getTitle());
+                },
+                onAfterEventsLoad: function (events) {
+                    if (!events) {
+                        return;
+                    }
+                    var list = $('#eventlist');
+                    list.html('');
+
+                    $.each(events, function (key, val) {
+                        $(document.createElement('li'))
+                            .html('<a href="' + val.url + '">' + val.title + '</a>')
+                            .appendTo(list);
+                    });
+                },
+                onAfterViewLoad: function (view) {
+                    $('.btn-group button').removeClass('active');
+                    $('button[data-calendar-view="' + view + '"]').addClass('active');
+                }
+            };
+
+            var calendar = $("#calendar").calendar(options);
+
+            $('.calendarNav').each(function () {
+                var $this = $(this);
+                $this.click(function () {
+                    calendar.navigate($this.data('calendar-nav'));
+                });
+            });
+
+            $("#courseScheduleModal").modal("show");
+        });
     });
 }
 

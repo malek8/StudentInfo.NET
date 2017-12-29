@@ -72,10 +72,6 @@
 
                     @if (User.IsInRole(StudentInfo.Enums.SystemRoles.Administrator) || User.IsInRole(StudentInfo.Enums.SystemRoles.FacultyMember))
                     {
-                        <button class="btn btn-primary" onclick='loadCourseScheduleModal("@item.Id")'>
-                            <span class="glyphicon glyphicon-calendar"></span> Schedule
-                        </button>
-
                         <button class="btn btn-primary" onclick='location.href = "/Course/CreateSchedule?courseId=@item.Id";'>
                             <span class="glyphicon glyphicon-calendar"></span> New Schedule
                         </button>
@@ -108,14 +104,6 @@
 <div id="courseEditModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div id="courseEditModalBody" class="modal-content">
-        </div>
-    </div>
-</div>
-
-<!-- Course Schedule Modal -->
-<div id="courseScheduleModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div id="courseScheduleModalBody" class="modal-content">
         </div>
     </div>
 </div>

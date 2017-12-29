@@ -656,9 +656,48 @@ namespace StudentInfo.WebClient.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCourseSchedule(Guid courseId)
+        public ActionResult GetCourseSchedule()
         {
             return View("_CourseSchedule");
+        }
+
+        [HttpGet]
+        public JsonResult GetSchedule(Guid semesterCourseId)
+        {
+            var db = new StudentInfoContext();
+
+            var semesterCourse = db.SemesterCourses.Find(semesterCourseId);
+            if (semesterCourse != null)
+            {
+                var schedule = semesterCourse.Schedule;
+                var calendarSchedule = new CalendarObject
+                {
+                    success = 1
+                };
+
+                var items = schedule.ScheduleItems.Select(x => new CalendarItem
+                {
+                    id = schedule.Id.ToString(),
+                    title = semesterCourse.Course.Code,
+                    url = "#",
+                    @class = "event-important",
+                    start = ((DateTimeOffset)new DateTime(x.Date.Year, x.Date.Month, x.Date.Day, x.StartTime.Hour, x.StartTime.Minute, x.StartTime.Second)).ToUnixTimeMilliseconds(),
+                    end = ((DateTimeOffset)new DateTime(x.Date.Year, x.Date.Month, x.Date.Day, x.EndTime.Hour, x.EndTime.Minute, x.EndTime.Second)).ToUnixTimeMilliseconds()
+                }).ToList();
+
+                var calendarObject = new List<CalendarObject>()
+                {
+                    new CalendarObject
+                    {
+                        success = 1,
+                        result = items
+                    }
+                };
+
+                var json = JsonConvert.SerializeObject(calendarObject);
+                return Json(json, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = 0, error = "Not found" });
         }
 
         private List<DateTime> ParseDates(string jsonParam)
