@@ -76,7 +76,7 @@
                     @Html.DisplayFor(x => item.Term)
                 </td>
                 <td>
-                    @Html.DisplayFor(x => item.CourseDate.Year)
+                    @Html.DisplayFor(x => item.Schedule.ScheduleItems.FirstOrDefault().Date.Year)
                 </td>
                 <td>
                     @{
