@@ -134,6 +134,7 @@
     @Html.PagedListPager(Model.Results, page => Url.Action("Search",
     new {
         Code = Model.Code,
+        Keyword = Model.Keyword,
         DepartmentId = Model.DepartmentId,
         FacultyId = Model.FacultyId,
         StudentId = Model.StudentId,

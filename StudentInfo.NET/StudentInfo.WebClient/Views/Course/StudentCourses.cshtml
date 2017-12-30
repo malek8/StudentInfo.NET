@@ -104,6 +104,7 @@ else
         @Html.PagedListPager(Model.Results, page => Url.Action("StudentCourses",
        new {
            Code = Model.Code,
+           Keyword = Model.Keyword,
            DepartmentId = Model.DepartmentId,
            FacultyId = Model.FacultyId,
            StudentId = Model.StudentId,

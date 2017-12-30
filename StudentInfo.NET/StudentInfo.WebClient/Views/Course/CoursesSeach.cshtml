@@ -92,6 +92,7 @@
     @Html.PagedListPager(Model.CoursesResults, page => Url.Action("SearchAll",
     new {
         Code = Model.Code,
+        Keyword = Model.Keyword,
         DepartmentId = Model.DepartmentId,
         FacultyId = Model.FacultyId,
         StudentId = Model.StudentId,
