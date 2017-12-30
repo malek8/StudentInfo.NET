@@ -1,5 +1,6 @@
 ﻿@model StudentInfo.WebClient.Models.StudentSearchModel
 @using StudentInfo.WebClient.Helpers
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Search Students";
 }
@@ -73,8 +74,21 @@
     </tbody>
 </table>
 
+@if (Model.Result != null)
+{
+    @: Page @(Model.Result.PageCount < Model.Result.PageNumber ? 0 : Model.Result.PageNumber) of @Model.Result.PageCount
+    @Html.PagedListPager(Model.Result, page => Url.Action("Search",
+            new
+            {
+                StudentId = Model.StudentId,
+                DepartmentId = Model.DepartmentId,
+                Name = Model.Name,
+                page
+            }))
+}
+
 <script type="text/javascript">
     function gotoStudentRecord(studentId) {
-        location.href ='/StudentRecord/Show?studentId=' + studentId;
+        location.href = '/StudentRecord/Show?studentId=' + studentId;
     }
 </script>

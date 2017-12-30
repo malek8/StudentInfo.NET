@@ -89,7 +89,15 @@
 @if (Model.CoursesResults != null)
 {
     @: Page @(Model.CoursesResults.PageCount < Model.CoursesResults.PageNumber ? 0 : Model.CoursesResults.PageNumber) of @Model.CoursesResults.PageCount
-    @Html.PagedListPager(Model.CoursesResults, page => Url.Action("SearchAll", new { page, model = Model }))
+    @Html.PagedListPager(Model.CoursesResults, page => Url.Action("SearchAll",
+    new {
+        Code = Model.Code,
+        DepartmentId = Model.DepartmentId,
+        FacultyId = Model.FacultyId,
+        StudentId = Model.StudentId,
+        Semester = Model.Semester,
+        page
+    }))
 }
 
 <!-- Course Details Modal -->
