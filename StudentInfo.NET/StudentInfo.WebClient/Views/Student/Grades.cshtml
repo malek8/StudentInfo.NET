@@ -25,7 +25,7 @@
                 <td>@item.SemesterCourse.Course.Code</td>
                 <td>@item.SemesterCourse.Course.Name</td>
                 <td>@item.SemesterCourse.Term</td>
-                <td>@item.SemesterCourse.CourseDate.Year</td>
+                <td>@item.SemesterCourse.Schedule.ScheduleItems.FirstOrDefault().Date.Year</td>
                 <td>@(item.Grade ?? "N/A")</td>
             </tr>
             }

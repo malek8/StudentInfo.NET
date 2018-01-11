@@ -154,7 +154,7 @@ namespace StudentInfo.Students
                         }
                     }
                 }
-                return student.Payments;
+                return student.Payments.OrderBy(x => x.DueDate).ToList();
             }
 
             return new List<Payment>();
