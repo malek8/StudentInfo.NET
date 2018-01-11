@@ -199,11 +199,13 @@ namespace StudentInfo.WebClient.Controllers
                     {
                         HttpContext.Session.Add("student", student);
                         HttpContext.Session.Add("hasBalance", true);
+                        HttpContext.Session.Add("hasDueBalance", true);
                         HttpContext.Session.Add("owingBalance", _studentPaymentService.GetBalance(student.Id));
                     }
                     else
                     {
                         HttpContext.Session.Add("hasBalance", false);
+                        HttpContext.Session.Add("hasDueBalance", false);
                     }
 
                 }

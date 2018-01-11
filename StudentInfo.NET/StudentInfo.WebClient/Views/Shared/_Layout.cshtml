@@ -154,7 +154,8 @@
 </body>
 </html>
 
-@if (HttpContext.Current.Session["hasBalance"] != null && (bool)HttpContext.Current.Session["hasBalance"] == true)
+@if (HttpContext.Current.Session["hasDueBalance"] != null && (bool)HttpContext.Current.Session["hasDueBalance"] == true &&
+    HttpContext.Current.Session["hasBalance"] != null && (bool)HttpContext.Current.Session["hasBalance"] == true)
 {
     <script type="text/javascript">
         $(function () {

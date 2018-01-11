@@ -248,7 +248,7 @@ namespace StudentInfo.WebClient.Controllers
                         else if (model.AmountToPay < model.Balance)
                         {
                             HttpContext.Session["owingBalance"] = model.Balance - model.AmountToPay;
-                            HttpContext.Session.Add("hasBalance", true);
+                            //HttpContext.Session.Add("hasBalance", true);
                         }
                     }
                     if (model.AmountToPay > model.Balance)
