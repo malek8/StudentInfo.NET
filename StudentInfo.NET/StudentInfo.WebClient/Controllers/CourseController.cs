@@ -300,7 +300,7 @@ namespace StudentInfo.WebClient.Controllers
             var db = new StudentInfoContext();
 
             var courses = db.SemesterCourses.Where(x => x.Schedule != null).AsQueryable();
-            courses = courses.Where(x => x.Schedule.ScheduleItems.All(z => z.Date >= DateTime.Now));
+            courses = courses.Where(x => x.Schedule.ScheduleItems.Any(z => z.Date >= DateTime.Now));
 
             if (User.IsInRole(SystemRoles.Instructor))
             {

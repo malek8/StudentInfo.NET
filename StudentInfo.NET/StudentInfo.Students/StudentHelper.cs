@@ -88,6 +88,10 @@ namespace StudentInfo.Students
                 terms.Add(Term.Fall);
                 terms.Add(Term.Winter);
             }
+            else if (currentMonth == 1)
+            {
+                terms.Add(Term.Winter);
+            }
 
             return terms;
         }

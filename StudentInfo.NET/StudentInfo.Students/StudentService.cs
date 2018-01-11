@@ -274,7 +274,7 @@ namespace StudentInfo.Students
                 var schedule = semesterCourse.Schedule;
                 if (schedule != null)
                 {
-                    var classScheduleItem = schedule.ScheduleItems.FirstOrDefault();
+                    var classScheduleItem = schedule.ScheduleItems.OrderBy(x => x.Date).FirstOrDefault();
                     if (classScheduleItem != null)
                     {
                         if (classScheduleItem.Date > DateTime.Now)
