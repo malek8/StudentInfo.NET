@@ -222,7 +222,7 @@ namespace StudentInfo.Students
                     return false;
                 }
 
-                studentCourse.CourseState = Enums.CourseRegistrationState.Discontinue;
+                _db.StudentCourses.Remove(studentCourse);
 
                 try
                 {
@@ -363,7 +363,7 @@ namespace StudentInfo.Students
         private bool IsClassFull(SemesterCourse semesterCourse)
         {
             var currentCount = _db.StudentCourses.Count(x => x.SemesterCourse.Id == semesterCourse.Id);
-            if (semesterCourse.Schedule.Classroom.Capacity < currentCount)
+            if (currentCount >= semesterCourse.Schedule.Classroom.Capacity)
             {
                 return true;
             }
